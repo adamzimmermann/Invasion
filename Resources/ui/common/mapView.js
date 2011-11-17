@@ -1,7 +1,10 @@
 exports.mapView = function() {
 
-var xml = require('data/xmldata');
-alert(xml.xmldata);
+var xml = require('data/xmldata').xmlfoo;
+alert(xml);
+
+// var currentPlayer = new xml();
+// alert(currentPlayer);
 
 var mapCreateView = Titanium.Map.createView({
 	mapType: Titanium.Map.HYBRID_TYPE,
