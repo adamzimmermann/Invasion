@@ -1,0 +1,8 @@
+Logfile initialized
+[INFO] logfile = /Users/seonte/BugoWorkspace/Invasion/build.log
+[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/1.7.3.v20111013094213/android/builder.py simulator Invasion /Users/seonte/Downloads/android-sdk-mac_x86 /Users/seonte/BugoWorkspace/Invasion edu.bradley.invasion 5 HVGA 
+[INFO] Building Invasion for Android ... one moment
+[INFO] Titanium SDK version: 1.7.3 (10/13/11 09:42 cfb6c67...)
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 0 devices/emulators
+[INFO] Android Emulator has exited
