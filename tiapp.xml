@@ -3,17 +3,17 @@
     <deployment-targets>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
-        <target device="ipad">false</target>
+        <target device="ipad">true</target>
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <id>edu.bradley.im.invasion</id>
+    <id>edu.bradley.invasion</id>
     <name>Invasion</name>
     <version>1.0</version>
-    <publisher>nelson</publisher>
+    <publisher>seonte</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2011 by nelson</copyright>
+    <copyright>2011 by seonte</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -22,7 +22,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>2d836ff5-fa7a-44e5-afdd-b306ede52938</guid>
+    <guid>801d2ea5-af52-44f8-aa78-be9d2a001b28</guid>
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
@@ -36,4 +36,15 @@
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
     <modules/>
+    <property name="ti.android.google.map.api.key">0hm1Es4JMAXNJRoD_kLubunArxquV07P3dYNc2g</property>
+    <property name="ti.android.debug" type="bool">false</property>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+        <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+    </android>
 </ti:app>
