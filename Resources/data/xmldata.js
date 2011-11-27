@@ -1,6 +1,9 @@
 var api = {};
 
+/*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// array of information about all games within 10 mile radius
 function findGames (latitude, longitude) { 
 	var data = [];
 	
@@ -36,7 +39,8 @@ function findGames (latitude, longitude) {
 
 /*------------------------------------------------------------------------------------------*/
 
-
+// Return Value:
+// xml data of player’s name and ID number
 function gamePlayers (gameID) { 
 	var data = [];
 	
@@ -65,7 +69,8 @@ function gamePlayers (gameID) {
 
 /*------------------------------------------------------------------------------------------*/
 
-// returns "true" or "false"
+// Return Value
+// "true" or "false" depending on if the operation occurred successfully
 function joinGame (gameID, userID, userName) { 
 	var data = [];
 	
@@ -86,6 +91,8 @@ function joinGame (gameID, userID, userName) {
 
 /*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// The ID of the Player who initiated the Game if Game exists, and 'false' if Game does not exist
 function gameInitiator (gameID) { 
 	var data = [];
 	
@@ -103,6 +110,8 @@ function gameInitiator (gameID) {
 
 /*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// An integer that denotes the current game status, 0 if not started, 1 if started
 function gameStatus (gameID) { 
 	var data = [];
 	
@@ -120,7 +129,8 @@ function gameStatus (gameID) {
 
 /*------------------------------------------------------------------------------------------*/
 
-
+// Return Value:
+// array of information about all the players in the Game
 function startGame (gameID) { 
 	var data = [];
 	
@@ -151,6 +161,110 @@ function startGame (gameID) {
 
 /*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// the gameID of the newly created Game
+function createGame (playerID, gameName, userName, latitude, longitude) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'createGame',
+		playerID: playerID,
+		gameName: gameName,
+		userName: userName,
+		latitude: latitude,
+		longitude: longitude
+	});
+	xhr.onload = function(e) {	
+	 	Ti.App.fireEvent('createGame', {data:this.responseText});
+	}
+}
+
+/*------------------------------------------------------------------------------------------*/
+
+// Return Value:
+// The ID of the Player who initiated the Game if Game exists, and 'false' if Game does not exist
+function gameInitator (gameID) {
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'gameInitiator'
+	});
+	xhr.onload = function(e) {	
+	 	Ti.App.fireEvent('gameInitiator', {data:this.responseText});
+	}
+}
+
+
+/*------------------------------------------------------------------------------------------*/
+
+// Return Value:
+// An integer that denotes the current game status, 0 if not started, 1 if started
+function flagsPlaced (gameID) {
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'flagsPlaced'
+	});
+	xhr.onload = function(e) {	
+	 	Ti.App.fireEvent('flagsPlaced', {data:this.responseText});
+	}
+}
+
+/*------------------------------------------------------------------------------------------*/
+
+// Return Value:
+// xml array of locations if other players found or “false” if no results found
+function getLocations (gameID, playerID, latitude, longitude) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'startGame',
+		gameID: gameID,
+		playerID: playerID,
+		latitude: latitude,
+		longitude: longitude,
+	});
+	
+	xhr.onload = function(e) {
+		var xml = this.responseXML;
+	  		
+		var games = xml.documentElement.getElementsByTagName("player");
+			
+		for (var i = 0; i < player.length; i++) {	
+	    	data.push({
+	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
+	    		playerID: games.item(i).getElementsByTagName("playerID").item(0).text,
+	    		teamID: games.item(i).getElementsByTagName("teamID").item(0).text,
+	    	}); 	
+		}	
+	 	Ti.App.fireEvent('gamePlayers', {data:data});
+	}
+}
+
+/*------------------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------------------------------*/
+
 
 
 
@@ -164,6 +278,8 @@ api.findGames = findGames;
 api.joinGame = joinGame;
 api.gameStatus = gameStatus;
 api.startGame = startGame;
+api.createGame = createGame;
+
 
 //public interface
 exports.api = api;
