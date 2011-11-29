@@ -347,7 +347,20 @@ function checkScore (gameID) {
 
 /*------------------------------------------------------------------------------------------*/
 
-
+function checkCode (gameID, accessCode) {
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'checkCode',
+		gameID: gameID,
+		accessCode: accessCode
+	});
+	xhr.onload = function(e) {	
+	 	Ti.App.fireEvent('checkCode', {data:this.responseText});
+	}
+}
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -371,6 +384,7 @@ api.playerData = playerData;
 api.flagsPlaced = flagsPlaced;
 api.placeFlag = placeFlag;
 api.flagCaptured = flagCaptured;
+api.checkCode = checkCode;
 
 
 //public interface

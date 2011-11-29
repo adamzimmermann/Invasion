@@ -3,6 +3,7 @@ exports.homePage = function() {
 	//var mapView = require('ui/common/mapView');
 	var joinGame = require('ui/common/joinGame');
 	var createGame = require('ui/common/createGame');
+	var aboutPage = require('ui/common/aboutPage');
 	var homePageView = Ti.UI.createWindow ({
 		backgroundImage: 'images/MediumLogoTop.jpg'
 	});
@@ -48,6 +49,13 @@ exports.homePage = function() {
 		newWin.open();
 		// var createGview = new createGame();
 		// newWin.add(createGview);
+	});
+	
+	button3.addEventListener('click', function(){
+		var newWin = Ti.UI.createWindow();
+		newWin.open();
+		var aboutView = new aboutPage();
+		newWin.add(aboutView);
 	});
 	
 	

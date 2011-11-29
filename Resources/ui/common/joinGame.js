@@ -1,5 +1,6 @@
 exports.joinGame = function() {
 	// create a window
+	
 	var view = Ti.UI.createWindow({
 		backgroundImage: 'images/smallLogoTop.jpg'
 	});	
@@ -35,16 +36,10 @@ exports.joinGame = function() {
 			backgroundColor: '#000'
 		})
 		// require aCode.js to define the object aCode
-		var aCode = require('ui/common/aCode');
+		
 		// table click listener
-		table.addEventListener('click', function() {
-			// create a new win
-			var newWin = Ti.UI.createWindow({backgroundColor: '#000'})
-			// open it
-			newWin.open();
-			// 
-			var aCodeWin = new aCode();
-			newWin.add(aCode);
+		table.addEventListener('click', function(e) {
+			Ti.App.fireEvent('createAccessCode', {gameID: 1});
 		});
 		// add the title label
 		view.add(title);
@@ -52,6 +47,18 @@ exports.joinGame = function() {
 		view.add(table);
 	});
 	// return the view window to homePage
+	
+	// create a new win
+	
+	Ti.App.addEventListener('createAccessCode', function(data){
+		var aCode = require('ui/common/aCode');
+		var newWin = Ti.UI.createWindow();
+		// open it
+		newWin.open();
+		aCode(data);
+		//newWin.add(aCodeWin);
+	} )
+			
 	return view;
 };
 
