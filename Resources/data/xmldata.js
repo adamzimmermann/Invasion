@@ -249,7 +249,7 @@ function flagsPlaced (gameID) {
 
 // Return Value:
 // xml array of locations if other players found or “false” if no results found
-function playerData (gameID, values) { 
+function playerData (values) { 
 	var data = [];
 	
 	var xhr = Titanium.Network.createHTTPClient();
@@ -257,13 +257,13 @@ function playerData (gameID, values) {
 	
 	xhr.send({
 		action: 'getLocations',
-		gameID: gameID,
-		playerID: values['playerID'],
-		latitude: values['latitude'],
-		longitude: ['longitude'],
-		canTag: values['canTag'],
-		canBeTagged: values['canBeTagged'],
-		hasFlag: values['hasFlag']
+		gameID: values.gameID,
+		playerID: values.playerID,
+		latitude: values.latitude,
+		longitude: values.longitude,
+		canTag: values.canTag,
+		canBeTagged: values.canBeTagged,
+		hasFlag: values.hasFlag
 	});
 	
 	xhr.onload = function(e) {
@@ -277,8 +277,10 @@ function playerData (gameID, values) {
 	    		latitude: values.item(i).getElementsByTagName("playerLatitude").item(0).text,
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
 	    	}); 	
-		}	
-	 	Ti.App.fireEvent('getLocations', {data:data});
+		}
+		alert('data in xml: ' + data);
+	 	Ti.App.fireEvent('playerData', {data:data});
+	 	
 	}
 }
 

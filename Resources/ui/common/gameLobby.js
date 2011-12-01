@@ -2,7 +2,10 @@ exports.gameLobby = function (input) {
 	
 	
 	
-	var instance = Ti.UI.createWindow({backgroundImage:'images/SmallLogoTop.jpg'});
+	var instance = Ti.UI.createWindow({
+		//backgroundImage:'images/SmallLogoTop.jpg'
+		backgroundColor:'#000'
+	});
 	
 	//var webAPI = new globals.xml.gamePlayers(gameID);
 	alert('got to gameLobby')

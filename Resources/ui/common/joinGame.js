@@ -2,7 +2,8 @@ exports.joinGame = function() {
 	// create a window
 	
 	var view = Ti.UI.createWindow({
-		backgroundImage: 'images/smallLogoTop.jpg'
+		//backgroundImage: 'images/smallLogoTop.jpg'
+		backgroundColor:'#000'
 	});	
 	// pull the findGames function with longitude and lat parameters
 	var webAPI = new globals.xml.findGames(10, 12);

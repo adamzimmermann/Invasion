@@ -1,5 +1,8 @@
 exports.gamePage = function() {
-	var instance = Ti.UI.createWindow({backgroundImage:'images/SmallLogoTop.jpg'});
+	var instance = Ti.UI.createWindow({
+		//backgroundImage:'images/SmallLogoTop.jpg'
+		backgroundColor:'#000'
+	});
 	
 	
 	Ti.App.GeoApp = {};
@@ -13,10 +16,20 @@ exports.gamePage = function() {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
 
+	var mapCreateView = Titanium.Map.createView({
+			mapType: Titanium.Map.STANDARD,
+			region:{latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
+			height:350,
+			width:275,
+			top: 100,
+			borderColor: '#d6d6d6',
+			borderWidth:2,
+			borderRadius:2,
+	});	
+	
 
 
-
-
+	//called by getCurrentPosition
 	function updatePosition(e) {
 	 
 	    if( ! e.success || e.error ) {
@@ -30,51 +43,64 @@ exports.gamePage = function() {
 	        "coords" : e.coords
 	    });
 	};
-	 
+	
+	//listens for updatePositions to finish
 	Ti.App.addEventListener("app:got.location", function(d) {
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
 	    Ti.API.debug(JSON.stringify(d));
 	    // you need to remove this listener, see the blog post mentioned above
-	    Ti.Geolocation.removeEventListener('location', updatePosition);	 
+	    Ti.Geolocation.removeEventListener('location', updatePosition);	
+	    
 	    alert(d.coords.latitude);
 	    
-	    data = {
+	    var data = {
 	    	latitude: d.coords.latitude,
 	    	longitude: d.coords.longitude,
-	    	gameID: gameID,
-	    	playerID: playerID,
+	    	gameID: 1,
+	    	playerID: Ti.Platform.id,
 	    	canTag: 1,
 	    	canBeTagged: 1,
 	    	hasFlag: 0,    	
-	    }
+	    };
+	    alert("here")
 	    var webAPI = new globals.xml.playerData(data);
 	 
 	});
 	
 	//listens for data to be returned about the other players
-	Ti.API.addEventListener('playerData', updateMap(data));
+	Ti.App.addEventListener('playerData', function(data){
+		alert('data: ' + data.data);
+		
+		var array = [];
+		// for loop to pull the data for each event
+		for (var key in data.data) {
+			// key the events in "e"
+			var a = data.data[key];
+			// pull the data from e and set it to lat, lon, and title
+			var annotData = {
+				latitude:a.latitude,
+				longitude:a.longitude,
+				title: 'test',
+				//image: 'images/Icons/Human/Human.png'
+			};
+			// push this all back to the data array
+			array.push(annotData);
+		}
+		alert(array);
+		mapCreateView.setAnnotations(array)
+	});
 	
+	//updates maps view
 	function updateMap(data) {
 		alert('other locations recieved' + data);
 	}
 	
 	
 	Titanium.Geolocation.getCurrentPosition( updatePosition );   
-	Titanium.Geolocation.addEventListener( 'location', updatePosition ); 
+	//Titanium.Geolocation.addEventListener( 'location', updatePosition ); 
 	
 	
-	var mapCreateView = Titanium.Map.createView({
-		mapType: Titanium.Map.STANDARD,
-		region:{latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
-		height:350,
-		width:275,
-		top: 100,
-		borderColor: '#d6d6d6',
-		borderWidth:2,
-		borderRadius:2,
-	});	
-
 	instance.add(mapCreateView);
 	instance.open();
 	return instance	

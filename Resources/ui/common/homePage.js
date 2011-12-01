@@ -5,8 +5,10 @@ exports.homePage = function() {
 	var createGame = require('ui/common/createGame');
 	var aboutPage = require('ui/common/aboutPage');
 	var homePageView = Ti.UI.createWindow ({
-		backgroundImage: 'images/MediumLogoTop.jpg'
+		//backgroundImage: 'images/MediumLogoTop.jpg'
+		backgroundColor:'#000'
 	});
+	
 	
 	var cheatButton = Ti.UI.createButton({
 		title:'Skip to Game',

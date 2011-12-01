@@ -3,7 +3,8 @@ exports.aCode = function(data) {
 	var gameLobby = require ('ui/common/gameLobby')
 	
 	var instance = Ti.UI.createWindow({
-		backgroundImage: 'images/MediumLogoTop.jpg'
+		//backgroundImage: 'images/MediumLogoTop.jpg'
+		backgroundColor:'#000'
 	});
 	instance.open();
 	

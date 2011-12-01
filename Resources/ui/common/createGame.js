@@ -1,7 +1,8 @@
 exports.createGame = function() {
 	
 	var view = Ti.UI.createWindow({
-		backgroundImage:'images/MediumLogoTop.jpg'
+		//backgroundImage:'images/MediumLogoTop.jpg'
+		backgroundColor:'#000'
 	});
 	
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
