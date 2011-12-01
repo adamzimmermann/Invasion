@@ -1,8 +1,8 @@
 exports.createGame = function() {
 	
 	var view = Ti.UI.createWindow({
-		//backgroundImage:'images/MediumLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage:'images/MediumLogoTop.jpg'
+		//backgroundColor:'#000'
 	});
 	
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
@@ -84,7 +84,6 @@ exports.createGame = function() {
 	
 	Ti.App.addEventListener('createGame', function(data){
 		Ti.API.debug(data.data)
-		alert('fired create game')
 		var gameLobby = require('ui/common/gameLobby');
 		// var newWin = Ti.UI.createWindow();
 		// // open it

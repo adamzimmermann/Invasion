@@ -3,18 +3,16 @@ exports.gameLobby = function (input) {
 	
 	
 	var instance = Ti.UI.createWindow({
-		//backgroundImage:'images/SmallLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage:'images/SmallLogoTop.jpg'
+		//backgroundColor:'#000'
 	});
 	
 	//var webAPI = new globals.xml.gamePlayers(gameID);
-	alert('got to gameLobby')
 	
-	alert(input.gameID);
 	
-	var webAPI = new globals.xml.gamePlayers(1);
+	var webAPI = new globals.xml.gamePlayers(input.gameID);
 	Ti.App.addEventListener('gamePlayers', function(input){
-		alert('here');
+	
 		var data = [];
 		for(var key in input.data){
 			var g = input.data[key]
@@ -49,10 +47,10 @@ exports.gameLobby = function (input) {
 	});
 	
 	userID = Ti.Platform.id;
-	var webAPI2 = new globals.xml.gameInitiator(1, userID);
+	var webAPI2 = new globals.xml.gameInitiator(input.gameID, userID);
 	// if game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
-		alert(input.data == "true")
+		
 		// if (input.data == "true")
 		// {
 			var startButton = Ti.UI.createButton({
@@ -61,7 +59,7 @@ exports.gameLobby = function (input) {
 				width:100,
 				title: 'Start Game!'
 			});
-			alert('gameInitiator');
+			
 			startButton.addEventListener('click', function(){
 				var gamePage = require('ui/common/gamePage')
 				gamePage();

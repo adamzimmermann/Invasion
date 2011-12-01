@@ -2,8 +2,8 @@ exports.joinGame = function() {
 	// create a window
 	
 	var view = Ti.UI.createWindow({
-		//backgroundImage: 'images/smallLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage: 'images/smallLogoTop.jpg'
+		//backgroundColor:'#000'
 	});	
 	// pull the findGames function with longitude and lat parameters
 	var webAPI = new globals.xml.findGames(10, 12);
@@ -15,8 +15,10 @@ exports.joinGame = function() {
 		for(var key in input.data){
 			var g = input.data[key]
 			var rowdata = {
-				title: g.gameName
+				title: g.gameName,
+				//gameID: g.gameID,
 			};
+			
 			data.push(rowdata);
 		}
 		// create a tableview
@@ -47,6 +49,8 @@ exports.joinGame = function() {
 		
 		// table click listener
 		table.addEventListener('click', function(e) {
+			//var currentRow = rowdata.gameID;
+			//alert('current row data: ' + currentRow)
 			Ti.App.fireEvent('gameSelected', {gameID: g.gameID});
 		});
 		
@@ -64,7 +68,8 @@ exports.joinGame = function() {
 		var newWin = Ti.UI.createWindow();
 		// open it
 		newWin.open();
-		aCode(data);
+		//alert('aCode gameID' + data.gameID);
+		aCode({gameID: data.gameID});
 		//newWin.add(aCodeWin);
 	} )
 			

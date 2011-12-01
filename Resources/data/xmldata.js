@@ -200,7 +200,6 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 	    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
 	    	});
 	    }
-	    alert(data)	
 	    Ti.App.fireEvent('createGame', {data:data});
 	}
 }
@@ -278,7 +277,7 @@ function playerData (values) {
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
 	    	}); 	
 		}
-		alert('data in xml: ' + data);
+	
 	 	Ti.App.fireEvent('playerData', {data:data});
 	 	
 	}

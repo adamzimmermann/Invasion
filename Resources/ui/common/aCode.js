@@ -3,8 +3,8 @@ exports.aCode = function(data) {
 	var gameLobby = require ('ui/common/gameLobby')
 	
 	var instance = Ti.UI.createWindow({
-		//backgroundImage: 'images/MediumLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage: 'images/MediumLogoTop.jpg'
+		//backgroundColor:'#000'
 	});
 	instance.open();
 	
@@ -78,12 +78,14 @@ exports.aCode = function(data) {
 	
 	// listens for buttons to clicked
 	button.addEventListener('click', function(data){
+		//alert('gameID: ' + data.gameID)
 		var webAPI = new globals.xml.checkCode(data.gameID, accessCode.value);	
 	});
 	
 	
 	//listens for WebAPI checkCode
 	Ti.App.addEventListener('checkCode', function(input){
+		
 		if (input.data == "true"){
 			userID = Ti.Platform.id;
 			var webAPI = new globals.xml.joinGame(input.gameID, userID, userName.value);	
@@ -97,7 +99,7 @@ exports.aCode = function(data) {
 	// listens for WebAPI JoinGame
 	Ti.App.addEventListener('joinGame', function(input){
 		var gameLobby = require('ui/common/gameLobby');
-		gameLobby({gameID: 1, userName: userName.value, userID: userID, accessCode: 229});
+		gameLobby({gameID: input.gameID, userName: userName.value, userID: userID, accessCode: input.accessCode});
 			
 	});
 	

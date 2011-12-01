@@ -7,7 +7,7 @@ require('lib/require').monkeypatch(this);
 //for one or zero global variables.
 var globals = {
 	osname: Ti.Platform.osname,
-	//xml: require('data/xmldata').api,
+	xml: require('data/xmldata').api,
 	//gameID: int
 };
 

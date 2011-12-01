@@ -5,10 +5,16 @@ exports.homePage = function() {
 	var createGame = require('ui/common/createGame');
 	var aboutPage = require('ui/common/aboutPage');
 	var homePageView = Ti.UI.createWindow ({
-		//backgroundImage: 'images/MediumLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage: 'images/MediumLogoTop.jpg'
+		//backgroundColor:'#000'
 	});
 	
+	var bgTunes = Ti.Media.createSound({
+		url: 'sounds/StartS.mp3',
+		looping: true
+	})
+	
+	bgTunes.play();
 	
 	var cheatButton = Ti.UI.createButton({
 		title:'Skip to Game',
@@ -65,7 +71,7 @@ exports.homePage = function() {
 		gamePage();
 	});
 	
-	homePageView.add(cheatButton)
+	//homePageView.add(cheatButton)
 	homePageView.add(button1);
 	homePageView.add(button2);
 	homePageView.add(button3);

@@ -1,8 +1,8 @@
 exports.aboutPage = function() {
 	var homePage = require('ui/common/homePage');
 	var view = Ti.UI.createWindow({
-		//backgroundImage:'images/SmallLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage:'images/SmallLogoTop.jpg'
+		//backgroundColor:'#000'
 	});
 	
 	var sView = Ti.UI.createScrollView({

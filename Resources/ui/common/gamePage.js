@@ -1,7 +1,7 @@
 exports.gamePage = function() {
 	var instance = Ti.UI.createWindow({
-		//backgroundImage:'images/SmallLogoTop.jpg'
-		backgroundColor:'#000'
+		backgroundImage:'images/SmallLogoTop.jpg'
+		// backgroundColor:'#000'
 	});
 	
 	
@@ -52,7 +52,7 @@ exports.gamePage = function() {
 	    // you need to remove this listener, see the blog post mentioned above
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
 	    
-	    alert(d.coords.latitude);
+	 
 	    
 	    var data = {
 	    	latitude: d.coords.latitude,
@@ -63,14 +63,14 @@ exports.gamePage = function() {
 	    	canBeTagged: 1,
 	    	hasFlag: 0,    	
 	    };
-	    alert("here")
+	    
 	    var webAPI = new globals.xml.playerData(data);
 	 
 	});
 	
 	//listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
-		alert('data: ' + data.data);
+		
 		
 		var array = [];
 		// for loop to pull the data for each event
@@ -82,12 +82,12 @@ exports.gamePage = function() {
 				latitude:a.latitude,
 				longitude:a.longitude,
 				title: 'test',
-				//image: 'images/Icons/Human/Human.png'
+				image: 'images/mini_icons/Human/Human.png'
 			};
 			// push this all back to the data array
 			array.push(annotData);
 		}
-		alert(array);
+	
 		mapCreateView.setAnnotations(array)
 	});
 	
