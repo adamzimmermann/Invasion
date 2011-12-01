@@ -57,7 +57,7 @@ function gamePlayers (gameID) {
 	  		
 		var games = xml.documentElement.getElementsByTagName("player");
 			
-		for (var i = 0; i < player.length; i++) {	
+		for (var i = 0; i < games.length; i++) {	
 	    	data.push({
 	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
 	    		playerID: games.item(i).getElementsByTagName("playerID").item(0).text,
@@ -84,8 +84,20 @@ function joinGame (gameID, userID, userName) {
 	});
 	
 	xhr.onload = function(e) {
-	 	Ti.App.fireEvent('joinGame', {data:this.responseText});
+		var xml = this.responseXML;
+		
+	 	var games = xml.documentElement.getElementsByTagName("game");
+		
+		for (var i = 0; i < games.length; i++) {	
+	    	data.push({
+	    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
+	    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
+	    	});
+	    }
+	    	
+	    Ti.App.fireEvent('joinGame', {data:data});	
 	}
+	
 }
 
 
@@ -178,7 +190,18 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 		longitude: longitude
 	});
 	xhr.onload = function(e) {	
-	 	Ti.App.fireEvent('createGame', {data:this.responseText});
+	 	var xml = this.responseXML;
+		
+	 	var games = xml.documentElement.getElementsByTagName("game");
+		
+		for (var i = 0; i < games.length; i++) {	
+	    	data.push({
+	    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
+	    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
+	    	});
+	    }
+	    alert(data)	
+	    Ti.App.fireEvent('createGame', {data:data});
 	}
 }
 
@@ -186,13 +209,15 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 
 // Return Value:
 // The ID of the Player who initiated the Game if Game exists, and 'false' if Game does not exist
-function gameInitator (gameID) {
+function gameInitiator (gameID, userID) {
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
 	xhr.send({
-		action: 'gameInitiator'
+		action: 'gameInitiator',
+		gameID: gameID,
+		userID: userID
 	});
 	xhr.onload = function(e) {	
 	 	Ti.App.fireEvent('gameInitiator', {data:this.responseText});
@@ -385,6 +410,7 @@ api.flagsPlaced = flagsPlaced;
 api.placeFlag = placeFlag;
 api.flagCaptured = flagCaptured;
 api.checkCode = checkCode;
+api.gameInitiator = gameInitiator;
 
 
 //public interface

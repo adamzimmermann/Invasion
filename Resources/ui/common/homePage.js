@@ -8,7 +8,13 @@ exports.homePage = function() {
 		backgroundImage: 'images/MediumLogoTop.jpg'
 	});
 	
-	
+	var cheatButton = Ti.UI.createButton({
+		title:'Skip to Game',
+		height:30,
+		width:150,
+		top:180
+	})
+
 	var button1 = Ti.UI.createButton({
 		title:'Join Game',
 		height:50,
@@ -44,13 +50,7 @@ exports.homePage = function() {
 		top:360
 	});
 	
-	button2.addEventListener('click', function(){
-		var newWin = Ti.UI.createWindow();
-		newWin.open();
-		// var createGview = new createGame();
-		// newWin.add(createGview);
-	});
-	
+
 	button3.addEventListener('click', function(){
 		var newWin = Ti.UI.createWindow();
 		newWin.open();
@@ -58,7 +58,12 @@ exports.homePage = function() {
 		newWin.add(aboutView);
 	});
 	
+	cheatButton.addEventListener('click', function(){
+		var gamePage = require('ui/common/gamePage')
+		gamePage();
+	});
 	
+	homePageView.add(cheatButton)
 	homePageView.add(button1);
 	homePageView.add(button2);
 	homePageView.add(button3);
