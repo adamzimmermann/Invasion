@@ -156,17 +156,24 @@ function startGame (gameID) {
 	
 	xhr.onload = function(e) {
 		var xml = this.responseXML;
-	  		
-		var games = xml.documentElement.getElementsByTagName("player");
+	  	
+	  	
+		var players = xml.documentElement.getElementsByTagName("player");
 			
-		for (var i = 0; i < player.length; i++) {	
+		for (var i = 0; i < players.length; i++) {	
+	    	
 	    	data.push({
-	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
-	    		playerID: games.item(i).getElementsByTagName("playerID").item(0).text,
-	    		teamID: games.item(i).getElementsByTagName("teamID").item(0).text,
-	    	}); 	
-		}	
-	 	Ti.App.fireEvent('gamePlayers', {data:data});
+	    		userName: players.item(i).getElementsByTagName("userName").item(0).text,
+	    		playerID: players.item(i).getElementsByTagName("playerID").item(0).text,
+	    		teamID: players.item(i).getElementsByTagName("teamID").item(0).text,
+	    	}); 
+	    	Ti.API.debug('in loop');	
+		}
+		Ti.API.debug('show up');
+		
+		//Ti.API.debug
+		
+	 	Ti.App.fireEvent('startGame', {data:data});
 	}
 }
 

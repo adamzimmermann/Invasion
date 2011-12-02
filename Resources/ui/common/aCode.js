@@ -88,7 +88,9 @@ exports.aCode = function(data) {
 		
 		if (input.data == "true"){
 			userID = Ti.Platform.id;
-			var webAPI = new globals.xml.joinGame(input.gameID, userID, userName.value);	
+			if(userName.value != null) {
+				var webAPI = new globals.xml.joinGame(input.gameID, userID, userName.value);
+			}
 		}
 		else {
 			alert("Incorrect Access Code");

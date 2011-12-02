@@ -60,9 +60,12 @@ exports.gameLobby = function (input) {
 				title: 'Start Game!'
 			});
 			
-			startButton.addEventListener('click', function(){
-				var gamePage = require('ui/common/gamePage')
-				gamePage();
+			startButton.addEventListener('click', function() {	
+				alert('gameID: ' + input.gameID)
+				var webAPI3 = new globals.xml.startGame('1');
+				
+				//var gamePage = require('ui/common/gamePage')
+				//gamePage();
 			});
 			instance.add(startButton)
 		// }
@@ -73,6 +76,11 @@ exports.gameLobby = function (input) {
 			// alert('not the game initiator');
 			// instance.add(standby);
 		// }
+	});
+	
+	Ti.App.addEventListener('startGame', function(e) {
+		alert('start game data: ' + e.data);
+		
 	});
 	
 	
