@@ -76,25 +76,20 @@ exports.createGame = function() {
 	var longitude = 50.21;
 	
 
-	
+	// creates a new Game when button is clicked
 	createButton.addEventListener('click', function(){
 		userID = Ti.Platform.id;
 		var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, latitude, longitude);
 		
 	});
 	
-	Ti.App.addEventListener('createGame', function(data){
-		
-		alert('game created');
-		Ti.API.debug(data.data)
+	
+	// listens for result of Create Game
+	Ti.App.addEventListener('createGame', function(input){
 		var gameLobby = require('ui/common/gameLobby');
-		// var newWin = Ti.UI.createWindow();
-		// // open it
-		// newWin.open();
-		gameLobby(data);
-		
-
-	} )
+		gameLobby(input);
+	});
+	
 	scrolly.add(createGameLabel);
 	scrolly.add(nameGameText);
 	scrolly.add(userNameText);	

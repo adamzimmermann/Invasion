@@ -184,7 +184,7 @@ function startGame (gameID) {
 // Return Value:
 // the gameID of the newly created Game
 function createGame (playerID, gameName, userName, latitude, longitude) { 
-	var data = [];
+	//var data = [];
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
@@ -200,15 +200,16 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 	xhr.onload = function(e) {	
 	 	var xml = this.responseXML;
 		
-	 	var games = xml.documentElement.getElementsByTagName("game");
+	 	//var games = xml.documentElement.getElementsByTagName("game");
 		
-		for (var i = 0; i < games.length; i++) {	
-	    	data.push({
-	    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
-	    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
-	    	});
-	    }
-	    Ti.App.fireEvent('createGame', {data:data});
+		//for (var i = 0; i < games.length; i++) {	
+	    	var data = {
+	    		gameID: xml.getElementsByTagName("gameID").item(0).text,
+	    		accessCode: xml.getElementsByTagName("accessCode").item(0).text,
+	    	};
+	    //}
+	    //alert('gameID: ' + data.gameID);
+	    Ti.App.fireEvent('createGame', data);
 	}
 }
 
