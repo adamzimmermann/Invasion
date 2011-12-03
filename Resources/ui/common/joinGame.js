@@ -5,12 +5,64 @@ exports.joinGame = function() {
 		backgroundImage: 'images/smallLogoTop.jpg'
 		//backgroundColor:'#000'
 	});	
+	
+	
+	
+	// Get Location
+	
+	Ti.App.GeoApp = {};
+	 
+	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
+	Ti.Geolocation.purpose = "testing";
+	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
+	Titanium.Geolocation.distanceFilter = 10;
+	 
+	if( Titanium.Geolocation.locationServicesEnabled === false ) {
+	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
+	}
+	
+	function updatePosition(e) {
+	 
+	    if( ! e.success || e.error ) {
+	        alert("Unable to get your location.");
+	        Ti.API.debug(JSON.stringify(e));
+	        Ti.API.debug(e);
+	        return;
+	    }
+	 
+	    Ti.App.fireEvent("app:got.location", {
+	        "coords" : e.coords
+	    });
+	};
+	
+	Ti.App.addEventListener("app:got.location", function(d) {
+	    // Ti.App.GeoApp.f_lng = d.longitude;
+	    // Ti.App.GeoApp.f_lat = d.latitude;
+	    Ti.API.debug(JSON.stringify(d));
+	    // you need to remove this listener, see the blog post mentioned above
+	    Ti.Geolocation.removeEventListener('location', updatePosition);	
+	    alert(d.coords.latitude)
+	    alert(d.coords.longitude)
+	 
+	    
+	    var webAPI = new globals.xml.findGames(d.coords.latitude, d.coords.longitude);
+
+	 
+	 
+	});
+	Titanium.Geolocation.getCurrentPosition( updatePosition );   
+	
+	
+	
+	
+
 	// pull the findGames function with longitude and lat parameters
-	var webAPI = new globals.xml.findGames(10, 12);
+
 	// the event listener to trigger when the data has been loaded
 	Ti.App.addEventListener('findGames', function(input){
 		// empty data array
 		var data = [];
+		alert('fired');
 		// for loop to populate the table with the available games
 		for(var key in input.data){
 			var g = input.data[key]
