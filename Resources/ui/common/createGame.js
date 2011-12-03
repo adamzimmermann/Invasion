@@ -77,7 +77,8 @@ exports.createGame = function() {
 	
 
 	// creates a new Game when button is clicked
-	createButton.addEventListener('click', function(){
+	createButton.addEventListener('click', function() {
+		alert('create clicked');
 		userID = Ti.Platform.id;
 		var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, latitude, longitude);
 		
@@ -86,6 +87,7 @@ exports.createGame = function() {
 	
 	// listens for result of Create Game
 	Ti.App.addEventListener('createGame', function(input){
+		alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
 		gameLobby(input);
 	});

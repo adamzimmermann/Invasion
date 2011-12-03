@@ -208,7 +208,7 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 	    		accessCode: xml.getElementsByTagName("accessCode").item(0).text,
 	    	};
 	    //}
-	    //alert('gameID: ' + data.gameID);
+	    alert('gameID: ' + data.gameID);
 	    Ti.App.fireEvent('createGame', data);
 	}
 }
@@ -284,10 +284,13 @@ function playerData (values) {
 	    		playerID: values.item(i).getElementsByTagName("playerID").item(0).text,
 	    		latitude: values.item(i).getElementsByTagName("playerLatitude").item(0).text,
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
+	    		canTag: values.item(i).getElementsByTagName("canTag").item(0).text,
+	    		canBeTagged: values.item(i).getElementsByTagName("canBeTagged").item(0).text,
+	    		hasFlag: values.item(i).getElementsByTagName("hasFlag").item(0).text,
 	    	}); 	
 		}
 	
-	 	Ti.App.fireEvent('playerData', {data:data});
+	 	Ti.App.fireEvent('playerData', data);
 	 	
 	}
 }
@@ -413,16 +416,23 @@ function teamInformation (input) {
 	});
 	xhr.onload = function(e) {	
 	 	var xml = this.responseXML;
+	 	
+	 	alert('team data');
 		
-	 	var teams = xml.documentElement.getElementsByTagName("team");
+	 	var players = xml.documentElement.getElementsByTagName("player");
 		
-		for (var i = 0; i < teams.length; i++) {	
+		alert('players: ' + players);
+		
+		for (var i = 0; i < players.length; i++) {	
 	    	data.push({
-	    		teamName: games.item(i).getElementsByTagName("teamName").item(0).text,
-	    		teamID: games.item(i).getElementsByTagName("teamID").item(0).text,
-	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
+	    		teamName: players.item(i).getElementsByTagName("teamName").item(0).text,
+	    		teamID: players.item(i).getElementsByTagName("teamID").item(0).text,
+	    		userName: players.item(i).getElementsByTagName("userName").item(0).text,
+	    		playerID: players.item(i).getElementsByTagName("playerID").item(0).text,
 	    	});
 	    }
+	    alert('team data: ' + data);
+	    
 	    Ti.App.fireEvent('teamInformation', {data:data});
 	}
 }
