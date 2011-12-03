@@ -103,6 +103,29 @@ exports.gamePage = function() {
 	
 	instance.add(mapCreateView);
 	instance.open();
+	
+	
+	// Back Button
+	
+	var back = Ti.UI.createButton({
+		title:'back',
+		height: 20,
+		width: 100,
+		bottom:0
+	});
+	instance.add(back);
+	back.addEventListener('click', function(e){
+		var win1 = Titanium.UI.createWindow();
+		win1.open()
+		var homePage = require('ui/common/homePage');
+		var Home = Titanium.UI.createWindow();
+		var homeScreen = new homePage();
+		Home.add(homeScreen);
+		win1.add(Home);
+	});
+	
+	//
+	
 	return instance	
 
 };
