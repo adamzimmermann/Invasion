@@ -80,9 +80,12 @@ exports.createGame = function() {
 	createButton.addEventListener('click', function(){
 		userID = Ti.Platform.id;
 		var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, latitude, longitude);
+		
 	});
 	
 	Ti.App.addEventListener('createGame', function(data){
+		
+		alert('game created');
 		Ti.API.debug(data.data)
 		var gameLobby = require('ui/common/gameLobby');
 		// var newWin = Ti.UI.createWindow();

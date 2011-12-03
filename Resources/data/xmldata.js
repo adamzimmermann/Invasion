@@ -123,7 +123,7 @@ function gameInitiator (gameID) {
 /*------------------------------------------------------------------------------------------*/
 
 // Return Value:
-// An integer that denotes the current game status, 0 if not started, 1 if started
+// String that denotes the current game status, false if not started, true if started
 function gameStatus (gameID) { 
 	var data = [];
 	
@@ -157,7 +157,7 @@ function startGame (gameID) {
 	xhr.onload = function(e) {
 		var xml = this.responseXML;
 	  	
-	  	
+	  	//alert('show up1');
 		var players = xml.documentElement.getElementsByTagName("player");
 			
 		for (var i = 0; i < players.length; i++) {	
@@ -166,10 +166,11 @@ function startGame (gameID) {
 	    		userName: players.item(i).getElementsByTagName("userName").item(0).text,
 	    		playerID: players.item(i).getElementsByTagName("playerID").item(0).text,
 	    		teamID: players.item(i).getElementsByTagName("teamID").item(0).text,
+	    		flagPlacer: players.item(i).getElementsByTagName("flagPlacer").item(0).text,
 	    	}); 
-	    	Ti.API.debug('in loop');	
+	    	//Ti.API.debug('in loop');	
 		}
-		Ti.API.debug('show up');
+		//alert('show up2');
 		
 		//Ti.API.debug
 		
@@ -394,6 +395,37 @@ function checkCode (gameID, accessCode) {
 	 	Ti.App.fireEvent('checkCode', {data:this.responseText});
 	}
 }
+/*------------------------------------------------------------------------------------------*/
+
+// Return Value:
+// the gameID of the newly created Game
+function teamInformation (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'teamInformation',
+		playerID: input.playerID,
+		gameID: input.gameID,
+	});
+	xhr.onload = function(e) {	
+	 	var xml = this.responseXML;
+		
+	 	var teams = xml.documentElement.getElementsByTagName("team");
+		
+		for (var i = 0; i < teams.length; i++) {	
+	    	data.push({
+	    		teamName: games.item(i).getElementsByTagName("teamName").item(0).text,
+	    		teamID: games.item(i).getElementsByTagName("teamID").item(0).text,
+	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
+	    	});
+	    }
+	    Ti.App.fireEvent('teamInformation', {data:data});
+	}
+}
+
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -419,7 +451,7 @@ api.placeFlag = placeFlag;
 api.flagCaptured = flagCaptured;
 api.checkCode = checkCode;
 api.gameInitiator = gameInitiator;
-
+api.teamInformation = teamInformation;
 
 //public interface
 exports.api = api;
