@@ -42,5 +42,7 @@ exports.aboutPage = function() {
 	view.add(sView);
 	
 	
+	
+	
 	return view;
 };
