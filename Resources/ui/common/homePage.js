@@ -9,12 +9,12 @@ exports.homePage = function() {
 		//backgroundColor:'#000'
 	});
 	
-	var bgTunes = Ti.Media.createSound({
-		url: 'sounds/StartS.mp3',
-		looping: true
-	})
-	
-	bgTunes.play();
+	// var bgTunes = Ti.Media.createSound({
+		// url: 'sounds/StartS.mp3',
+		// looping: true
+	// })
+// 	
+	// bgTunes.play();
 	
 	var cheatButton = Ti.UI.createButton({
 		title:'Skip to Game',

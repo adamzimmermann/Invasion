@@ -7,7 +7,7 @@ exports.aCode = function(data) {
 		//backgroundColor:'#000'
 	});
 	instance.open();
-	
+	alert(data);
 	
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
 	
@@ -73,19 +73,21 @@ exports.aCode = function(data) {
 		height:50,
 		top:390,
 		width:120,
-		title:'Join Game'
+		title:'Join Game',
+		data: data
 	})
 	
 	// listens for buttons to clicked
-	button.addEventListener('click', function(data){
-		//alert('gameID: ' + data.gameID)
-		var webAPI = new globals.xml.checkCode(data.gameID, accessCode.value);	
+	button.addEventListener('click', function(e){
+		
+		alert('The GameID is :' + e.source.data)
+		var webAPI = new globals.xml.checkCode(e.source.data, accessCode.value);	
 	});
 	
 	
 	//listens for WebAPI checkCode
 	Ti.App.addEventListener('checkCode', function(input){
-		
+		alert(input);
 		if (input.data == "true"){
 			userID = Ti.Platform.id;
 			if(userName.value != null) {

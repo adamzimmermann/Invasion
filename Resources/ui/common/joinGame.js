@@ -14,12 +14,25 @@ exports.joinGame = function() {
 		// for loop to populate the table with the available games
 		for(var key in input.data){
 			var g = input.data[key]
-			var rowdata = {
+			// var rowdata = {
+				// title: g.gameName,
+				// //gameID: g.gameID,
+			// };
+			var row = Titanium.UI.createTableViewRow({
 				title: g.gameName,
-				//gameID: g.gameID,
-			};
+				height : 50,
+				related : g,
+				gameID: g.gameID
+			});
 			
-			data.push(rowdata);
+			row.addEventListener('click', function(e) {
+				var currentRow = e.row;
+				alert('current row is: ' + currentRow)
+				alert('current row data: ' + currentRow.gameID)
+				Ti.App.fireEvent('gameSelected', {gameID: currentRow.gameID});
+			});
+		
+			data.push(row);
 		}
 		// create a tableview
 		var table = Ti.UI.createTableView({
@@ -48,11 +61,6 @@ exports.joinGame = function() {
 		// require aCode.js to define the object aCode
 		
 		// table click listener
-		table.addEventListener('click', function(e) {
-			//var currentRow = rowdata.gameID;
-			//alert('current row data: ' + currentRow)
-			Ti.App.fireEvent('gameSelected', {gameID: g.gameID});
-		});
 		
 		// add the title label
 		view.add(title);
@@ -68,8 +76,9 @@ exports.joinGame = function() {
 		var newWin = Ti.UI.createWindow();
 		// open it
 		newWin.open();
+		alert('Game ID is: ' + data.gameID)
 		//alert('aCode gameID' + data.gameID);
-		aCode({gameID: data.gameID});
+		aCode(data.gameID);
 		//newWin.add(aCodeWin);
 	} )
 			
