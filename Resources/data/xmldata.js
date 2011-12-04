@@ -503,19 +503,19 @@ function flagLocations (input) {
 
 // Return Value:
 // true if it worked or false if it didn't work
-function flagCaptured (input) { 
+function flagTaken (input) { 
 	var data = [];
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
 	xhr.send({
-		action: 'flagCaptured',
+		action: 'flagTaken',
 		teamID: input.teamID,
 	});
 	xhr.onload = function(e) {	
 	    
-	    Ti.App.fireEvent('teamInformation', {data:this.responseText});
+	    Ti.App.fireEvent('flagTaken', {data:this.responseText});
 	}
 }
 
