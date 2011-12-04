@@ -72,65 +72,22 @@ exports.createGame = function() {
 	})
 	
 	
-	// Get Location
-	
-	Ti.App.GeoApp = {};
-	 
-	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
-	Ti.Geolocation.purpose = "testing";
-	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
-	Titanium.Geolocation.distanceFilter = 10;
-	 
-	if( Titanium.Geolocation.locationServicesEnabled === false ) {
-	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
-	}
-	
-	function updatePosition(e) {
-	 
-	    if( ! e.success || e.error ) {
-	        alert("Unable to get your location.");
-	        Ti.API.debug(JSON.stringify(e));
-	        Ti.API.debug(e);
-	        return;
-	    }
-	 
-	    Ti.App.fireEvent("app:got.location", {
-	        "coords" : e.coords
-	    });
-	};
-	
-	Ti.App.addEventListener("app:got.location", function(d) {
-	    // Ti.App.GeoApp.f_lng = d.longitude;
-	    // Ti.App.GeoApp.f_lat = d.latitude;
-	    Ti.API.debug(JSON.stringify(d));
-	    // you need to remove this listener, see the blog post mentioned above
-	    Ti.Geolocation.removeEventListener('location', updatePosition);	
-	    alert(d.coords.latitude)
-	    alert(d.coords.longitude)
-	 
-	    
-	   
-
-	 	var latitude = d.coords.latitude;
-	 	var longitude = d.coords.longitude;
-	 	
-	 	createButton.addEventListener('click', function(){
-		userID = Ti.Platform.id;
-		var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, latitude, longitude);
-		
-		});
-	});
-	Titanium.Geolocation.getCurrentPosition( updatePosition );   
-	
-	
+	var latitude = 60.21;
+	var longitude = 50.21;
 	
 
 	// creates a new Game when button is clicked
-	
+	createButton.addEventListener('click', function() {
+		alert('create clicked');
+		userID = Ti.Platform.id;
+		var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, latitude, longitude);
+		
+	});
 	
 	
 	// listens for result of Create Game
 	Ti.App.addEventListener('createGame', function(input){
+		alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
 		gameLobby(input);
 	});
@@ -143,27 +100,6 @@ exports.createGame = function() {
 	scrolly.add(gameName);
 	scrolly.add(userName);
 	view.add(scrolly);
-	
-	// Back Button
-	
-	var back = Ti.UI.createButton({
-		title:'back',
-		height: 20,
-		width: 100,
-		bottom:0
-	});
-	view.add(back);
-	back.addEventListener('click', function(e){
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
-	});
-	
-	//
 	
 	
 	return view;

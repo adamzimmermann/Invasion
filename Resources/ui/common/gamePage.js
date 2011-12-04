@@ -4,9 +4,8 @@ exports.gamePage = function() {
 		// backgroundColor:'#000'
 	});
 	
-	
+	// starts up GPS service
 	Ti.App.GeoApp = {};
-	 
 	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
 	Ti.Geolocation.purpose = "testing";
 	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
@@ -16,6 +15,7 @@ exports.gamePage = function() {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
 
+	//creates a Map View
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
 			region:{latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
@@ -28,8 +28,39 @@ exports.gamePage = function() {
 			borderRadius:4,
 	});	
 	
+	//check if the user is a flag placer
+	if(flagPlacer) {
+		//notify them and have them navigate to the desired location
+		
+		//call placeFlag
+	}
+	if(!flagPlacer) { //******* NEEDS WORK
+		//notify them to wait for flags to be placed
+		
+		//checks if both flags are placed
+		var webAPI = new globals.xml.gameReady(gameID);   //NEEDS GAMEID
+		
+		
+		Ti.App.addEventListener('gameReady', function(input){
+			// both flags are placed
+			if(input.data == 'true'){
+				//do something
+			}
+			// flags not placed yet
+			else {
+				//wait 2 seconds
+				
+				//check if both flags are placed
+				var webAPI = new globals.xml.gameReady(gameID);
+			}
+		});
+		
+	}
+	
 
 
+
+	// called every frame ---- I think this is right or will be right.
 	//called by getCurrentPosition
 	function updatePosition(e) {
 	 

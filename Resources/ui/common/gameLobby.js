@@ -9,6 +9,7 @@ exports.gameLobby = function (input) {
 	
 	var accessCode = input.accessCode;
 	var gameID = input.gameID;
+	var playerID = Ti.Platform.id;
 	
 	//var webAPI = new globals.xml.gamePlayers(gameID);
 	
@@ -50,8 +51,8 @@ exports.gameLobby = function (input) {
 	});
 	
 	//checks if current user is the game initiator
-	userID = Ti.Platform.id;
-	var webAPI2 = new globals.xml.gameInitiator(input.gameID, userID);
+	
+	var webAPI2 = new globals.xml.gameInitiator(input.gameID, playerID);
 	
 	
 	// gets information about whether current user is the game initiator
@@ -87,15 +88,18 @@ exports.gameLobby = function (input) {
 			
 			// listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
-				alert('gameID: ' + input.gameID)
-				var webAPI3 = new globals.xml.startGame('1'); // NEED A GAME ID
+				//creates teams and assigns players to teams
+				alert('start game clicked');
 				
+				var webAPI3 = new globals.xml.startGame(gameID);
+				
+				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
-				gameInformation({gameID: input.gameID}) // NEED A GAMEID ************
+				gameInformation({gameID: gameID, playerID: playerID});
 			});
 		}
 		// if they just joined the game and aren't the initiator
-		else{
+		else {
 			//displays standby text
 			var standby = Ti.UI.createLabel({
 				text: 'Standby to Start the Game'
@@ -104,7 +108,7 @@ exports.gameLobby = function (input) {
 			
 			
 			//check if the game has started
-			var webAPI3 = new globals.xml.gameStatus(gameID); // NEED A GAMEID ************
+			var webAPI3 = new globals.xml.gameStatus(gameID);
 			
 			
 			//listens for the game status information
@@ -112,7 +116,7 @@ exports.gameLobby = function (input) {
 				// game has started
 				if(e.data == 'true') {
 					//fires when the game has been started by game initiator
-					gameInformation({gameID: gameID}) // NEED A GAMEID ************
+					gameInformation({gameID: gameID, playerID: playerID});
 				}
 				//game has not started
 				else {
@@ -130,11 +134,11 @@ exports.gameLobby = function (input) {
 	
 	// gets information about which team the current user is on
 	function gameInformation(input) {
+		//alert('start game data: ' + input.gameID);
+		//userID =Ti.Platform.id;	
+		var webAPI9 = new globals.xml.teamInformation({gameID:gameID, playerID: playerID});
 		
-		userID =Ti.Platform.id;	
-		var webAPI4 = new globals.xml.teamInformation({gameID:input.gameID, userID: userID});
 		
-		alert('start game data: ' + input.data);
 		
 		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
 		
@@ -142,9 +146,9 @@ exports.gameLobby = function (input) {
 	}
 	
 	// listens for information about team members
-	Ti.App.addEventListener('taemInformation', function(input){
+	Ti.App.addEventListener('teamInformation', function(input){
 		//display team members
-		alert('team members: ' + input.data);
+		//alert('team members: ' + input.data);
 		var data = [];
 		for(var key in input.data){
 			var player = input.data[key]
@@ -167,12 +171,14 @@ exports.gameLobby = function (input) {
 		alert('instructions: ' + instructions.text);
 		
 		
+		//var gamePage = require('ui/common/instructionPage')
+		//gamePage();
+		
 		//var gamePage = require('ui/common/gamePage')
 		//gamePage();
 	})
 	
 	// Back Button
-	
 	var back = Ti.UI.createButton({
 		title:'back',
 		height: 20,
@@ -190,7 +196,6 @@ exports.gameLobby = function (input) {
 		win1.add(Home);
 	});
 	
-	//
 	
 	instance.open();
 	
