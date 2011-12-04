@@ -22,9 +22,10 @@ exports.gamePage = function() {
 			height:350,
 			width:275,
 			top: 100,
+			userLocation: true,
 			borderColor: '#d6d6d6',
-			borderWidth:2,
-			borderRadius:2,
+			borderWidth:5,
+			borderRadius:4,
 	});	
 	
 	//check if the user is a flag placer
@@ -102,21 +103,61 @@ exports.gamePage = function() {
 	//listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
 		
+		// set up array to contain annotation of everything
+		var mapData = [];
 		
-		var array = [];
 		// for loop to pull the data for each event
-		for (var key in data.data) {
+		for (var key in data) {
 			// key the events in "e"
-			var a = data.data[key];
+			var player = data.data[key];
 			// pull the data from e and set it to lat, lon, and title
-			var annotData = {
-				latitude:a.latitude,
-				longitude:a.longitude,
-				title: 'test',
-				image: 'images/mini_icons/Human/Human.png'
+			
+			switch(player.teamName) {
+				case 'Humans':
+					// can be tagged
+					if(player.canBeTagged == 'true') {
+						// change player 'flag carrier human'
+						if(player.hasFlag == 'false'){
+							var image = 'images/miniIcons/Human/Human.png';
+						}
+						else {
+							var image = 'images/miniIcons/Human/Human_Carrier.png';
+						}			
+					}
+					// can't be tagged
+					else {
+						var image = 'images/miniIcons/Human/Human_Tagged.png';
+					}
+				
+				break;
+				
+				//---------------------------------------------
+				case 'Aliens':
+					// can be tagged
+					if(player.canBeTagged == 'true'){
+						if(player.hasFlag == 'false'){
+							var image = 'images/miniIcons/Human/Alien.png';
+						}
+						else {
+							var image = 'images/miniIcons/Human/Alien_Carrier.png';
+						}
+					}
+					else {
+						var image = 'images/miniIcons/Alien/Alien_Tagged.png';
+					}			
+				break;
+				
 			};
+			var playerData = {
+				latitude:player.latitude,
+				longitude:player.longitude,
+				title: 'test',
+				image: image	
+			}
+			
+		
 			// push this all back to the data array
-			array.push(annotData);
+			mapData.push(playerData);
 		}
 	
 		mapCreateView.setAnnotations(array)

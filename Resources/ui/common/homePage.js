@@ -71,7 +71,7 @@ exports.homePage = function() {
 		gamePage();
 	});
 	
-	//homePageView.add(cheatButton)
+	homePageView.add(cheatButton)
 	homePageView.add(button1);
 	homePageView.add(button2);
 	homePageView.add(button3);
