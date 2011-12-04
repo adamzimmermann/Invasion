@@ -93,7 +93,7 @@ exports.gameLobby = function (input) {
 				
 				var webAPI3 = new globals.xml.startGame(gameID);
 				
-				alert('right before gameInformation call');
+				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
 				gameInformation({gameID: gameID, playerID: playerID});
 			});
@@ -134,7 +134,7 @@ exports.gameLobby = function (input) {
 	
 	// gets information about which team the current user is on
 	function gameInformation(input) {
-		alert('start game data: ' + input.gameID);
+		//alert('start game data: ' + input.gameID);
 		//userID =Ti.Platform.id;	
 		var webAPI9 = new globals.xml.teamInformation({gameID:gameID, playerID: playerID});
 		
@@ -148,7 +148,7 @@ exports.gameLobby = function (input) {
 	// listens for information about team members
 	Ti.App.addEventListener('teamInformation', function(input){
 		//display team members
-		alert('team members: ' + input.data);
+		//alert('team members: ' + input.data);
 		var data = [];
 		for(var key in input.data){
 			var player = input.data[key]
@@ -171,12 +171,14 @@ exports.gameLobby = function (input) {
 		alert('instructions: ' + instructions.text);
 		
 		
+		//var gamePage = require('ui/common/instructionPage')
+		//gamePage();
+		
 		//var gamePage = require('ui/common/gamePage')
 		//gamePage();
 	})
 	
 	// Back Button
-	
 	var back = Ti.UI.createButton({
 		title:'back',
 		height: 20,
@@ -194,7 +196,6 @@ exports.gameLobby = function (input) {
 		win1.add(Home);
 	});
 	
-	//
 	
 	instance.open();
 	

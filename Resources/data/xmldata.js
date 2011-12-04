@@ -417,11 +417,11 @@ function teamInformation (input) {
 	xhr.onload = function(e) {	
 	 	var xml = this.responseXML;
 	 	
-	 	alert('team data');
+	 	//alert('team data');
 		
 	 	var players = xml.documentElement.getElementsByTagName("player");
 		
-		alert('players: ' + players);
+		//alert('players: ' + players);
 		
 		for (var i = 0; i < players.length; i++) {	
 	    	data.push({
@@ -431,7 +431,7 @@ function teamInformation (input) {
 	    		playerID: players.item(i).getElementsByTagName("playerID").item(0).text,
 	    	});
 	    }
-	    alert('team data: ' + data);
+	    //alert('team data: ' + data);
 	    
 	    Ti.App.fireEvent('teamInformation', {data:data});
 	}
@@ -440,11 +440,84 @@ function teamInformation (input) {
 
 /*------------------------------------------------------------------------------------------*/
 
-
+// Return Value:
+// information about the status of each flag
+function flagStatus (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'flagStatus',
+		gameID: input.gameID,
+	});
+	xhr.onload = function(e) {	
+	 	var xml = this.responseXML;
+	 	
+	 	//alert('team data');
+		
+	 	var results = xml.documentElement.getElementsByTagName("flag");
+		
+		for (var i = 0; i < results.length; i++) {	
+	    	data.push({
+	    		flagCaputured: results.item(i).getElementsByTagName("flagCaptured").item(0).text,
+	    		teamID: results.item(i).getElementsByTagName("teamID").item(0).text,
+	    	});
+	    }
+	    
+	    Ti.App.fireEvent('flagStatus', {data:data});
+	}
+}
 
 /*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// information about flag locations
+function flagLocations (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'flagLocations',
+		gameID: input.gameID,
+	});
+	xhr.onload = function(e) {	
+	 	var xml = this.responseXML;
+		
+	 	var results = xml.documentElement.getElementsByTagName("flag");
+		
+		for (var i = 0; i < results.length; i++) {	
+	    	data.push({
+	    		flagCaputured: results.item(i).getElementsByTagName("flagCaptured").item(0).text,
+	    		teamID: results.item(i).getElementsByTagName("teamID").item(0).text,
+	    	});
+	    }
+	    
+	    Ti.App.fireEvent('flagLocations', {data:data});
+	}
+}
+/*------------------------------------------------------------------------------------------*/
 
+// Return Value:
+// true if it worked or false if it didn't work
+function flagCaptured (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'flagCaptured',
+		teamID: input.teamID,
+	});
+	xhr.onload = function(e) {	
+	    
+	    Ti.App.fireEvent('teamInformation', {data:this.responseText});
+	}
+}
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -457,12 +530,15 @@ api.startGame = startGame;
 api.createGame = createGame;
 api.gameReady = gameReady;
 api.playerData = playerData;
-api.flagsPlaced = flagsPlaced;
+//api.flagsPlaced = flagsPlaced;
 api.placeFlag = placeFlag;
 api.flagCaptured = flagCaptured;
 api.checkCode = checkCode;
 api.gameInitiator = gameInitiator;
 api.teamInformation = teamInformation;
+api.flagStatus = flagStatus;
+api.flagTaken = flagTaken;
+api.flagLocations = flagLocations;
 
 //public interface
 exports.api = api;
