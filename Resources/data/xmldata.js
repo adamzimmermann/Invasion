@@ -284,10 +284,13 @@ function playerData (values) {
 	    		playerID: values.item(i).getElementsByTagName("playerID").item(0).text,
 	    		latitude: values.item(i).getElementsByTagName("playerLatitude").item(0).text,
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
+	    		//canTag: values.item(i).getElementsByTagName("canBeTagged").item(0).text,
+	    		//canBeTagged: values.item(i).getElementsByTagName("canTag").item(0).text,
+	    		//has: values.item(i).getElementsByTagName("hasFlag").item(0).text,
 	    	}); 	
 		}
 	
-	 	Ti.App.fireEvent('playerData', {data:data});
+	 	Ti.App.fireEvent('playerData', data); //************
 	 	
 	}
 }
