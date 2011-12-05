@@ -12,7 +12,7 @@ exports.gameLobby = function (input) {
 	//var webAPI = new globals.xml.gamePlayers(gameID);
 	
 	// displays list of registered players
-	alert('this is what input is passing:' + input.gameID)
+	
 	var webAPI = new globals.xml.gamePlayers(input.gameID);
 	Ti.App.addEventListener('gamePlayers', function(input){
 		

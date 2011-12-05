@@ -41,8 +41,8 @@ exports.joinGame = function() {
 	    Ti.API.debug(JSON.stringify(d));
 	    // you need to remove this listener, see the blog post mentioned above
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
-	    alert(d.coords.latitude)
-	    alert(d.coords.longitude)
+	    // alert(d.coords.latitude)
+	    // alert(d.coords.longitude)
 	 
 	    
 	    var webAPI = new globals.xml.findGames(d.coords.latitude, d.coords.longitude);
@@ -62,7 +62,7 @@ exports.joinGame = function() {
 	Ti.App.addEventListener('findGames', function(input){
 		// empty data array
 		var data = [];
-		alert('fired');
+		
 		// for loop to populate the table with the available games
 		for(var key in input.data){
 			var g = input.data[key]
@@ -128,7 +128,7 @@ exports.joinGame = function() {
 		var newWin = Ti.UI.createWindow();
 		// open it
 		newWin.open();
-		alert('Game ID is: ' + data.gameID)
+		// alert('Game ID is: ' + data.gameID)
 		//alert('aCode gameID' + data.gameID);
 		aCode(data.gameID);
 		//newWin.add(aCodeWin);

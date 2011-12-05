@@ -9,6 +9,7 @@ exports.teamRoster = function(input){
 		//alert('start game data: ' + input.gameID);
 		//userID =Ti.Platform.id;	
 		alert('the input here was' + input.gameID);
+		// pass game ID and player ID to the team info
 		var webAPI9 = new globals.xml.teamInformation({gameID:input.gameID, playerID: input.playerID});
 		
 		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
