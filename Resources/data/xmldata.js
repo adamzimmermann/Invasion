@@ -43,6 +43,7 @@ function findGames (latitude, longitude) {
 // xml data of player’s name and ID number
 function gamePlayers (gameID) { 
 	var data = [];
+
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
@@ -80,7 +81,8 @@ function joinGame (gameID, userID, userName) {
 	xhr.send({
 		action:'joinGame',
 		userID: userID,
-		userName: userName
+		userName: userName,
+		gameID: gameID
 	});
 	
 	xhr.onload = function(e) {

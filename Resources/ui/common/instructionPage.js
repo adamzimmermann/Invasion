@@ -9,12 +9,15 @@ exports.instructionPage = function() {
 	var readContents;
 	var readFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'instructions.txt');        
  
+ 	alert('file path: ' + readFile.path);
+ 
 	if (readFile.exists()) {
-	     readContents = readFile.read();
-	     Ti.API.info('File Exists');  
+	     readContents = readFile.read().toString();
+	     Ti.API.debug('File Exists');  
 	}
-	var instructions = readContents.text();
-	Ti.API.info('Contents = ' + doc);
+	alert('instructions: ' + readFile.read().toString());
+	var instructions = readContents.toString();
+	Ti.API.debug('Contents = ' + instructions);
 	
 	//text area that holds instructions
 	var instructionText = Ti.UI.TextArea({

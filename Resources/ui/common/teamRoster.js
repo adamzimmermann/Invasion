@@ -63,8 +63,8 @@ exports.teamRoster = function(input){
 	
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
-		var instructionPage = require('ui/common/instructionPage')
-		instructionPage();
+		var instructionPageWindow = require('ui/common/instructionPage');
+		instructionPageWindow();
 	});
 	
 	return instance;
