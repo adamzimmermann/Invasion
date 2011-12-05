@@ -88,13 +88,13 @@ exports.gameLobby = function (input) {
 			// listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
 				//creates teams and assigns players to teams
-				alert('start game clicked');
+				alert('start game clicked and game ID is' + gameID + playerID);
 				
 				var webAPI3 = new globals.xml.startGame(gameID);
-				
+				var teamRoster = require('ui/common/teamRoster')
 				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
-				gameInformation({gameID: gameID, playerID: playerID});
+				teamRoster({gameID: gameID, playerID: playerID});
 			});
 		}
 		// if they just joined the game and aren't the initiator
@@ -131,50 +131,9 @@ exports.gameLobby = function (input) {
 	});
 	
 	
-	// gets information about which team the current user is on
-	function gameInformation(input) {
-		//alert('start game data: ' + input.gameID);
-		//userID =Ti.Platform.id;	
-		alert('the input here was' + input);
-		var webAPI9 = new globals.xml.teamInformation({gameID:gameID, playerID: playerID});
-		
-		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
-		
-		
-	}
 	
-	// listens for information about team members
-	Ti.App.addEventListener('teamInformation', function(input){
-		//display team members
-		//alert('team members: ' + input.data);
-		var data = [];
-		for(var key in input.data){
-			var player = input.data[key]
-			var rowdata = {
-				title: player.userName
-			};
-			data.push(rowdata);
-		}
-		var teamInformation = Ti.UI.createTableView({
-			top: 140,
-			height: 260,
-			width: 250,
-			borderColor: '#d6d6d6',
-			borderRadius: 2,	 
-			borderWidth: 3,
-			data: data,
-		});
-		
-		//display instructions
-		//alert('instructions: ' + instructions.text);
-		
-		
-		//var gamePage = require('ui/common/instructionPage')
-		//gamePage();
-		
-		//var gamePage = require('ui/common/gamePage')
-		//gamePage();
-	})
+	
+	
 	
 	// Back Button
 	var back = Ti.UI.createButton({
