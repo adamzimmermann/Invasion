@@ -104,7 +104,7 @@ exports.aCode = function(data) {
 	Ti.App.addEventListener('joinGame', function(input){
 		var gameLobby = require('ui/common/gameLobby');
 		alert('info going into gameLobby: ' + data + ', ' + userName.value + ', ' + userID + ', ' + accessCode.value + '.' )
-		gameLobby({gameID: data, userName: userName.value, userID: userID});
+		gameLobby({gameID: data, userName: userName.value, userID: userID, accessCode: accessCode.value});
 			
 	});
 	
