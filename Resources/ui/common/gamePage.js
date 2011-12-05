@@ -18,7 +18,7 @@ c
 	//creates a Map View
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
-			region:{latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
+			region: {latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
 			height:350,
 			width:275,
 			top: 100,
