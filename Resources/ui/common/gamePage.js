@@ -1,5 +1,4 @@
-exports.gamePage = function() {
-	
+c
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
 		// backgroundColor:'#000'
