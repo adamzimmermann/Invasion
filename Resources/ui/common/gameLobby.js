@@ -1,7 +1,5 @@
 exports.gameLobby = function (input) {
 	
-	
-	
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
 		//backgroundColor:'#000'
@@ -14,9 +12,10 @@ exports.gameLobby = function (input) {
 	//var webAPI = new globals.xml.gamePlayers(gameID);
 	
 	// displays list of registered players
+	alert('this is what input is passing:' + input.gameID)
 	var webAPI = new globals.xml.gamePlayers(input.gameID);
 	Ti.App.addEventListener('gamePlayers', function(input){
-	
+		
 		var data = [];
 		for(var key in input.data){
 			var g = input.data[key]
@@ -136,13 +135,12 @@ exports.gameLobby = function (input) {
 	function gameInformation(input) {
 		//alert('start game data: ' + input.gameID);
 		//userID =Ti.Platform.id;	
+		alert('the input here was' + input);
 		var webAPI9 = new globals.xml.teamInformation({gameID:gameID, playerID: playerID});
-		
-		
 		
 		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
 		
-	
+		
 	}
 	
 	// listens for information about team members
@@ -168,7 +166,7 @@ exports.gameLobby = function (input) {
 		});
 		
 		//display instructions
-		alert('instructions: ' + instructions.text);
+		//alert('instructions: ' + instructions.text);
 		
 		
 		//var gamePage = require('ui/common/instructionPage')

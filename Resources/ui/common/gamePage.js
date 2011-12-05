@@ -1,4 +1,5 @@
 exports.gamePage = function() {
+	
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
 		// backgroundColor:'#000'
@@ -29,16 +30,16 @@ exports.gamePage = function() {
 	});	
 	
 	//check if the user is a flag placer
-	if(flagPlacer) {
+	//if(flagPlacer) {
 		//notify them and have them navigate to the desired location
 		
 		//call placeFlag
-	}
-	if(!flagPlacer) { //******* NEEDS WORK
+	//}
+	//if(!flagPlacer) { //******* NEEDS WORK
 		//notify them to wait for flags to be placed
 		
 		//checks if both flags are placed
-		var webAPI = new globals.xml.gameReady(gameID);   //NEEDS GAMEID
+		var webAPI = new globals.xml.gameReady(1);   //NEEDS GAMEID
 		
 		
 		Ti.App.addEventListener('gameReady', function(input){
@@ -55,7 +56,7 @@ exports.gamePage = function() {
 			}
 		});
 		
-	}
+	//}
 	
 
 
@@ -164,9 +165,9 @@ exports.gamePage = function() {
 	});
 	
 	//updates maps view
-	function updateMap(data) {
-		alert('other locations recieved' + data);
-	}
+	// function updateMap(data) {
+		// alert('other locations recieved' + data);
+	// }
 	
 	
 	Titanium.Geolocation.getCurrentPosition( updatePosition );   

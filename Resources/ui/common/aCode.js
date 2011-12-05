@@ -87,7 +87,7 @@ exports.aCode = function(data) {
 	
 	//listens for WebAPI checkCode
 	Ti.App.addEventListener('checkCode', function(input){
-		alert(input);
+		alert('fired before joinGame:' + data);
 		if (input.data == "true"){
 			userID = Ti.Platform.id;
 			if(userName.value != null) {
@@ -103,7 +103,8 @@ exports.aCode = function(data) {
 	// listens for WebAPI JoinGame
 	Ti.App.addEventListener('joinGame', function(input){
 		var gameLobby = require('ui/common/gameLobby');
-		gameLobby({gameID: input.gameID, userName: userName.value, userID: userID, accessCode: input.accessCode});
+		alert('info going into gameLobby: ' + data + ', ' + userName.value + ', ' + userID + ', ' + accessCode.value + '.' )
+		gameLobby({gameID: data, userName: userName.value, userID: userID});
 			
 	});
 	
