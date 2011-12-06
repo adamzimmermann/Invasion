@@ -11,17 +11,21 @@ exports.gameLobby = function (input) {
 	
 	
 	//loads the initial data
-	alert('loading initial data');
 	var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
 	
-	//creates a timer
+	//creates a lobby update timer
 	lobbyUpdateTimer = setInterval(lobbyData, 5000);
 	
 	//calls gamePlayers to get list of players
 	function lobbyData() {
 		var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
-		
 	}
+	
+	// checks the game status
+	function statusUpdate() {
+		var webAPI3 = new globals.xml.gameStatus(gameID);
+	}
+	
 	
 	//listens for data from gamePlayers
 	// displays list of registered players
@@ -69,8 +73,12 @@ exports.gameLobby = function (input) {
 	// gets information about whether current user is the game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
 		
+		
+		
+		
 		// if they are the game initiator
 		if (input.data == "true") {
+			
 			//creates a start button
 			var startButton = Ti.UI.createButton({
 				bottom: 15,
@@ -81,22 +89,6 @@ exports.gameLobby = function (input) {
 			instance.add(startButton);
 			
 			
-			// displays the access code
-			var accessCodeLabel = Ti.UI.createLabel({
-				text: 'Access Code: ' + accessCode,
-				color: '#fff',
-				bottom: 100,
-				height:50,
-				width: 250,
-				font: {fontFamily:'arial', fontSize: 22},
-				borderColor: '#d6d6d6',
-				borderRadius: 2,	 
-				borderWidth: 3,
-				backgroundColor: '#000'
-			});
-			instance.add(accessCodeLabel);			
-
-			
 			// listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
 				//creates teams and assigns players to teams
@@ -106,6 +98,7 @@ exports.gameLobby = function (input) {
 				var teamRoster = require('ui/common/teamRoster')
 				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
+				clearInterval(lobbyUpdateTimer);
 				teamRoster({gameID: gameID, playerID: playerID});
 			});
 		}
@@ -121,34 +114,45 @@ exports.gameLobby = function (input) {
 			//check if the game has started
 			var webAPI3 = new globals.xml.gameStatus(gameID);
 			
+			gameStatusTimer = setInterval(statusUpdate, 5000);
 			
 			//listens for the game status information
 			Ti.App.addEventListener('gameStatus', function(e){
 				// game has started
-				if(e.data == 'true') { //*****
-					alert('game has started');
+				if(e.data == 'true') { //
+					clearInterval(gameStatusTimer);
+					clearInterval(lobbyUpdateTimer);
+					Ti.API.debug('game has started');
 					//fires when the game has been started by game initiator					
-					//var teamRoster = require('ui/common/teamRoster')
-					//teamRoster({gameID: gameID, playerID: playerID});
+					var teamRoster = require('ui/common/teamRoster')
+					teamRoster({gameID: gameID, playerID: playerID});
 					//gameInformation({gameID: gameID, playerID: playerID});
 				}
 				//game has not started
 				else {
-					alert('game has not started');
+					//alert('game has not started');
 					//wait for 3 seconds
-					Ti.API.debug('game has not started');
-					
-					//check if game has started
-					//gameStatusTimer = setInterval(checkGameStatus(gameID), 5000);
-					//var webAPI6 = new globals.xml.gameStatus(gameID); // NEED A GAMEID ************			
+					Ti.API.debug('game has not started');			
 				}
 			})
-			
 		}
 	});
 	
 	
-	
+	// displays the access code
+	var accessCodeLabel = Ti.UI.createLabel({
+		text: 'Access Code: ' + accessCode,
+		color: '#fff',
+		bottom: 100,
+		height:50,
+		width: 250,
+		font: {fontFamily:'arial', fontSize: 22},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		backgroundColor: '#000'
+	});
+	instance.add(accessCodeLabel);
 	
 	
 	
@@ -163,6 +167,8 @@ exports.gameLobby = function (input) {
 	
 	// listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
+		clearInterval(gameStatusTimer);
+		clearInterval(lobbyUpdateTimer);
 		var win1 = Titanium.UI.createWindow();
 		win1.open()
 		var homePage = require('ui/common/homePage');
