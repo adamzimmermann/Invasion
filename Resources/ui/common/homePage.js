@@ -16,7 +16,7 @@ exports.homePage = function() {
 		url: 'sounds/StartS.mp3',
 		looping: true
 	});
-	// bgTunes.play();
+	bgTunes.play();
 	
 	var cheatButton = Ti.UI.createButton({
 		title:'Skip to Game',
@@ -36,7 +36,7 @@ exports.homePage = function() {
 	button1.addEventListener('click', function(){
 		var joinGame = require('ui/common/joinGame');
 		var joinGview = new joinGame();
-		joinGame();
+		joinGview.open();
 	});
 	
 	var button2 = Ti.UI.createButton({
@@ -70,7 +70,7 @@ exports.homePage = function() {
 	cheatButton.addEventListener('click', function(){
 		var gamePage = require('ui/common/gamePage');
 		userID = Ti.Platform.id;
-		gamePage({gameID: 117, userID: '12131231'});
+		var game = new gamePage({gameID: 117, userID: '12131231'});
 	});
 	
 	homePageView.add(cheatButton)

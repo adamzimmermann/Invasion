@@ -173,7 +173,7 @@ exports.gameLobby = function (input) {
 	});
 	
 	
-	instance.open();
+	
 	return instance;
 	
 	

@@ -133,7 +133,8 @@ exports.createGame = function() {
 	Ti.App.addEventListener('createGame', function(input){
 		// alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
-		gameLobby(input);
+		var gameLobbyScreen = new gameLobby(input);
+		gameLobbyScreen.open();
 	});
 	
 	scrolly.add(createGameLabel);

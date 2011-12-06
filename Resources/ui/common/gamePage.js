@@ -130,7 +130,7 @@ exports.gamePage = function(input) {
 			Titanium.Geolocation.getCurrentPosition( updatePosition ); 
 			
 			//check tagging conditions
-			checkConditions();
+			//checkConditions();
 			
 			//update flag conditions
 			updateFlags();	

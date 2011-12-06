@@ -6,7 +6,7 @@ exports.joinGame = function() {
 		//backgroundColor:'#000'
 	});	
 	
-	view.open();
+
 	
 	var onlyOnce=0;
 	
@@ -126,7 +126,8 @@ exports.joinGame = function() {
 		
 		//load access code screen
 		aCode = require('ui/common/aCode');
-		aCode({gameID:data.gameID});
+		accessCodeScreen = new aCode({gameID:data.gameID});
+		accessCodeScreen.open();
 		
 		// var newWin = Ti.UI.createWindow({backgroundColor: '#000'});
 		// open it
