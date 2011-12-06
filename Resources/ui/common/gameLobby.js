@@ -5,9 +5,11 @@ exports.gameLobby = function (input) {
 		//backgroundColor:'#000'
 	});
 	
-	var accessCode = input.accessCode;
-	var gameID = input.gameID;
-	var playerID = Ti.Platform.id;
+	instance.open();
+	
+	accessCode: input.accessCode;
+	gameID: input.gameID;
+	playerID: Ti.Platform.id;
 	
 	//var webAPI = new globals.xml.gamePlayers(gameID);
 	
@@ -154,7 +156,7 @@ exports.gameLobby = function (input) {
 	});
 	
 	
-	instance.open();
+	
 	
 	return instance;
 	

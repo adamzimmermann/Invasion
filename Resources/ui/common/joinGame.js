@@ -124,17 +124,18 @@ exports.joinGame = function() {
 	// create a new win
 	
 	Ti.App.addEventListener('gameSelected', function(data){
-		var aCode = require('ui/common/aCode');
+		aCode = require('ui/common/aCode');
 		alert('gameSelected')
+		var accessCodeScreen = new aCode(data.gameID);
+		
 		// var newWin = Ti.UI.createWindow({backgroundColor: '#000'});
 		// open it
 		// newWin.open();
 		// alert('Game ID is: ' + data.gameID)
 		// alert('aCode gameID' + data.gameID);
-		var newWin = new aCode(data.gameID);
-		
 		//newWin.add(aCodeWin);
-	} )
+		
+	});
 	
 	var back = Ti.UI.createButton({
 		title:'back',
