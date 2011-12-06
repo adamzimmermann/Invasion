@@ -1,20 +1,6 @@
 exports.homePage = function() {
 	
 	
-	// The Timer
-// 	
-	// var timer = setInterval(functionCheck, 5000)
-// 	
-	// i = 0;
-	// function functionCheck(){
-		// alert('fired!');
-		// i++
-		// Ti.API.debug(i);
-		// if (i == 3){
-			// clearInterval(timer);
-		// }
-	// };
-	
 	//var mapView = require('ui/common/mapView');
 	// var joinGame = require('ui/common/joinGame');
 	var createGame = require('ui/common/createGame');
@@ -26,11 +12,10 @@ exports.homePage = function() {
 	
 	homePageView.open();
 	
-	// var bgTunes = Ti.Media.createSound({
-		// url: 'sounds/StartS.mp3',
-		// looping: true
-	// })
-// 	
+	var bgTunes = Ti.Media.createSound({
+		url: 'sounds/StartS.mp3',
+		looping: true
+	});
 	// bgTunes.play();
 	
 	var cheatButton = Ti.UI.createButton({
@@ -83,8 +68,9 @@ exports.homePage = function() {
 	});
 	
 	cheatButton.addEventListener('click', function(){
-		var gamePage = require('ui/common/gamePage')
-		gamePage();
+		var gamePage = require('ui/common/gamePage');
+		userID = Ti.Platform.id;
+		gamePage({gameID: 117, userID: '12131231'});
 	});
 	
 	homePageView.add(cheatButton)

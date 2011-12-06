@@ -104,14 +104,22 @@ exports.createGame = function() {
 	    Ti.API.debug(JSON.stringify(d));
 	    // you need to remove this listener, see the blog post mentioned above
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
-	    alert(d.coords.latitude)
-	    alert(d.coords.longitude)
+	    //alert(d.coords.latitude)
+	    //alert(d.coords.longitude)
 	 
 	    
 	    createButton.addEventListener('click', function() {
 			// alert('create clicked');
-			userID = Ti.Platform.id;
-			var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, d.coords.latitude, d.coords.longitude);
+			if((gameName.value != '') && (userName.value != '')) {
+				userID = Ti.Platform.id;
+				var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, d.coords.latitude, d.coords.longitude);
+			}
+			else if(gameName.value == '') {
+				alert('Please enter a valid game name');
+			}
+			else if(userName.value == '') {
+				alert('Please enter a valid user name')
+			}
 		});
 	 
 	});

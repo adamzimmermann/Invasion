@@ -72,31 +72,26 @@ function gamePlayers (gameID) {
 
 // Return Value
 // "true" or "false" depending on if the operation occurred successfully
-function joinGame (gameID, userID, userName) { 
-	var data = [];
+function joinGame (input) { 
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
 	xhr.send({
 		action:'joinGame',
-		userID: userID,
-		userName: userName,
-		gameID: gameID
+		userID: input.userID,
+		userName: input.userName,
+		gameID: input.gameID
 	});
 	
 	xhr.onload = function(e) {
 		var xml = this.responseXML;
 		
-	 	var games = xml.documentElement.getElementsByTagName("game");
-		
-		for (var i = 0; i < games.length; i++) {	
-	    	data.push({
-	    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
-	    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
-	    	});
-	    }
-	    	
+    	var data = {
+    		gameID: xml.documentElement.getElementsByTagName("gameID").item(0).text,
+    		accessCode: xml.documentElement.getElementsByTagName("accessCode").item(0).text,
+    	};
+
 	    Ti.App.fireEvent('joinGame', {data:data});	
 	}
 	
@@ -374,10 +369,10 @@ function checkScore (gameID) {
 	  		
 		var values = xml.documentElement.getElementsByTagName("team");
 			
-		for (var i = 0; i < teams.length; i++) {	
+		for (var i = 0; i < values.length; i++) {	
 	    	data.push({
 	    		teamID: values.item(i).getElementsByTagName("teamID").item(0).text,
-	    		color: values.item(i).getElementsByTagName("color").item(0).text,
+	    		teamName: values.item(i).getElementsByTagName("teamName").item(0).text,
 	    		points: values.item(i).getElementsByTagName("points").item(0).text,
 	    	}); 	
 		}	
@@ -474,6 +469,8 @@ function flagStatus (input) {
 
 /*------------------------------------------------------------------------------------------*/
 
+// Finds the initial locations of both team's flags
+
 // Return Value:
 // information about flag locations
 function flagLocations (input) { 
@@ -493,8 +490,10 @@ function flagLocations (input) {
 		
 		for (var i = 0; i < results.length; i++) {	
 	    	data.push({
-	    		flagCaputured: results.item(i).getElementsByTagName("flagCaptured").item(0).text,
 	    		teamID: results.item(i).getElementsByTagName("teamID").item(0).text,
+	    		teamName: results.item(i).getElementsByTagName("teamName").item(0).text,
+	    		latitude: results.item(i).getElementsByTagName("flagLatitude").item(0).text,
+	    		longitude: results.item(i).getElementsByTagName("flagLongitude").item(0).text,
 	    	});
 	    }
 	    
@@ -502,6 +501,8 @@ function flagLocations (input) {
 	}
 }
 /*------------------------------------------------------------------------------------------*/
+
+// Called when a team's flag is taken, but not captured
 
 // Return Value:
 // true if it worked or false if it didn't work
@@ -544,7 +545,7 @@ function userInfo (input) {
     		userName: xml.documentElement.getElementsByTagName("userName").item(0).text,
     	};
     	
-    	Ti.App.fireEvent('userInfo', data);
+    	Ti.App.fireEvent('userInfo', {data:data});
 	}
 }
 
@@ -569,6 +570,7 @@ api.flagStatus = flagStatus;
 api.flagTaken = flagTaken;
 api.flagLocations = flagLocations;
 api.userInfo = userInfo;
+api.checkScore = checkScore;
 
 //public interface
 exports.api = api;

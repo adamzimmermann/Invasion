@@ -8,58 +8,61 @@ exports.joinGame = function() {
 	
 	view.open();
 	
-	// Get Location
+	var onlyOnce=0;
 	
+	// sets up GPS interface
 	Ti.App.GeoApp = {};
-	 
 	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
 	Ti.Geolocation.purpose = "testing";
 	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 	Titanium.Geolocation.distanceFilter = 10;
 	 
+	//checks if GPS is enabled
 	if( Titanium.Geolocation.locationServicesEnabled === false ) {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
 	
+	//called after location found
 	function updatePosition(e) {
-	 
-	    if( ! e.success || e.error ) {
-	        alert("Unable to get your location.");
-	        Ti.API.debug(JSON.stringify(e));
-	        Ti.API.debug(e);
-	        return;
-	    }
-	 
-	    Ti.App.fireEvent("app:got.location", {
-	        "coords" : e.coords
-	    });
+		if( ! e.success || e.error ) {
+		    alert("Unable to get your location.");
+		    Ti.API.debug(JSON.stringify(e));
+		    Ti.API.debug(e);
+		    return;
+		}
+		if(onlyOnce == 0) {
+			//onlyOnce = 1;
+		 	//fires location found event
+		    Ti.App.fireEvent("app:got.location", {
+		        "coords" : e.coords
+			});
+		}
 	};
 	
+	//waits for location to be found
 	Ti.App.addEventListener("app:got.location", function(d) {
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
 	    Ti.API.debug(JSON.stringify(d));
-	    // you need to remove this listener, see the blog post mentioned above
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
 	    // alert(d.coords.latitude)
 	    // alert(d.coords.longitude)
-	 
-	    
-	    var webAPI = new globals.xml.findGames(d.coords.latitude, d.coords.longitude);
-
-	 
-	 
+		
+		if(onlyOnce == 0) {
+			onlyOnce = 1;
+			//finds games within 10 miles
+			var webAPI = new globals.xml.findGames(d.coords.latitude, d.coords.longitude);
+		}
 	});
+	
+	//gets current location
 	Titanium.Geolocation.getCurrentPosition( updatePosition );   
 	
-	
-	
-	
-
-	// pull the findGames function with longitude and lat parameters
 
 	// the event listener to trigger when the data has been loaded
 	Ti.App.addEventListener('findGames', function(input){
+		
+		Ti.App.removeEventListener('findGames', function(input){});
 		// empty data array
 		var data = [];
 		
@@ -81,12 +84,12 @@ exports.joinGame = function() {
 				var currentRow = e.row;
 				// alert('current row is: ' + currentRow)
 				// alert('current row data: ' + currentRow.gameID)
-				Ti.App.fireEvent('gameSelected', {gameID: currentRow.gameID});
+				Ti.App.fireEvent('gameSelected', {gameID:currentRow.gameID});
 			});
 		
 			data.push(row);
 		}
-		// create a tableview
+		// list of games
 		var table = Ti.UI.createTableView({
 			top: 140,
 			height: 280,
@@ -96,12 +99,11 @@ exports.joinGame = function() {
 			borderWidth: 3,
 			data: data,
 		});
-		// simple header label	
+		// header label	
 		var title = Ti.UI.createLabel({
 			text: '  Choose a Game',
 			color: '#fff',
-			bottom: 315,
-			
+			bottom: 315,	
 			height:50,
 			width: 250,
 			font: {fontFamily:'arial', fontSize: 22},
@@ -110,23 +112,21 @@ exports.joinGame = function() {
 			borderWidth: 3,
 			backgroundColor: '#000'
 		})
-		// require aCode.js to define the object aCode
-		
-		// table click listener
-		
+
 		// add the title label
 		view.add(title);
 		// add the table
 		view.add(table);
 	});
-	// return the view window to homePage
+
 	
-	// create a new win
-	
+	// table click listener
 	Ti.App.addEventListener('gameSelected', function(data){
+		alert('game selected with gameID: ' + data.gameID);
+		
+		//load access code screen
 		aCode = require('ui/common/aCode');
-		alert('gameSelected')
-		var accessCodeScreen = new aCode(data.gameID);
+		aCode({gameID:data.gameID});
 		
 		// var newWin = Ti.UI.createWindow({backgroundColor: '#000'});
 		// open it
@@ -137,21 +137,19 @@ exports.joinGame = function() {
 		
 	});
 	
-	var back = Ti.UI.createButton({
+	//creates back button
+	var backButton = Ti.UI.createButton({
 		title:'back',
 		height: 20,
 		width: 100,
 		bottom:0
 	});
-	view.add(back);
-	back.addEventListener('click', function(e){
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
+	view.add(backButton);
+	
+	//listens for click on back button
+	backButton.addEventListener('click', function(e){
 		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		homePage();
 	});
 			
 	return view;

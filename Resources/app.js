@@ -11,7 +11,7 @@ var globals = {
 	//gameID: int
 };
 
-alert('test');
+//alert('test');
 
 (function() {
 	var WindowObject;

@@ -11,7 +11,7 @@ exports.teamRoster = function(input){
 		// pass game ID and player ID to the team info
 		Ti.API.debug('right before problem');
 		Ti.API.debug('userID: ' + input.userID)
-		alert('the values: ' + input.userID);
+		//alert('the values: ' + input.userID);
 		var webAPI9 = new globals.xml.teamInformation({gameID:input.gameID, userID: input.userID});
 		
 		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');

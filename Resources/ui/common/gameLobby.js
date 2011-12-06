@@ -73,9 +73,6 @@ exports.gameLobby = function (input) {
 	// gets information about whether current user is the game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
 		
-		
-		
-		
 		// if they are the game initiator
 		if (input.data == "true") {
 			
@@ -87,8 +84,7 @@ exports.gameLobby = function (input) {
 				title: 'Start Game!'
 			});
 			instance.add(startButton);
-			
-			
+				
 			// listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
 				//creates teams and assigns players to teams
@@ -114,6 +110,7 @@ exports.gameLobby = function (input) {
 			//check if the game has started
 			var webAPI3 = new globals.xml.gameStatus(gameID);
 			
+			//start game status timer
 			gameStatusTimer = setInterval(statusUpdate, 5000);
 			
 			//listens for the game status information
@@ -129,8 +126,6 @@ exports.gameLobby = function (input) {
 				}
 				//game has not started
 				else {
-					//alert('game has not started');
-					//wait for 3 seconds
 					Ti.API.debug('game has not started');			
 				}
 			})
