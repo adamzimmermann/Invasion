@@ -1,13 +1,30 @@
 exports.homePage = function() {
 	
+	
+	// The Timer
+// 	
+	// var timer = setInterval(functionCheck, 5000)
+// 	
+	// i = 0;
+	// function functionCheck(){
+		// alert('fired!');
+		// i++
+		// Ti.API.debug(i);
+		// if (i == 3){
+			// clearInterval(timer);
+		// }
+	// };
+	
 	//var mapView = require('ui/common/mapView');
-	var joinGame = require('ui/common/joinGame');
+	// var joinGame = require('ui/common/joinGame');
 	var createGame = require('ui/common/createGame');
 	var aboutPage = require('ui/common/aboutPage');
 	var homePageView = Ti.UI.createWindow ({
 		backgroundImage: 'images/MediumLogoTop.jpg'
 		//backgroundColor:'#000'
 	});
+	
+	homePageView.open();
 	
 	// var bgTunes = Ti.Media.createSound({
 		// url: 'sounds/StartS.mp3',
@@ -32,10 +49,9 @@ exports.homePage = function() {
 	});
 	
 	button1.addEventListener('click', function(){
-		var newWin = Ti.UI.createWindow({backgroundColor: '#000'})
-		newWin.open();
+		var joinGame = require('ui/common/joinGame');
 		var joinGview = new joinGame();
-		newWin.add(joinGview);
+		joinGame();
 	});
 	
 	var button2 = Ti.UI.createButton({

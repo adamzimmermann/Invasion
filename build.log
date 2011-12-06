@@ -4,14 +4,132 @@ Logfile initialized
 [INFO] Building Invasion for Android ... one moment
 [INFO] Titanium SDK version: 1.7.3 (10/17/11 13:44 dcf4257)
 [DEBUG] Waiting for device to be ready ...
-[TRACE] adb devices returned 2 devices/emulators
-[DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.028103 seconds on emulator to get ready
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[ERROR] Timed out waiting for emulator to be ready, you may need to close the emulator and try again
 [DEBUG] edu.bradley.im.invasion installed? False
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying project resources..
+[INFO] Detected tiapp.xml change (or assets deleted), forcing full re-build...
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/android/appicon.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/appicon.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/android/default.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/default.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/app.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/app.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/data/instructions.txt => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/data/instructions.txt
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/data/playerMapping.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/data/playerMapping.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/data/xmldata.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/data/xmldata.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Alien_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Alien_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Alien_Flag.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Alien_Flag.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Alien_Flag_Origin.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Alien_Flag_Origin.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Alien_Normal.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Alien_Normal.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Alien_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Alien_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Player/Alien_Player_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Player/Alien_Player_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Player/Alien_Player_Normal.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Player/Alien_Player_Normal.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Alien/Player/Alien_Player_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Alien/Player/Alien_Player_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Human.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Human.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Human_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Human_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Human_Flag.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Human_Flag.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Human_Flag_Origin.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Human_Flag_Origin.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Human_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Human_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Player/Human_Player.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Player/Human_Player.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Player/Human_Player_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Player/Human_Player_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/Human/Player/Human_Player_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/Human/Player/Human_Player_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Carrier.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Carrier.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Flag.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Flag.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Flag_Origin.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Flag_Origin.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Normal.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Normal.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Player_Carrier.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Player_Carrier.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Player_Normal.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Player_Normal.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Player_Tagged.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Player_Tagged.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Alien_Tagged.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Alien_Tagged.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Carrier.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Carrier.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Flag.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Flag.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Flag_Origin.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Flag_Origin.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Normal.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Normal.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Player_Carrier.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Player_Carrier.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Player_Normal.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Player_Normal.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Player_Tagged.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Player_Tagged.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/Icons/PSD/Human_Tagged.psd => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/Icons/PSD/Human_Tagged.psd
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/MediumLogoTop.jpg => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/MediumLogoTop.jpg
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Alien_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Alien_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Alien_Flag.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Alien_Flag.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Alien_Flag_Origin.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Alien_Flag_Origin.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Alien_Normal.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Alien_Normal.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Alien_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Alien_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Player/Alien_Player_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Player/Alien_Player_Normal.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Normal.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Alien/Player/Alien_Player_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Human.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Human.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Human_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Human_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Human_Flag.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Human_Flag.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Human_Flag_Origin.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Human_Flag_Origin.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Human_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Human_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Player/Human_Player.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Player/Human_Player.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Player/Human_Player_Carrier.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Player/Human_Player_Carrier.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/miniIcons/Human/Player/Human_Player_Tagged.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/miniIcons/Human/Player/Human_Player_Tagged.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/images/SmallLogoTop.jpg => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/images/SmallLogoTop.jpg
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/KS_nav_ui.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/KS_nav_ui.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/KS_nav_views.png => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/KS_nav_views.png
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/lib/require.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/lib/require.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/flagisnear.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/flagisnear.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/flagpostion.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/flagpostion.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/notes.txt => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/notes.txt
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/otherteamplayerisnear.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/otherteamplayerisnear.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/otherteamplayerisnearurflag.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/otherteamplayerisnearurflag.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/radio beeps.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/radio beeps.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/alien winning.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/alien winning.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/human  winning song.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/human  winning song.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/human.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/human.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/incomingtransmission.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/incomingtransmission.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/space jingle.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/space jingle.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/tagged2.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/tagged2.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/theotherteamhasyourflag.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/theotherteamhasyourflag.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/utagplayer.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/utagplayer.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/rawsounds/winning song.wav => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/rawsounds/winning song.wav
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/StartS.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/StartS.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/sounds/StartSlower_rate.mp3 => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/sounds/StartSlower_rate.mp3
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/android/androidWindow.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/android/androidWindow.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/aboutPage.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/aboutPage.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/aCode.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/aCode.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/createGame.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/createGame.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/gameLobby.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/gameLobby.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/gamePage.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/gamePage.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/homePage.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/homePage.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/instructionPage.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/instructionPage.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/joinGame.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/joinGame.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/scoring.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/scoring.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/common/teamRoster.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/common/teamRoster.js
+[TRACE] COPYING CREATED FILE: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/ui/iphone/iphoneWindow.js => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/ui/iphone/iphoneWindow.js
 [TRACE] Generating Java Classes
 [DEBUG] Processing Android resource drawables
+[DEBUG] app stylesheet => /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/ApplicationStylesheet.java
 [DEBUG] copying app icon: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/appicon.png
 [DEBUG] generating theme.xml
 [DEBUG] found drawable-long-land-hdpi splash screen at /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/android/images/res-long-land-hdpi/default.png
@@ -36,17 +154,183 @@ Logfile initialized
 [DEBUG] copying /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/Resources/android/images/res-notlong-port-mdpi/default.png splash screen to /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/res/drawable-notlong-port-mdpi/background.png
 [DEBUG] found splash screen at /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/assets/Resources/default.png
 [TRACE] Writing out AndroidManifest.xml
+[DEBUG] adding /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/ApplicationStylesheet.java to javac build list
 [DEBUG] adding /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionActivity.java to javac build list
 [DEBUG] adding /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionAppInfo.java to javac build list
 [DEBUG] adding /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionApplication.java to javac build list
 [DEBUG] adding /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/R.java to javac build list
-[DEBUG] Building Java Sources: "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionActivity.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionAppInfo.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionApplication.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/R.java"
-[ERROR] Error(s) compiling generated Java code
-[ERROR] /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionApplication.java:31: cannot find symbol
-symbol  : class ApplicationStylesheet
-location: class edu.bradley.im.invasion.InvasionApplication
-		stylesheet = new ApplicationStylesheet();
-		                 ^
-1 error
-
-[INFO] Android Emulator has exited
+[DEBUG] Building Java Sources: "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/ApplicationStylesheet.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionActivity.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionAppInfo.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/InvasionApplication.java" "/Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/gen/edu/bradley/im/invasion/R.java"
+[INFO] Waiting for SDCard to become available..
+[ERROR] Error checking for SDCard using 'mount'
+[INFO] Compiling Android Resources... This could take some time
+[DEBUG] Android classes.dex built
+[DEBUG] creating unsigned apk: /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build/android/bin/app-unsigned.apk
+[DEBUG] from resource zip => assets/Resources/data/instructions.txt
+[DEBUG] from resource zip => assets/Resources/data/playerMapping.js
+[DEBUG] from resource zip => assets/Resources/data/xmldata.js
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Player/Alien_Player_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Player/Alien_Player_Normal.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Player/Alien_Player_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Alien_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Alien_Flag.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Alien_Flag_Origin.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Alien_Normal.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Alien/Alien_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Player/Human_Player.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Player/Human_Player_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Player/Human_Player_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Human.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Human_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Human_Flag.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Human_Flag_Origin.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/Human/Human_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Carrier.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Flag.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Flag_Origin.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Normal.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Player_Carrier.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Player_Normal.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Player_Tagged.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Alien_Tagged.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Carrier.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Flag.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Flag_Origin.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Normal.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Player_Carrier.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Player_Normal.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Player_Tagged.psd
+[DEBUG] from resource zip => assets/Resources/images/Icons/PSD/Human_Tagged.psd
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Normal.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Player/Alien_Player_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Alien_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Alien_Flag.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Alien_Flag_Origin.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Alien_Normal.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Alien/Alien_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Player/Human_Player.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Player/Human_Player_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Player/Human_Player_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Human.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Human_Carrier.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Human_Flag.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Human_Flag_Origin.png
+[DEBUG] from resource zip => assets/Resources/images/miniIcons/Human/Human_Tagged.png
+[DEBUG] from resource zip => assets/Resources/images/MediumLogoTop.jpg
+[DEBUG] from resource zip => assets/Resources/images/SmallLogoTop.jpg
+[DEBUG] from resource zip => assets/Resources/lib/require.js
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/alien winning.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/human  winning song.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/human.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/incomingtransmission.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/space jingle.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/tagged2.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/theotherteamhasyourflag.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/utagplayer.wav
+[DEBUG] from resource zip => assets/Resources/sounds/rawsounds/winning song.wav
+[DEBUG] from resource zip => assets/Resources/sounds/StartS.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/StartSlower_rate.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/flagisnear.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/flagpostion.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/notes.txt
+[DEBUG] from resource zip => assets/Resources/sounds/otherteamplayerisnear.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/otherteamplayerisnearurflag.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/radio beeps.mp3
+[DEBUG] from resource zip => assets/Resources/ui/android/androidWindow.js
+[DEBUG] from resource zip => assets/Resources/ui/common/aCode.js
+[DEBUG] from resource zip => assets/Resources/ui/common/aboutPage.js
+[DEBUG] from resource zip => assets/Resources/ui/common/createGame.js
+[DEBUG] from resource zip => assets/Resources/ui/common/gameLobby.js
+[DEBUG] from resource zip => assets/Resources/ui/common/gamePage.js
+[DEBUG] from resource zip => assets/Resources/ui/common/homePage.js
+[DEBUG] from resource zip => assets/Resources/ui/common/instructionPage.js
+[DEBUG] from resource zip => assets/Resources/ui/common/joinGame.js
+[DEBUG] from resource zip => assets/Resources/ui/common/scoring.js
+[DEBUG] from resource zip => assets/Resources/ui/common/teamRoster.js
+[DEBUG] from resource zip => assets/Resources/ui/iphone/iphoneWindow.js
+[DEBUG] from resource zip => assets/Resources/KS_nav_ui.png
+[DEBUG] from resource zip => assets/Resources/KS_nav_views.png
+[DEBUG] from resource zip => assets/Resources/app.js
+[DEBUG] from resource zip => assets/Resources/appicon.png
+[DEBUG] from resource zip => assets/Resources/default.png
+[DEBUG] from resource zip => assets/tiapp.xml
+[DEBUG] from resource zip => res/drawable/appicon.png
+[DEBUG] from resource zip => res/drawable/background.png
+[DEBUG] from resource zip => res/drawable/facebook_icon.png
+[DEBUG] from resource zip => res/drawable/facebook_login.png
+[DEBUG] from resource zip => res/drawable/facebook_login_down.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide_down.png
+[DEBUG] from resource zip => res/drawable/facebook_logout.png
+[DEBUG] from resource zip => res/drawable/facebook_logout_down.png
+[DEBUG] from resource zip => res/layout/titanium_tabgroup.xml
+[DEBUG] from resource zip => AndroidManifest.xml
+[DEBUG] from resource zip => resources.arsc
+[DEBUG] from resource zip => res/drawable-hdpi/facebook_icon.png
+[DEBUG] from resource zip => res/drawable-ldpi/facebook_icon.png
+[DEBUG] from resource zip => res/drawable-long-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-mdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-mdpi/background.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/apache/Commons-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/apache/HttpComponents-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/apache/mime4j-NOTICE.txt
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/build.properties
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/background.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_18.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_48.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_18.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_48.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_normal.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_pressed.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_selected.9.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/default_icon.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/titanium.jar => org/appcelerator/titanium/res/drawable/photoDefault.png
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/modules/titanium-facebook.jar => ti/modules/titanium/facebook/LICENSE
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/modules/titanium-yahoo.jar => ti/modules/titanium/yahoo/yahoo.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/smalljs.jar => org/mozilla/javascript/resources/Messages.properties
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/smalljs.jar => org/mozilla/javascript/resources/Messages_fr.properties
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.min.js
+[DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/json2.js
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[ERROR] Timed out waiting for emulator to be ready, you may need to close the emulator and try again
+[INFO] Installing application on device

@@ -6,7 +6,7 @@ exports.joinGame = function() {
 		//backgroundColor:'#000'
 	});	
 	
-	
+	view.open();
 	
 	// Get Location
 	
@@ -79,8 +79,8 @@ exports.joinGame = function() {
 			
 			row.addEventListener('click', function(e) {
 				var currentRow = e.row;
-				alert('current row is: ' + currentRow)
-				alert('current row data: ' + currentRow.gameID)
+				// alert('current row is: ' + currentRow)
+				// alert('current row data: ' + currentRow.gameID)
 				Ti.App.fireEvent('gameSelected', {gameID: currentRow.gameID});
 			});
 		
@@ -125,12 +125,14 @@ exports.joinGame = function() {
 	
 	Ti.App.addEventListener('gameSelected', function(data){
 		var aCode = require('ui/common/aCode');
-		var newWin = Ti.UI.createWindow();
+		alert('gameSelected')
+		// var newWin = Ti.UI.createWindow({backgroundColor: '#000'});
 		// open it
-		newWin.open();
+		// newWin.open();
 		// alert('Game ID is: ' + data.gameID)
-		//alert('aCode gameID' + data.gameID);
-		aCode(data.gameID);
+		// alert('aCode gameID' + data.gameID);
+		var newWin = new aCode(data.gameID);
+		
 		//newWin.add(aCodeWin);
 	} )
 	
