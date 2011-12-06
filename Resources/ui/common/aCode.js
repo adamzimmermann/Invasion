@@ -7,7 +7,7 @@ exports.aCode = function(data) {
 		//backgroundColor:'#000'
 	});
 	instance.open();
-	alert(data);
+	// alert(data);
 	
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
 	
@@ -52,7 +52,7 @@ exports.aCode = function(data) {
 		top: 250,
 		height:30,
 		width:200,
-		hintText:'Mr. Bitey',
+		hintText:'User Name',
 		backgroundColor: '#fff',
 		color:'#000',
 		clearOnEdit:true	
@@ -63,7 +63,7 @@ exports.aCode = function(data) {
 		top:310,
 		height:30,
 		width:200,
-		hintText:'123',
+		hintText:'Required',
 		backgroundColor: '#fff',
 		color:'#000',
 		clearOnEdit:true	
@@ -91,6 +91,7 @@ exports.aCode = function(data) {
 		if (input.data == "true"){
 			userID = Ti.Platform.id;
 			if(userName.value != null) {
+				alert(userName.value)
 				var webAPI = new globals.xml.joinGame(input.gameID, userID, userName.value);
 			}
 		}
