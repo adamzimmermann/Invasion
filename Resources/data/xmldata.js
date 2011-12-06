@@ -413,7 +413,7 @@ function teamInformation (input) {
 	
 	xhr.send({
 		action: 'teamInformation',
-		playerID: input.playerID,
+		userID: input.userID,
 		gameID: input.gameID,
 	});
 	xhr.onload = function(e) {	
@@ -430,7 +430,7 @@ function teamInformation (input) {
 	    		teamName: players.item(i).getElementsByTagName("teamName").item(0).text,
 	    		teamID: players.item(i).getElementsByTagName("teamID").item(0).text,
 	    		userName: players.item(i).getElementsByTagName("userName").item(0).text,
-	    		playerID: players.item(i).getElementsByTagName("playerID").item(0).text,
+	    		userID: players.item(i).getElementsByTagName("playerID").item(0).text,
 	    	});
 	    }
 	    //alert('team data: ' + data);
@@ -520,6 +520,33 @@ function flagTaken (input) {
 	    Ti.App.fireEvent('flagTaken', {data:this.responseText});
 	}
 }
+/*------------------------------------------------------------------------------------------*/
+
+// Return Value:
+// true if they are the placer, false if they are not the placer
+function userInfo (input) { 
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'userInfo',
+		gameID: input.gameID,
+		userID: input.userID,
+	});
+	xhr.onload = function(e) {	
+	 	var xml = this.responseXML;
+		
+    	var data = {
+    		flagPlacer: xml.documentElement.getElementsByTagName("flagPlacer").item(0).text,
+    		teamID: xml.documentElement.getElementsByTagName("teamID").item(0).text,
+    		userID: xml.documentElement.getElementsByTagName("playerID").item(0).text,
+    		userName: xml.documentElement.getElementsByTagName("userName").item(0).text,
+    	};
+    	
+    	Ti.App.fireEvent('userInfo', data);
+	}
+}
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -541,6 +568,7 @@ api.teamInformation = teamInformation;
 api.flagStatus = flagStatus;
 api.flagTaken = flagTaken;
 api.flagLocations = flagLocations;
+api.userInfo = userInfo;
 
 //public interface
 exports.api = api;

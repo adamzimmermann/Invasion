@@ -1,4 +1,4 @@
-c
+exports.gamePage = function(input) {
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
 		// backgroundColor:'#000'
@@ -14,6 +14,9 @@ c
 	if( Titanium.Geolocation.locationServicesEnabled === false ) {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
+	
+	//checks if current user is a flag placer
+	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 
 	//creates a Map View
 	var mapCreateView = Titanium.Map.createView({
@@ -28,34 +31,68 @@ c
 			borderRadius:4,
 	});	
 	
-	//check if the user is a flag placer
-	//if(flagPlacer) {
-		//notify them and have them navigate to the desired location
-		
-		//call placeFlag
-	//}
-	//if(!flagPlacer) { //******* NEEDS WORK
-		//notify them to wait for flags to be placed
-		
-		//checks if both flags are placed
-		var webAPI = new globals.xml.gameReady(1);   //NEEDS GAMEID
-		
-		
-		Ti.App.addEventListener('gameReady', function(input){
-			// both flags are placed
-			if(input.data == 'true'){
-				//do something
-			}
-			// flags not placed yet
-			else {
-				//wait 2 seconds
+	
+	
+	//checks if flags are placed
+	function checkFlags() {
+		alert('gameID for checking if flags are placed: ' + input.gameID);
+		var webAPI = new globals.xml.gameReady(input.gameID);
+	}
+	
+	
+	
+	//listens for information determining if user is a flag placer
+	Ti.App.addEventListener('flagPlacer', function(input) {
+		//check if the user is a flag placer
+		if(input.flagPlacer == 'true') {
+			//notify them and have them navigate to the desired location
+			alert('you are the flag placer');
+			alert('navigate to the desired flag location');
+			
+			//adds Place Flag button
+			var placeFlagButton = Ti.UI.createButton({
+				height:50,
+				top:390,
+				width:120,
+				title:'Place Flag'
+			})
+			
+			
+			//add event listenter
+			placeFlagButtonArray.addEventListener(click, function() {
+				//starts timer to check if both flags are placed
+				gameStatusTimer = setInterval(checkFlags, 5);
 				
-				//check if both flags are placed
-				var webAPI = new globals.xml.gameReady(gameID);
-			}
-		});
-		
-	//}
+				//saves the flag location
+				var webAPI = new globals.xml.placeFlag(); // NEEDS LOCATION DATA ********
+			});		
+		}
+		else {
+			//notify them to wait for flags to be placed
+			alert('wait for flags to be placed');
+			
+			//starts timer to check if flags are placed
+			flagsPlacedTimer = setInterval(checkFlags, 5);	
+		}
+	}
+	
+	// waits for game to be ready
+	Ti.App.addEventListener('gameReady', function(input){
+		// both flags are placed
+		if(input.data == 'true'){
+			//ends timers
+			clearInterval(flagsPlacedTimer);
+			clearInterval(gameStatusTimer);
+			
+			//starts the game
+			//start location timer
+		}
+		// flags not placed yet
+		else {
+			Ti.API.debug('flags not placed');
+		}
+	});
+
 	
 
 

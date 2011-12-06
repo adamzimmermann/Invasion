@@ -7,7 +7,7 @@ exports.gameLobby = function (input) {
 	
 	var accessCode = input.accessCode;
 	var gameID = input.gameID;
-	var playerID = Ti.Platform.id;
+	var userID = Ti.Platform.id;
 	
 	
 	//loads the initial data
@@ -67,7 +67,7 @@ exports.gameLobby = function (input) {
 	});
 	
 	//checks if current user is the game initiator
-	var webAPI2 = new globals.xml.gameInitiator(input.gameID, playerID);
+	var webAPI2 = new globals.xml.gameInitiator(input.gameID, userID);
 	
 	
 	// gets information about whether current user is the game initiator
@@ -92,14 +92,14 @@ exports.gameLobby = function (input) {
 			// listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
 				//creates teams and assigns players to teams
-				alert('start game clicked and game ID is' + gameID + playerID);
+				//alert('start game clicked and game ID is' + gameID + userID);
 				
 				var webAPI3 = new globals.xml.startGame(gameID);
 				var teamRoster = require('ui/common/teamRoster')
 				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
 				clearInterval(lobbyUpdateTimer);
-				teamRoster({gameID: gameID, playerID: playerID});
+				teamRoster({gameID: gameID, userID: userID});
 			});
 		}
 		// if they just joined the game and aren't the initiator
@@ -125,8 +125,7 @@ exports.gameLobby = function (input) {
 					Ti.API.debug('game has started');
 					//fires when the game has been started by game initiator					
 					var teamRoster = require('ui/common/teamRoster')
-					teamRoster({gameID: gameID, playerID: playerID});
-					//gameInformation({gameID: gameID, playerID: playerID});
+					teamRoster({gameID: gameID, userID: userID});
 				}
 				//game has not started
 				else {

@@ -1,11 +1,12 @@
-exports.instructionPage = function() {
+exports.instructionPage = function(input) {
 	
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
 		// backgroundColor:'#000'
 	});
+	instance.open();
 	
-	
+	/*
 	var readContents;
 	var readFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'instructions.txt');        
  
@@ -18,6 +19,8 @@ exports.instructionPage = function() {
 	alert('instructions: ' + readFile.read().toString());
 	var instructions = readContents.toString();
 	Ti.API.debug('Contents = ' + instructions);
+	
+	
 	
 	//text area that holds instructions
 	var instructionText = Ti.UI.TextArea({
@@ -34,6 +37,8 @@ exports.instructionPage = function() {
 		backgroundColor: '#000'
 	})
 	instance.add(instructionText);
+	
+	*/
 	
 	//creates a label
 	var title = Ti.UI.createLabel({
@@ -64,10 +69,10 @@ exports.instructionPage = function() {
 	
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
-		//var instructionPage = require('ui/common/instructionPage')
-		//instructionPage();
+		var instructionPage = require('ui/common/gamePage')
+		gamePage(input);
 	});
 	
-	
+
 	return instance;
 };

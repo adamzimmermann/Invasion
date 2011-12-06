@@ -2,19 +2,21 @@ exports.teamRoster = function(input){
 	var instance = Ti.UI.createWindow({backgroundColor: '#000'});
 	instance.open();
 	
-	
-	gameInformation({gameID: input.gameID, playerID: input.playerID});
-	
-	function gameInformation(input) {
+	//
+	// gameInformation({gameID: input.gameID, userID: input.userID});
+	// function gameInformation(input) {
 		//alert('start game data: ' + input.gameID);
 		//userID =Ti.Platform.id;	
-		alert('the input here was' + input.gameID);
+		// alert('the input here was' + input.gameID);
 		// pass game ID and player ID to the team info
-		var webAPI9 = new globals.xml.teamInformation({gameID:input.gameID, playerID: input.playerID});
+		Ti.API.debug('right before problem');
+		Ti.API.debug('userID: ' + input.userID)
+		alert('the values: ' + input.userID);
+		var webAPI9 = new globals.xml.teamInformation({gameID:input.gameID, userID: input.userID});
 		
 		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
 		
-	}
+	// }
 	
 	// listens for information about team members
 	Ti.App.addEventListener('teamInformation', function(input){
@@ -28,7 +30,7 @@ exports.teamRoster = function(input){
 			};
 			data.push(rowdata);
 		}
-		var teamInformation = Ti.UI.createTableView({
+		var teamMembers = Ti.UI.createTableView({
 			top: 140,
 			height: 260,
 			width: 250,
@@ -37,18 +39,7 @@ exports.teamRoster = function(input){
 			borderWidth: 3,
 			data: data,
 		});
-		
-		//display instructions
-		//alert('instructions: ' + instructions.text);
-		
-		
-		//var gamePage = require('ui/common/instructionPage')
-		//gamePage();
-		
-		//var gamePage = require('ui/common/gamePage')
-		//gamePage();
-		
-		instance.add(teamInformation);
+		instance.add(teamMembers);
 	})
 	
 	//creates a Continue Button
@@ -64,7 +55,7 @@ exports.teamRoster = function(input){
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
 		var instructionPageWindow = require('ui/common/instructionPage');
-		instructionPageWindow();
+		instructionPageWindow(input);
 	});
 	
 	return instance;
