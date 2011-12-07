@@ -95,7 +95,9 @@ exports.gameLobby = function (input) {
 				//alert('right before gameInformation call');
 				//gets information about who is on the user's team
 				clearInterval(lobbyUpdateTimer);
-				teamRoster({gameID: gameID, userID: userID});
+				var teamRoster = require('ui/common/teamRoster')
+				var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
+				teamRosterScreen.open();
 			});
 		}
 		// if they just joined the game and aren't the initiator
@@ -123,7 +125,7 @@ exports.gameLobby = function (input) {
 					//fires when the game has been started by game initiator					
 					var teamRoster = require('ui/common/teamRoster')
 					var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
-					teamRoster.open();
+					teamRosterScreen.open();
 				}
 				//game has not started
 				else {

@@ -107,13 +107,11 @@ exports.aCode = function(data) {
 	Ti.App.addEventListener('checkCode', function(input){
 		//alert('fired before joinGame:' + data.gameID);
 		if (input.data == "true"){
-			alert('joining a game');
-			alert(gameID);
-			alert(gameID + '//' + userID + '//' + userName.value)
+			alert('joinGame data: ' + gameID + ' // ' + userID + ' // ' + userName.value)
 			var webAPI = new globals.xml.joinGame({
 				gameID: gameID,
 				userID: userID,
-				userName: 'JIMMYJOHN'
+				userName: userName.value
 			});
 		}
 		else {
@@ -125,7 +123,7 @@ exports.aCode = function(data) {
 	// listens for join game event
 	Ti.App.addEventListener('joinGame', function(input){
 		
-		alert('info going into gameLobby: ' + gameID + ', ' + userID + ', ' + input.data.accessCode + '.' )
+		//alert('info going into gameLobby: ' + gameID + ', ' + userID + ', ' + input.data.accessCode + '.' )
 		
 		//load game lobby screen
 		var gameLobby = require('ui/common/gameLobby');

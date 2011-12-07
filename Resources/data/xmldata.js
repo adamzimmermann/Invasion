@@ -77,6 +77,8 @@ function joinGame (input) {
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
+	//alert('input data: ' + input);
+	
 	xhr.send({
 		action:'joinGame',
 		userID: input.userID,
@@ -86,6 +88,8 @@ function joinGame (input) {
 	
 	xhr.onload = function(e) {
 		var xml = this.responseXML;
+		
+		//alert('response xml: ' + xml);
 		
     	var data = {
     		gameID: xml.documentElement.getElementsByTagName("gameID").item(0).text,

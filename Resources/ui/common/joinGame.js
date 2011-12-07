@@ -122,7 +122,7 @@ exports.joinGame = function() {
 	
 	// table click listener
 	Ti.App.addEventListener('gameSelected', function(data){
-		alert('game selected with gameID: ' + data.gameID);
+		//alert('game selected with gameID: ' + data.gameID);
 		
 		//load access code screen
 		aCode = require('ui/common/aCode');
