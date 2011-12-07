@@ -1,12 +1,20 @@
 exports.gamePage = function(input) {
+	
+	// Create the Game Page Window
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
-		// backgroundColor:'#000'
 	});
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	
+	// Simplify the Arguments
 	
 	gameID = input.gameID
 	
 	/*----------------------------------------------------------------------------------------------------*/
+	
+	// Begin Geolocation Services
 	
 	// starts up GPS service
 	Ti.App.GeoApp = {};
@@ -20,21 +28,27 @@ exports.gamePage = function(input) {
 	}
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//checks if current user is a flag placer
+	
+	
+	// Checks if current user is a flag placer
 	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//checks if flags are placed
+	
+	// Checks if flags are placed
 	function checkFlags() {
 		//alert('gameID for checking if flags are placed: ' + input.gameID);
 		var webAPI = new globals.xml.gameReady(input.gameID);
-	}
+	};
+	
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//listens for information determining if user is a flag placer
+	
+	
+	// Listens for information determining if user is a flag placer
 	Ti.App.addEventListener('userInfo', function(input) {
 		//check if the user is a flag placer
 		if(input.data.flagPlacer == '1') {
@@ -77,9 +91,11 @@ exports.gamePage = function(input) {
 		}
 	});
 	
+	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	// waits for game to be ready
+	
+	// Waits for game to be ready
 	Ti.App.addEventListener('gameReady', function(input){
 		// both flags are placed
 		if(input.data == 'true'){
@@ -117,6 +133,8 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	// GamePlay
+	
 	//the update function called on an interval
 	//do everything you do every frame
 	//this will be like on update in Unity
@@ -145,6 +163,8 @@ exports.gamePage = function(input) {
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
+	
+	// Flag Capture
 	
 	Ti.App.addEventListener('flagCaptured', function(input){
 		//get current score
@@ -175,6 +195,8 @@ exports.gamePage = function(input) {
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
+	
+	// Scoring System
 	
 	function displayScore(input) {
 		//display human score
@@ -213,7 +235,7 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//display victory text
+	// Display victory text
 	function victory(input) {
 		if(input == 'human') {
 			//display humans won
@@ -224,7 +246,7 @@ exports.gamePage = function(input) {
 			alert('aliens won');
 		}
 		//create main menu button
-	}
+	};
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
@@ -244,7 +266,7 @@ exports.gamePage = function(input) {
 
 	/*----------------------------------------------------------------------------------------------------*/
 
-	//creates a Map View
+	// Creates a Map View
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
 			region: {latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
@@ -258,7 +280,9 @@ exports.gamePage = function(input) {
 	});	
 	
 	/*----------------------------------------------------------------------------------------------------*/
-
+	
+	// Update Player Position
+	
 	function updatePosition(e) {
 	 
 	    if( ! e.success || e.error ) {
@@ -275,7 +299,8 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//listens for updatePositions to finish
+	
+	// Listens for updatePositions to finish
 	Ti.App.addEventListener("app:got.location", function(d) {
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
@@ -301,7 +326,7 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//listens for data to be returned about the other players
+	//Listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
 		
 		// set up array to contain annotation of everything
@@ -376,6 +401,11 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	
+	
+	// Story Elements Display
+	
+	
 	function displayStoryElement(score) {
 		var storyText = {
 			'1-0': "The humans have infiltrated our base and stole some of our resources!!",
@@ -401,7 +431,8 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	
+	//	Story Element
+		
 	function storyElement(input) {
 		human = input.human.score;
 		alien = input.alient.score;
@@ -411,10 +442,12 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	instance.add(mapCreateView);
+	// Add To the Window
 	
+	instance.add(mapCreateView);
 	instance.open();
 	
+	/*----------------------------------------------------------------------------------------------------*/
 	
 	
 	// Back Button
@@ -435,7 +468,8 @@ exports.gamePage = function(input) {
 		win1.add(Home);
 	});
 	
-	//
+	/*----------------------------------------------------------------------------------------------------*/
+	
 	
 	return instance	
 
