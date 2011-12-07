@@ -1,0 +1,20 @@
+flag is near
+-too long
+
+flag position
+-when is this played?
+
+otherteamplayerisnear
+-i like it
+
+otherteamplayerisnearurflag
+-i like it
+
+radio beeps
+-good
+
+starS
+-good
+
+Start Slower_rate
+-good
