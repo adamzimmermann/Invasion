@@ -1,1 +1,14 @@
-this is some text
+
+You are fighting for the survival of your world and your kind, which will be determined by the acquisition of flags.
+
+1. Flags are placed by chosen flag-placers at the start of the match.
+
+2. Flags can be carried by getting within proximity of the flag's origin point and accepting the flag on your phone.
+
+3. To capture a flag, it must carried from its origin point to the origin point of your own team's flag. 
+
+4. A carried flag can be dropped if the carrier comes into proximity of an opposing team member. In that instance, the now tagged carried drops the flag, which returns to its origin point.
+
+5. A tagged player must return to his or her flag's origin point before resuming play.
+
+6. The first side to attain 3 of these flags wins.

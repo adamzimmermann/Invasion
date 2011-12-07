@@ -7,48 +7,51 @@ exports.instructionPage = function(input) {
 	
 	/*--------------------------------------------------*/
 	
-	/*
+	// Reads a specific txt file and loads it into an uneditable text area
+	
 	var readContents;
-	var readFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'instructions.txt');        
- 
- 	alert('file path: ' + readFile.path);
- 
+	var resourcesDir = Titanium.Filesystem.getResourcesDirectory();
+    var readFile = Titanium.Filesystem.getFile(resourcesDir, 'data/instructions.txt');
+   
 	if (readFile.exists()) {
 	     readContents = readFile.read().toString();
-	     Ti.API.debug('File Exists');  
 	}
-	alert('instructions: ' + readFile.read().toString());
 	var instructions = readContents.toString();
-	Ti.API.debug('Contents = ' + instructions);
 	
 	
-	
-	//text area that holds instructions
-	var instructionText = Ti.UI.TextArea({
-		value: instructions,
-		color: '#fff',
-		bottom: 315,
-		height:50,
+	var scrollyPolly = Titanium.UI.createScrollableView({
+		top:150,
+		height:225,
 		width: 250,
-		editable: 0,
-		font: {fontFamily:'arial', fontSize: 22},
 		borderColor: '#d6d6d6',
 		borderRadius: 2,	 
 		borderWidth: 3,
-		backgroundColor: '#000'
-	})
-	instance.add(instructionText);
 	
-	*/
+	});
+	
+	// Text area that holds instructions
+	var instructionsText = Ti.UI.createTextArea({
+		color: '#fff',
+		editable: 0,
+		backgroundColor: '#000',
+		font: {fontFamily:'arial', fontSize: 15},
+		value:instructions
+	});
+	
+	scrollyPolly.add(instructionsText)
+	
+	instance.add(scrollyPolly);
+	
+	
 	
 	/*--------------------------------------------------*/
 	
 	// Creates a Title
 	
 	var title = Ti.UI.createLabel({
-		text: 'Instructions',
+		text: '  Instructions',
 		color: '#fff',
-		bottom: 100,
+		top: 100,
 		height:50,
 		width: 250,
 		font: {fontFamily:'arial', fontSize: 22},
@@ -67,7 +70,7 @@ exports.instructionPage = function(input) {
 	var continueButton = Ti.UI.createButton({
 		height:30,
 		top:390,
-		width:120,
+		width:100,
 		title:'Continue'
 	})
 	instance.add(continueButton);
@@ -77,6 +80,8 @@ exports.instructionPage = function(input) {
 		var gamePage = require('ui/common/gamePage')
 		gamePage(input);
 	});
+	
+	
 	
 	/*--------------------------------------------------*/
 	
@@ -90,8 +95,7 @@ exports.instructionPage = function(input) {
 		title:'back',
 		height: 20,
 		width: 100,
-		bottom:0
-	});
+		bottom:10	});
 	instance.add(backButton);
 	
 	// Listens for back button to be clicked
