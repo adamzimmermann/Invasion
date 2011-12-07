@@ -258,3 +258,4 @@ Logfile initialized
 [DEBUG] waited 0.131628 seconds on emulator to get ready
 [INFO] Installing application on emulator
 [INFO] Application installed. Launch from drawer on Home Screen
+[INFO] Android Emulator has exited

@@ -79,7 +79,8 @@ exports.teamRoster = function(input){
 	instance.add(continueButton);
 	
 	// Listens for continue button to be clicked
-	continueButton.addEventListener('click', function() {	
+	continueButton.addEventListener('click', function() {
+		alert(input);
 		var instructionPage = require('ui/common/instructionPage');
 		var instructionPageScreen = new instructionPage(input);
 		instructionPageScreen.open();

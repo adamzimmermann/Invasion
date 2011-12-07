@@ -77,8 +77,10 @@ exports.instructionPage = function(input) {
 	
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
+		alert(input);
 		var gamePage = require('ui/common/gamePage')
-		gamePage(input);
+		var gamePageScreen = new gamePage(input);
+		gamePageScreen.open();
 	});
 	
 	
