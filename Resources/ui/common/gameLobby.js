@@ -161,7 +161,7 @@ exports.gameLobby = function (input) {
 					//fires when the game has been started by game initiator					
 					var teamRoster = require('ui/common/teamRoster')
 					var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
-					teamRoster.open();
+					teamRosterScreen.open();
 				}
 				//game has not started
 				else {

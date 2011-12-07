@@ -136,7 +136,7 @@ exports.aCode = function(data) {
 			var webAPI = new globals.xml.joinGame({
 				gameID: gameID,
 				userID: userID,
-				userName: 'JIMMYJOHN'
+				userName: userName.value
 			});
 		}
 		else {
