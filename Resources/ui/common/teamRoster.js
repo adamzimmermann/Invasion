@@ -1,8 +1,7 @@
 exports.teamRoster = function(input){
 	var instance = Ti.UI.createWindow({backgroundColor: '#000'});
-	instance.open();
 	
-	//
+	
 	// gameInformation({gameID: input.gameID, userID: input.userID});
 	// function gameInformation(input) {
 		//alert('start game data: ' + input.gameID);

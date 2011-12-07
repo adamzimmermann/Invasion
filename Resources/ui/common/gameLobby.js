@@ -5,9 +5,9 @@ exports.gameLobby = function (input) {
 		//backgroundColor:'#000'
 	});
 	
-	var accessCode = input.accessCode;
-	var gameID = input.gameID;
-	var userID = Ti.Platform.id;
+	accessCode = input.accessCode;
+	gameID = input.gameID;
+	userID = Ti.Platform.id;
 	
 	
 	//loads the initial data
@@ -122,7 +122,8 @@ exports.gameLobby = function (input) {
 					Ti.API.debug('game has started');
 					//fires when the game has been started by game initiator					
 					var teamRoster = require('ui/common/teamRoster')
-					teamRoster({gameID: gameID, userID: userID});
+					var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
+					teamRoster.open();
 				}
 				//game has not started
 				else {
