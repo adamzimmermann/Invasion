@@ -10,30 +10,53 @@ exports.aboutPage = function() {
 	
 	/*--------------------------------------------------*/
 	
-	// Creates the Scrollable Window
+
 	
-	var sView = Ti.UI.createScrollView({
-		backgroundColor:'#000',
-		contentWidth:'auto',
-		contentHeight:'auto',
-		height: 280,
-		width: 230,
-		showVerticalScrollIndicator:true,
-        showHorizontalScrollIndicator:true
+	
+	// Reads a specific txt file and loads it into an uneditable text area
+	
+	var readContents;
+	var resourcesDir = Titanium.Filesystem.getResourcesDirectory();
+    var readFile = Titanium.Filesystem.getFile(resourcesDir, 'data/instructions.txt');
+   
+	if (readFile.exists()) {
+	     readContents = readFile.read().toString();
+	}
+	var instructions = readContents.toString();
+	
+	
+	var scrollyPolly = Titanium.UI.createScrollableView({
+		top:150,
+		height:225,
+		width: 250,
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+	
+	});
+	
+	// Text area that holds instructions
+	var instructionsText = Ti.UI.createTextArea({
+		color: '#fff',
+		editable: 0,
+		backgroundColor: '#000',
+		font: {fontFamily:'arial', fontSize: 15},
+		value:instructions
 	});
 	
 	
-	/*--------------------------------------------------*/
-	
-	// About Text
-	var text = Ti.UI.createLabel({
-		text:"Invasion is a futuristic Capture the Flag game where you fight either for the sanctity of Earth as a human or the revival of your home planet as an alien. The flags that you vie for are either technology or resources.Once a game has been created, teams will be appointed and flags will be placed. The first team to acquire 3 flags will achieve overall victory. You can pick up the opposing flag by coming within 10 feet of its GPS location, which will be displayed on the map on the main game page. The opposing team's flag must be carried to your team's flag's origin point in order to capture it. Upon its arrival, your team will be awarded one point.If a player from the opposing team comes within 10 feet of your GPS location while you are carrying the flag (or vice-versa), you will be tagged and must return to your flag's origin point before you can become eligible for play again. The dropped flag will automatically return to its origin point.",
-		width: 180,
-		editable: false,
-		color: '#ffffff',
-		height:'auto'
-	})
-	
+	var title = Ti.UI.createLabel({
+		text: '  About',
+		color: '#fff',
+		top: 100,
+		height:50,
+		width: 250,
+		font: {fontFamily:'arial', fontSize: 22},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		backgroundColor: '#000'
+	});
 	
 	
 	/*--------------------------------------------------*/
@@ -41,7 +64,7 @@ exports.aboutPage = function() {
 	// Back Button
 	
 	var back = Ti.UI.createButton({
-		title:'back',
+		title:'Home',
 		height: 20,
 		width: 100,
 		bottom:10
@@ -61,8 +84,10 @@ exports.aboutPage = function() {
 	
 	//Adds Everything to the Window
 	
-	sView.add(text);
-	instance.add(sView);
+	
+	scrollyPolly.add(instructionsText)
+	instance.add(scrollyPolly);
+	instance.add(title);
 	
 	
 	/*--------------------------------------------------*/
