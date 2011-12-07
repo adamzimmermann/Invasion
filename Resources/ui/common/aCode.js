@@ -102,7 +102,7 @@ exports.aCode = function(data) {
 	
 	//creates a join game button
 	var joinGameButton = Ti.UI.createButton({
-		height:50,
+		height:30,
 		top:390,
 		width:120,
 		title:'Join Game',
@@ -128,20 +128,22 @@ exports.aCode = function(data) {
 	
 	// Listens for access code verification
 	Ti.App.addEventListener('checkCode', function(input){
-		//alert('fired before joinGame:' + data.gameID);
-		if (input.data == "true"){
-			alert('joining a game');
-			alert(gameID);
-			alert(gameID + '//' + userID + '//' + userName.value)
-			var webAPI = new globals.xml.joinGame({
-				gameID: gameID,
-				userID: userID,
-				userName: userName.value
-			});
-		}
-		else {
-			alert("Incorrect Access Code");
-		}
+		
+			//alert('fired before joinGame:' + data.gameID);
+			if (input.data == "true"){
+				alert('joining a game');
+				alert(gameID);
+				alert(gameID + '//' + userID + '//' + userName.value)
+				var webAPI = new globals.xml.joinGame({
+					gameID: gameID,
+					userID: userID,
+					userName: userName.value
+				});
+			}
+			else {
+				alert("Incorrect Access Code");
+			}
+		
 	});
 	
 	
@@ -152,7 +154,7 @@ exports.aCode = function(data) {
 		
 		//load game lobby screen
 		var gameLobby = require('ui/common/gameLobby');
-		var gameLobbyScreen = new gameLobby({gameID: gameID, userID: userID, accessCode: input.data.accessCode});
+		var gameLobbyScreen = new gameLobby({gameID: input.gameID, userID: input.userID, accessCode: input.data.accessCode});
 		gameLobbyScreen.open();
 			
 	});

@@ -80,9 +80,10 @@ exports.homePage = function() {
 		top:180
 	});
 	
+	// Skip to Game Listener
 	cheatButton.addEventListener('click', function(){
-		var gamePage = require('ui/common/gamePage');
 		userID = Ti.Platform.id;
+		var gamePage = require('ui/common/gamePage');
 		var gameScreen = new gamePage({gameID: 117, userID: '12131231'});
 		gameScreen.open();
 		instance.close();
