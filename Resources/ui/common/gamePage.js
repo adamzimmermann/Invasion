@@ -86,8 +86,8 @@ exports.gamePage = function(input) {
 	
 		if (onlyOnce == 0){
 	
-	// Listens for information determining if user is a flag placer
-	//Ti.App.addEventListener('userInfo', function(input) {
+		// Listens for information determining if user is a flag placer
+		//Ti.App.addEventListener('userInfo', function(input) {
 		//check if the user is a flag placer
 		
 		// JUST FOR TESTING!!!!
@@ -141,7 +141,7 @@ exports.gamePage = function(input) {
 				onlyOnce = 1;
 				
 				//saves the flag location
-				var webAPI = new globals.xml.placeFlag(); // NEEDS LOCATION DATA ********
+				var webAPI = new globals.xml.placeFlag({flagLatitude: flag.Latitude, flagLongitude: flag.Longitude}); // NEEDS LOCATION DATA ********
 			});		
 		}
 		else {
