@@ -152,7 +152,7 @@ exports.aCode = function(data) {
 		
 		//load game lobby screen
 		var gameLobby = require('ui/common/gameLobby');
-		var gameLobbyScreen = new gameLobby(input);
+		var gameLobbyScreen = new gameLobby({gameID: gameID, userID: userID, accessCode: input.data.accessCode});
 		gameLobbyScreen.open();
 			
 	});
@@ -183,13 +183,10 @@ exports.aCode = function(data) {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/

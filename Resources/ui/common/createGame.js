@@ -88,7 +88,7 @@ exports.createGame = function() {
 	
 	// Create Button
 	var createButton = Ti.UI.createButton({
-		height:50,
+		height:30,
 		top:390,
 		width:120,
 		title:'Create Game'
@@ -163,37 +163,9 @@ exports.createGame = function() {
 		gameLobbyScreen.open();
 	});
 	
-	
-	
 	/*--------------------------------------------------*/
 	
 	
-	// Back Button
-	
-	
-	// Creates a Back Button
-	var backButton = Ti.UI.createButton({
-		title:'back',
-		height: 20,
-		width: 100,
-		bottom:0
-	});
-	instance.add(backButton);
-	
-	// Listens for back button to be clicked
-	backButton.addEventListener('click', function(e){
-		clearInterval(gameStatusTimer);
-		clearInterval(lobbyUpdateTimer);
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
-	});
-	
-	/*--------------------------------------------------*/
 	
 	// Adds everything to the Window
 	
@@ -206,6 +178,32 @@ exports.createGame = function() {
 	scrolly.add(userName);
 	instance.add(scrolly);
 	
+	
+	/*--------------------------------------------------*/
+	
+	
+	
+	
+	
+	// Back Button
+	
+	
+	// Creates a Back Button
+	var backButton = Ti.UI.createButton({
+		title:'back',
+		height: 20,
+		width: 100,
+		bottom:10
+	});
+	instance.add(backButton);
+	
+	// Listens for back button to be clicked
+	backButton.addEventListener('click', function(e){
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
+	});
 	
 	/*--------------------------------------------------*/
 	

@@ -41,7 +41,7 @@ exports.teamRoster = function(input){
 		}
 		var teamMembers = Ti.UI.createTableView({
 			top: 140,
-			height: 260,
+			height: 220,
 			width: 250,
 			borderColor: '#d6d6d6',
 			borderRadius: 2,
@@ -57,14 +57,25 @@ exports.teamRoster = function(input){
 	
 	// Creates the Continue Button
 	
-	
+	var title = Ti.UI.createLabel({
+		text: '  Teammates',
+		color: '#fff',
+		bottom: 315,
+		height:50,
+		width: 250,
+		font: {fontFamily:'arial', fontSize: 22},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		backgroundColor: '#000'
+	});
 	var continueButton = Ti.UI.createButton({
-		height:40,
+		height:30,
 		top:380,
 		width:120,
 		title:'Continue'
 	});
-	
+	instance.add(title)
 	instance.add(continueButton);
 	
 	// Listens for continue button to be clicked
@@ -93,15 +104,10 @@ exports.teamRoster = function(input){
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
-		clearInterval(gameStatusTimer);
-		clearInterval(lobbyUpdateTimer);
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
 		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/

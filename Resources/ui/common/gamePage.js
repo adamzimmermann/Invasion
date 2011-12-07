@@ -12,8 +12,7 @@ exports.gamePage = function(input) {
 	
 	gameID = input.gameID
 	
-	alert(gameID);
-	
+
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Begin Geolocation Services
@@ -552,13 +551,12 @@ exports.gamePage = function(input) {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		clearInterval(checkFlags);
+		clearInterval(gamePlay);
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/

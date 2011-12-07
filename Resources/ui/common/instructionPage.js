@@ -65,7 +65,7 @@ exports.instructionPage = function(input) {
 	
 	
 	var continueButton = Ti.UI.createButton({
-		height:50,
+		height:30,
 		top:390,
 		width:120,
 		title:'Continue'
@@ -76,6 +76,30 @@ exports.instructionPage = function(input) {
 	continueButton.addEventListener('click', function() {	
 		var gamePage = require('ui/common/gamePage')
 		gamePage(input);
+	});
+	
+	/*--------------------------------------------------*/
+	
+	
+	
+	// Back Button
+	
+	
+	// Creates a Back Button
+	var backButton = Ti.UI.createButton({
+		title:'back',
+		height: 20,
+		width: 100,
+		bottom:0
+	});
+	instance.add(backButton);
+	
+	// Listens for back button to be clicked
+	backButton.addEventListener('click', function(e){
+		var homePage = require('ui/common/homePage');
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/

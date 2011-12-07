@@ -47,13 +47,11 @@ exports.aboutPage = function() {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		//
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	
@@ -69,5 +67,5 @@ exports.aboutPage = function() {
 	/*--------------------------------------------------*/
 	
 	
-	return view;
+	return instance;
 };

@@ -30,6 +30,7 @@ exports.homePage = function() {
 		var joinGame = require('ui/common/joinGame');
 		var joinGview = new joinGame();
 		joinGview.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/
@@ -48,6 +49,7 @@ exports.homePage = function() {
 		var createGame = require('ui/common/createGame');
 		var createGameScreen = new createGame();
 		createGameScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/
@@ -65,6 +67,7 @@ exports.homePage = function() {
 		var aboutPage = require('ui/common/aboutPage');
 		var aboutScreen = new aboutPage();
 		aboutScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/
@@ -82,6 +85,7 @@ exports.homePage = function() {
 		userID = Ti.Platform.id;
 		var gameScreen = new gamePage({gameID: 117, userID: '12131231'});
 		gameScreen.open();
+		instance.close();
 	});
 	instance.add(cheatButton)
 	

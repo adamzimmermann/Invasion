@@ -67,7 +67,7 @@ exports.gameLobby = function (input) {
 		// The Lobby Table
 		var lobbyTable = Ti.UI.createTableView({
 			top: 140,
-			height: 260,
+			height: 170,
 			width: 250,
 			borderColor: '#d6d6d6',
 			borderRadius: 2,	 
@@ -109,13 +109,16 @@ exports.gameLobby = function (input) {
 	// Gets information about whether current user is the game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
 		
+		// just a test. this has to key the number of players
+		numPlayers = 2;
+		
 		// If they are the game initiator
-		if (input.data == "true") {
+		if (input.data == "true" & numPlayers >= 2) {
 			
 			// Creates a start button
 			var startButton = Ti.UI.createButton({
-				bottom: 25,
-				height:30,
+				bottom: 35,
+				height:25,
 				width:100,
 				title: 'Start Game!'
 			});
@@ -140,7 +143,12 @@ exports.gameLobby = function (input) {
 		else {
 			// Displays standby text
 			var standby = Ti.UI.createLabel({
-				text: 'Standby to Start the Game'
+				text: 'Please Wait...',
+				color: '#fff',
+				bottom: 50,
+				height: 25,
+				width:150,
+				left: 100
 			});
 			instance.add(standby);
 			
@@ -178,7 +186,7 @@ exports.gameLobby = function (input) {
 	// Displays the access code
 	
 	var accessCodeLabel = Ti.UI.createLabel({
-		text: 'Access Code: ' + accessCode,
+		text: '  Access Code: ' + accessCode,
 		color: '#fff',
 		bottom: 100,
 		height:50,
@@ -204,21 +212,17 @@ exports.gameLobby = function (input) {
 		title:'back',
 		height: 20,
 		width: 100,
-		bottom:0
+		bottom:10
 	});
 	instance.add(backButton);
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
-		clearInterval(gameStatusTimer);
 		clearInterval(lobbyUpdateTimer);
-		var win1 = Titanium.UI.createWindow();
-		win1.open()
-		var homePage = require('ui/common/homePage');
-		var Home = Titanium.UI.createWindow();
-		var homeScreen = new homePage();
-		Home.add(homeScreen);
-		win1.add(Home);
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/

@@ -128,23 +128,18 @@ exports.joinGame = function() {
 	/*--------------------------------------------------*/
 	
 	
+	// Table click listener
 	
-	
-	// table click listener
 	Ti.App.addEventListener('gameSelected', function(data){
-		//alert('game selected with gameID: ' + data.gameID);
 		
-		//load access code screen
+		
+		// Load access code screen
+		
 		aCode = require('ui/common/aCode');
 		accessCodeScreen = new aCode({gameID:data.gameID});
 		accessCodeScreen.open();
 		
-		// var newWin = Ti.UI.createWindow({backgroundColor: '#000'});
-		// open it
-		// newWin.open();
-		// alert('Game ID is: ' + data.gameID)
-		// alert('aCode gameID' + data.gameID);
-		//newWin.add(aCodeWin);
+		
 		
 	});
 	
@@ -162,7 +157,9 @@ exports.joinGame = function() {
 	//listens for click on back button
 	backButton.addEventListener('click', function(e){
 		var homePage = require('ui/common/homePage');
-		homePage();
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	});
 	
 	instance.add(backButton);
