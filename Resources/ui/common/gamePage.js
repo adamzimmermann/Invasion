@@ -552,6 +552,75 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	// Legend Window
+	
+	// Legend Button
+	var legendButton = Ti.UI.createButton({
+		height:20,
+		bottom:10,
+		left:30,
+		width:90,
+		title:'Legend'
+	});
+	
+	// Add it to the window
+	instance.add(legendButton);
+	
+	// The event listener
+	legendButton.addEventListener('click', function(){
+		
+		
+		var legWin = Ti.UI.createWindow({
+			height: 350,
+			width: 200,
+			backgroundColor: '#000'
+		});
+		
+		legWin.open();
+		data = [];
+		
+		data[0] = Ti.UI.createTableViewRow({title: 'You', leftButton: ''});
+		data[1] = Ti.UI.createTableViewRow({title: 'Alien Flag', leftImage: 'images/miniIcons/Alien/Alien_Flag.png'});
+		data[2] = Ti.UI.createTableViewRow({title: 'Human Flag', leftImage: 'images/miniIcons/Human/Human_Flag.png'});
+		data[3] = Ti.UI.createTableViewRow({title: 'Alien', leftImage: 'images/miniIcons/Alien/Alien_Normal.png'});
+		data[4] = Ti.UI.createTableViewRow({title: 'Tagged Alien', leftImage: 'images/miniIcons/Alien/Alien_Tagged.png'});
+		data[5] = Ti.UI.createTableViewRow({title: 'Alien Flag Carrier', leftImage: 'images/miniIcons/Alien/Alien_Carrier.png'});
+		data[6] = Ti.UI.createTableViewRow({title: 'Human', leftImage: 'images/miniIcons/Human/Human.png'});
+		data[7] = Ti.UI.createTableViewRow({title: 'Tagged Human', leftImage: 'images/miniIcons/Human/Human_Tagged.png'});
+		data[8] = Ti.UI.createTableViewRow({title: 'Human Flag Carrier', leftImage: 'images/miniIcons/Human/Human_Carrier.png'});
+		
+		
+		var scrolly = Ti.UI.createScrollableView({});
+		legTable = Ti.UI.createTableView({
+			data:data,
+			height: 300,
+			width:150
+		});
+		
+		
+		
+		scrolly.add(legTable);
+		legWin.add(scrolly);
+		
+		// Close Button
+		var close = Ti.UI.createButton({
+			bottom:2,
+			height:20,
+			width:50,
+			title:'Close'
+		})
+		
+		legWin.add(close);
+		close.addEventListener('click', function(){
+			legWin.close();
+		});
+		
+	});
+	
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	
 	// Add To the Window
 	
 	instance.add(mapCreateView);
