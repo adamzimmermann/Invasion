@@ -214,8 +214,22 @@ exports.gamePage = function(input) {
 	}
 	
 	
-	/*--------------------------------------------------*/	
+	/*--------------------------------------------------*/
 	
+	// Scoring System
+	
+	// GUI
+	var scoreHeader = Ti.UI.createLabel({
+		
+	});
+	// Function called when a team captures
+	function teamScored(input){
+		
+	};
+	// 
+	
+		
+	/*--------------------------------------------------*/
 
 
 	// Creates a Map View
