@@ -50,7 +50,7 @@ exports.homePage = function() {
 		var newWin = Ti.UI.createWindow();
 		newWin.open();
 		var createGview = new createGame();
-		newWin.add(createGview);
+		newWin.add(createGview); //FIX***************
 	});
 	var button3 = Ti.UI.createButton({
 		title:'About',
@@ -70,7 +70,8 @@ exports.homePage = function() {
 	cheatButton.addEventListener('click', function(){
 		var gamePage = require('ui/common/gamePage');
 		userID = Ti.Platform.id;
-		var game = new gamePage({gameID: 117, userID: '12131231'});
+		//var game = new gamePage({gameID: 117, userID: '12131231'});
+		var game = new gamePage({gameID: 117, userID: userID});
 	});
 	
 	homePageView.add(cheatButton)
