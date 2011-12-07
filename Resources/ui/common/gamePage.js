@@ -26,15 +26,47 @@ exports.gamePage = function(input) {
 	if( Titanium.Geolocation.locationServicesEnabled === false ) {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
+	
+	// Called after location found
+	function updatePosition(e) {
+		if( ! e.success || e.error ) {
+		    alert("Unable to get your location.");
+		    Ti.API.debug(JSON.stringify(e));
+		    Ti.API.debug(e);
+		    return;
+		}
+		if(onlyOnce == 0) {
+			// onlyOnce = 1;
+		 	// fires location found event
+		    Ti.App.fireEvent("app:got.location", {
+		        "coords" : e.coords
+			});
+		}
+	};
+	
+	// Waits for location to be found
+	Ti.App.addEventListener("app:got.location", function(d) {
+	    Ti.API.debug(JSON.stringify(d));
+	    Ti.Geolocation.removeEventListener('location', updatePosition);	
+	});
+	
+	// Gets current location
+	Titanium.Geolocation.getCurrentPosition( updatePosition );   
+	
+	
+	
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	
 	
 	// Checks if current user is a flag placer
-	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
+	//var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 
 
+	
+	
 	/*----------------------------------------------------------------------------------------------------*/
+	
 	
 	
 	// Checks if flags are placed
@@ -46,12 +78,23 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	onlyOnce = 0;
 	
+	Ti.App.addEventListener("app:got.location", function(d) {
+	    Ti.API.debug(JSON.stringify(d));
+	    Ti.Geolocation.removeEventListener('location', updatePosition);	
+	
+		if (onlyOnce == 0){
 	
 	// Listens for information determining if user is a flag placer
-	Ti.App.addEventListener('userInfo', function(input) {
+	//Ti.App.addEventListener('userInfo', function(input) {
 		//check if the user is a flag placer
-		if(input.data.flagPlacer == '1') {
+		
+		// JUST FOR TESTING!!!!
+		//input.data.
+		flagPlacer = 1;
+		
+		if(flagPlacer == '1') {
 			//notify them and have them navigate to the desired location
 			alert('you are the flag placer');
 			alert('navigate to the desired flag location and select place flag');
@@ -59,7 +102,7 @@ exports.gamePage = function(input) {
 			//adds Place Flag button
 			var placeFlagButton = Ti.UI.createButton({
 				height:50,
-				top:390,
+				top:10,
 				width:120,
 				title:'Place Flag'
 			});
@@ -69,7 +112,24 @@ exports.gamePage = function(input) {
 			//add event listenter
 			placeFlagButton.addEventListener('click', function() {
 				//starts timer to check if both flags are placed
+				
+				
 				flagsPlacedTimer = setInterval(checkFlags, 5000);
+				//if input.data.teamName == 'Human'
+				var flag = Ti.Map.createAnnotation({
+					animate:true,
+					image: 'images/miniIcons/Human/Human_Flag.png',
+					latitude: d.coords.latitude,
+					longitude: d.coords.longitude
+				});
+				//if input.data.teamName == 'Alien'
+				// var flag = Ti.Map.createAnnotation({
+					// animate:true,
+					// image: 'images/miniIcons/Alien/Alien_Flag.png',
+					// latitude: d.coords.latitude,
+					// longitude: d.coords.longitude
+				// });
+				mapCreateView.addAnnotation(flag);
 				
 				//removes place flag button
 				instance.remove(placeFlagButton);
@@ -77,6 +137,8 @@ exports.gamePage = function(input) {
 				
 				//place flag button clicked
 				Ti.API.debug('place flag button clicked')
+				
+				onlyOnce = 1;
 				
 				//saves the flag location
 				var webAPI = new globals.xml.placeFlag(); // NEEDS LOCATION DATA ********
@@ -89,6 +151,8 @@ exports.gamePage = function(input) {
 			//starts timer to check if both flags are placed
 			flagsPlacedTimer = setInterval(checkFlags, 5000);	
 		}
+		};
+	//});
 	});
 	
 	
@@ -252,7 +316,7 @@ exports.gamePage = function(input) {
 	
 	//updates flag icons on the map
 	function updateFlags() {
-		Ti.App.debug('checking flagStatus');
+		Ti.API.debug('checking flagStatus');
 		var webAPI = new globals.xml.flagStatus({gameID:gameID});
 		
 		Ti.App.addEventListener('flagStatus', function(input){
