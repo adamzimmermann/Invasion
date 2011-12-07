@@ -327,8 +327,8 @@ function placeFlag (teamID, latitude, longitude) {
 	xhr.send({
 		action: 'placeFlag',
 		teamID: teamID,
-		latitude: latitude,
-		longitude: longitude
+		flagLatitude: latitude,
+		flagLongitude: longitude
 	});
 	xhr.onload = function(e) {	
 	 	Ti.App.fireEvent('placeFlag', {data:this.responseText});

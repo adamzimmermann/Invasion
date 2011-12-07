@@ -12,6 +12,8 @@ exports.gamePage = function(input) {
 	
 	gameID = input.gameID
 	
+	alert(gameID);
+	
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Begin Geolocation Services
@@ -138,16 +140,19 @@ exports.gamePage = function(input) {
 				//place flag button clicked
 				Ti.API.debug('place flag button clicked')
 				
-				onlyOnce = 1;
+				
 				
 				//saves the flag location
-				var webAPI = new globals.xml.placeFlag({flagLatitude: flag.Latitude, flagLongitude: flag.Longitude}); // NEEDS LOCATION DATA ********
-			});		
+				
+				// had to use the mock team ID becasue userInfo isn't being called for testing
+				var webAPI = new globals.xml.placeFlag({teamID: 304, latitude: d.coords.latitude, longitude: d.coords.longitude}); // NEEDS LOCATION DATA ********
+				
+				onlyOnce = 1;
+			});	
 		}
 		else {
 			//notify them to wait for flags to be placed
 			alert('wait for flags to be placed'); //convert to window that is dismissed when game starts *******
-			
 			//starts timer to check if both flags are placed
 			flagsPlacedTimer = setInterval(checkFlags, 5000);	
 		}
@@ -186,7 +191,30 @@ exports.gamePage = function(input) {
 		
 		//receives flag location data
 		Ti.App.addEventListener('flagLocations', function(input){
-			//add flag data to the map************
+			/*-------------------------------*/
+			
+			// if both flags placed **** gonna need this from the XML
+			
+			if (input.teamID = 'Human'){
+				var humanFlag = Ti.Map.createAnnotation({
+					animate:true,
+					image: 'images/miniIcons/Human/Human_Flag.png',
+					latitude: input.latitude,
+					longitude: input.longitude
+				});
+				mapCreateView.addAnnotation(humanFlag);
+			 
+			} else if (input.team = 'Alien') {
+				var alienFlag = Ti.Map.createAnnotation({
+					animate:true,
+					image: 'images/miniIcons/Alien/Alien_Flag.png',
+					latitude: input.latitude,
+					longitude: input.longitude
+				});
+				mapCreateView.addAnnotation(alienFlag);
+			};
+			
+			/*-------------------------------*/
 		});
 		
 		
@@ -320,7 +348,8 @@ exports.gamePage = function(input) {
 		var webAPI = new globals.xml.flagStatus({gameID:gameID});
 		
 		Ti.App.addEventListener('flagStatus', function(input){
-			//annotate the map *************
+			
+			
 		});
 	}
 	
