@@ -102,9 +102,10 @@ exports.gamePage = function(input) {
 			
 			//adds Place Flag button
 			var placeFlagButton = Ti.UI.createButton({
-				height:50,
-				top:10,
-				width:120,
+				height:20,
+				bottom:10,
+				right:30,
+				width:90,
 				title:'Place Flag'
 			});
 			instance.add(placeFlagButton);
@@ -171,7 +172,7 @@ exports.gamePage = function(input) {
 	// Creates a Map View
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
-			height:350,
+			height:320,
 			width:275,
 			top: 100,
 			userLocation: true,
@@ -226,7 +227,6 @@ exports.gamePage = function(input) {
 					longitude: input.longitude
 				});
 				mapCreateView.addAnnotation(humanFlag);
-			 
 			} else if (input.team = 'Alien') {
 				var alienFlag = Ti.Map.createAnnotation({
 					animate:true,
@@ -239,10 +239,13 @@ exports.gamePage = function(input) {
 			
 			/*-------------------------------*/
 		});
-		
-		
+		Ti.App.addEventListener('flagsPlaced', function(){
+			alert('Both flags placed. Get ready.');
+			gameTimer = setInterval(gamePlay, 5000);
+			gamePlay();
+		});
 		//start game timer
-		gameTimer = setInterval(gamePlay, 5000);
+		
 		
 	}
 	
@@ -260,7 +263,12 @@ exports.gamePage = function(input) {
 		Titanium.Geolocation.getCurrentPosition( updatePosition ); 
 		
 		//check tagging conditions
-		//checkConditions();
+		
+		checkConditions();
+		
+		// if (distance(player, players) < 10)
+		
+		
 		
 		//update flag conditions
 		updateFlags();	
@@ -268,6 +276,13 @@ exports.gamePage = function(input) {
 		
 		
 	}
+
+
+	function checkConditions(){
+		alert('checking conditions')
+	};
+	
+	
 
 	/*----------------------------------------------------------------------------------------------------*/
 
@@ -313,19 +328,19 @@ exports.gamePage = function(input) {
 	
 	// Scoring System
 	
-	function displayScore(input) {
+	//function displayScore(input) {
 		//display human score
 		var humanScore = Ti.UI.createLabel({
-			text: 'Humans: ' + input.humanScore,
+			text: '  Humans: ' /*+ input.humanScore,*/,
 			color: '#fff',
-			top: 0,
-			left: 0,
-			height:50,
-			width: 50,
-			font: {fontFamily:'arial', fontSize: 22},
+			top: 65,
+			left: 25,
+			height:30,
+			width: 90,
+			font: {fontFamily:'arial', fontSize: 15},
 			borderColor: '#d6d6d6',
 			borderRadius: 2,	 
-			borderWidth: 3,
+			borderWidth: 1,
 			backgroundColor: '#000'
 		});
 		instance.add(humanScore);
@@ -333,20 +348,20 @@ exports.gamePage = function(input) {
 		
 		//display alien score
 		var alienScore = Ti.UI.createLabel({
-			text: 'Aliens: ' + input.alienScore,
+			text: '    Aliens: ' /*+ input.alienScore*/,
 			color: '#fff',
-			top: 0,
-			right: 0,
-			height: 50,
-			width: 50,
-			font: {fontFamily:'arial', fontSize: 22},
+			top: 65,
+			right: 25,
+			height: 30,
+			width: 90,
+			font: {fontFamily:'arial', fontSize: 15},
 			borderColor: '#d6d6d6',
 			borderRadius: 2,	 
-			borderWidth: 3,
+			borderWidth: 1,
 			backgroundColor: '#000'
 		});
 		instance.add(alienScore);
-	}
+	//}
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
@@ -493,12 +508,7 @@ exports.gamePage = function(input) {
 	// function updateMap(data) {
 		// alert('other locations recieved' + data);
 	// }
-	
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	//Titanium.Geolocation.getCurrentPosition( updatePosition );   
-	//Titanium.Geolocation.addEventListener( 'location', updatePosition ); 
-	
+
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	
@@ -552,10 +562,10 @@ exports.gamePage = function(input) {
 	
 	// Back Button
 	var back = Ti.UI.createButton({
-		title:'back',
+		title:'Home',
 		height: 20,
-		width: 100,
-		bottom:0
+		width: 60,
+		bottom:10
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
