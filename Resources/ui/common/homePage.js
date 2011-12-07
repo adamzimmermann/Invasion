@@ -64,10 +64,18 @@ exports.homePage = function() {
 	
 	// Open the About Screen
 	button3.addEventListener('click', function(){
-		var aboutPage = require('ui/common/aboutPage');
-		var aboutScreen = new aboutPage();
-		aboutScreen.open();
-		instance.close();
+		if (globals.osname == 'iphone'){
+			var aboutPage = require('ui/common/aboutPage');
+			var aboutScreen = new aboutPage();
+			aboutScreen.open();
+			instance.close();
+		} else if (globals.osname == 'android'){
+			var aboutPage = require('ui/common/aboutPage');
+			var aboutScreen = new aboutPage();
+			aboutScreen.open();
+			instance.close();
+		}
+ 
 	});
 	
 	/*--------------------------------------------------*/
@@ -84,7 +92,7 @@ exports.homePage = function() {
 	cheatButton.addEventListener('click', function(){
 		userID = Ti.Platform.id;
 		var gamePage = require('ui/common/gamePage');
-		var gameScreen = new gamePage({gameID: 117, userID: '12131231'});
+		var gameScreen = new gamePage({gameID: 117, userID: userID});
 		gameScreen.open();
 		instance.close();
 	});

@@ -17,7 +17,7 @@ var globals = {
 		var homeScreen = new homePage();
 		homeScreen.open();
 	}
-	else {
+	else if (globals.osname == 'android'){
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();
 		homeScreen.open();

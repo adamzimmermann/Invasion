@@ -319,16 +319,16 @@ function gameReady (gameID) {
 
 // Return Value:
 // true if it worked, false if something didn’t go right
-function placeFlag (teamID, latitude, longitude) {
+function placeFlag (input) {
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
 	xhr.send({
 		action: 'placeFlag',
-		teamID: teamID,
-		flagLatitude: latitude,
-		flagLongitude: longitude
+		teamID: input.teamID,
+		latitude: input.latitude,
+		longitude: input.longitude
 	});
 	xhr.onload = function(e) {	
 	 	Ti.App.fireEvent('placeFlag', {data:this.responseText});
@@ -545,10 +545,11 @@ function userInfo (input) {
     	var data = {
     		flagPlacer: xml.documentElement.getElementsByTagName("flagPlacer").item(0).text,
     		teamID: xml.documentElement.getElementsByTagName("teamID").item(0).text,
+    		teamName: xml.documentElement.getElementsByTagName("teamName").item(0).text,
     		userID: xml.documentElement.getElementsByTagName("playerID").item(0).text,
     		userName: xml.documentElement.getElementsByTagName("userName").item(0).text,
     	};
-    	
+    	alert('team name is: ' + data.teamName);
     	Ti.App.fireEvent('userInfo', {data:data});
 	}
 }

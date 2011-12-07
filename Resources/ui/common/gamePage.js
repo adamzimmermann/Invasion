@@ -61,7 +61,7 @@ exports.gamePage = function(input) {
 	
 	
 	// Checks if current user is a flag placer
-	//var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
+	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 
 
 	
@@ -85,79 +85,75 @@ exports.gamePage = function(input) {
 	    Ti.API.debug(JSON.stringify(d));
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
 	
-		if (onlyOnce == 0){
+		if (onlyOnce == 0);
 	
 		// Listens for information determining if user is a flag placer
-		//Ti.App.addEventListener('userInfo', function(input) {
-		//check if the user is a flag placer
-		
-		// JUST FOR TESTING!!!!
-		//input.data.
-		flagPlacer = 1;
-		
-		if(flagPlacer == '1') {
-			//notify them and have them navigate to the desired location
-			alert('you are the flag placer');
-			alert('navigate to the desired flag location and select place flag');
-			
-			//adds Place Flag button
-			var placeFlagButton = Ti.UI.createButton({
-				height:20,
-				bottom:10,
-				right:30,
-				width:90,
-				title:'Place Flag'
-			});
-			instance.add(placeFlagButton);
-			
-			
-			//add event listenter
-			placeFlagButton.addEventListener('click', function() {
-				//starts timer to check if both flags are placed
+		Ti.App.addEventListener('userInfo', function(input) {
+			alert('Team Name is: ' + input.data.teamName)
+			//they are the flag placer
+			if(input.data.flagPlacer == '1') {
+				//notify them and have them navigate to the desired location
+				alert('you are the flag placer');
+				alert('navigate to the desired flag location and select place flag');
 				
-				
-				flagsPlacedTimer = setInterval(checkFlags, 5000);
-				//if input.data.teamName == 'Human'
-				var flag = Ti.Map.createAnnotation({
-					animate:true,
-					image: 'images/miniIcons/Human/Human_Flag.png',
-					latitude: d.coords.latitude,
-					longitude: d.coords.longitude
+				//adds Place Flag button
+				var placeFlagButton = Ti.UI.createButton({
+					height:20,
+					bottom:10,
+					right:30,
+					width:90,
+					title:'Place Flag'
 				});
-				//if input.data.teamName == 'Alien'
-				// var flag = Ti.Map.createAnnotation({
-					// animate:true,
-					// image: 'images/miniIcons/Alien/Alien_Flag.png',
-					// latitude: d.coords.latitude,
-					// longitude: d.coords.longitude
-				// });
-				mapCreateView.addAnnotation(flag);
-				
-				//removes place flag button
-				instance.remove(placeFlagButton);
-				placeFlagButton.removeEventListener('click', function(){});
-				
-				//place flag button clicked
-				Ti.API.debug('place flag button clicked')
+				instance.add(placeFlagButton);
 				
 				
-				
-				//saves the flag location
-				
-				// had to use the mock team ID becasue userInfo isn't being called for testing
-				var webAPI = new globals.xml.placeFlag({teamID: 304, latitude: d.coords.latitude, longitude: d.coords.longitude}); // NEEDS LOCATION DATA ********
-				
-				onlyOnce = 1;
-			});	
-		}
-		else {
-			//notify them to wait for flags to be placed
-			alert('wait for flags to be placed'); //convert to window that is dismissed when game starts *******
-			//starts timer to check if both flags are placed
-			flagsPlacedTimer = setInterval(checkFlags, 5000);	
-		}
-		};
-		 var region={
+				//listens for place flag button to be clicked
+				placeFlagButton.addEventListener('click', function() {
+					//starts timer to check if both flags are placed
+					flagsPlacedTimer = setInterval(checkFlags, 5000);
+					
+					//place human flag
+					if(input.data.teamName == 'Humans') {
+						alert('In the humans conditional')
+						var flag = Ti.Map.createAnnotation({
+							animate:true,
+							image: 'images/miniIcons/Human/Human_Flag.png',
+							latitude: d.coords.latitude,
+							longitude: d.coords.longitude
+						});
+						mapCreateView.addAnnotation(flag);
+					}
+					//place alien flag
+					if(input.data.teamName == 'Aliens') {
+						var flag = Ti.Map.createAnnotation({
+							animate:true,
+							image: 'images/miniIcons/Alien/Alien_Flag.png',
+							latitude: d.coords.latitude,
+							longitude: d.coords.longitude
+						});
+						mapCreateView.addAnnotation(flag);
+					}
+					//removes place flag button
+					instance.remove(placeFlagButton);
+					placeFlagButton.removeEventListener('click', function(){});
+					
+					//place flag button clicked
+					Ti.API.debug('place flag button clicked')
+					alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
+					//saves the flag location
+					var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
+					
+					onlyOnce = 1;
+				});	
+			}
+			else {
+				//notify them to wait for flags to be placed
+				alert('wait for flags to be placed'); //convert to window that is dismissed when game starts *******
+				//starts timer to check if both flags are placed
+				flagsPlacedTimer = setInterval(checkFlags, 5000);	
+			}
+		});
+		var region={
             latitude: d.coords.latitude,
             longitude: d.coords.longitude,
             animate:true,
@@ -166,7 +162,7 @@ exports.gamePage = function(input) {
         };
         mapCreateView.setLocation(region);
 	});
-	//});
+	
 	/*----------------------------------------------------------------------------------------------------*/
 
 	// Creates a Map View
