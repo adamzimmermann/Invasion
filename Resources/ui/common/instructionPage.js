@@ -1,10 +1,11 @@
 exports.instructionPage = function(input) {
 	
+	// Creates the Instruction Page Window
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
-		// backgroundColor:'#000'
 	});
-	instance.open();
+	
+	/*--------------------------------------------------*/
 	
 	/*
 	var readContents;
@@ -40,7 +41,10 @@ exports.instructionPage = function(input) {
 	
 	*/
 	
-	//creates a label
+	/*--------------------------------------------------*/
+	
+	// Creates a Title
+	
 	var title = Ti.UI.createLabel({
 		text: 'Instructions',
 		color: '#fff',
@@ -55,9 +59,11 @@ exports.instructionPage = function(input) {
 	});
 	instance.add(title);
 	
+	/*--------------------------------------------------*/
+	
+	// Creates a Continue Button
 	
 	
-	//creates a Continue Button
 	var continueButton = Ti.UI.createButton({
 		height:50,
 		top:390,
@@ -66,13 +72,13 @@ exports.instructionPage = function(input) {
 	})
 	instance.add(continueButton);
 	
-	
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
 		var gamePage = require('ui/common/gamePage')
 		gamePage(input);
 	});
 	
+	/*--------------------------------------------------*/
 
 	return instance;
 };

@@ -1,28 +1,32 @@
 exports.joinGame = function() {
-	// create a window
 	
-	var view = Ti.UI.createWindow({
+	// Create the Join Game Window
+	var instance = Ti.UI.createWindow({
 		backgroundImage: 'images/smallLogoTop.jpg'
-		//backgroundColor:'#000'
 	});	
 	
-
 	
+	/*--------------------------------------------------*/
+	
+	// Geolocation Code
+	
+	
+	// Makes sure the Get Location is only fired once.
 	var onlyOnce=0;
 	
-	// sets up GPS interface
+	// Sets up GPS Interface
 	Ti.App.GeoApp = {};
 	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
 	Ti.Geolocation.purpose = "testing";
 	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 	Titanium.Geolocation.distanceFilter = 10;
 	 
-	//checks if GPS is enabled
+	// Checks if GPS is enabled
 	if( Titanium.Geolocation.locationServicesEnabled === false ) {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
 	
-	//called after location found
+	// Called after location found
 	function updatePosition(e) {
 		if( ! e.success || e.error ) {
 		    alert("Unable to get your location.");
@@ -31,23 +35,18 @@ exports.joinGame = function() {
 		    return;
 		}
 		if(onlyOnce == 0) {
-			//onlyOnce = 1;
-		 	//fires location found event
+			// onlyOnce = 1;
+		 	// fires location found event
 		    Ti.App.fireEvent("app:got.location", {
 		        "coords" : e.coords
 			});
 		}
 	};
 	
-	//waits for location to be found
+	// Waits for location to be found
 	Ti.App.addEventListener("app:got.location", function(d) {
-	    // Ti.App.GeoApp.f_lng = d.longitude;
-	    // Ti.App.GeoApp.f_lat = d.latitude;
 	    Ti.API.debug(JSON.stringify(d));
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
-	    // alert(d.coords.latitude)
-	    // alert(d.coords.longitude)
-		
 		if(onlyOnce == 0) {
 			onlyOnce = 1;
 			//finds games within 10 miles
@@ -55,11 +54,16 @@ exports.joinGame = function() {
 		}
 	});
 	
-	//gets current location
+	// Gets current location
 	Titanium.Geolocation.getCurrentPosition( updatePosition );   
 	
-
-	// the event listener to trigger when the data has been loaded
+	
+	
+	/*--------------------------------------------------*/
+	
+	
+	
+	// The event listener to trigger when the data from 'Find Games' has been loaded
 	Ti.App.addEventListener('findGames', function(input){
 		
 		Ti.App.removeEventListener('findGames', function(input){});
@@ -89,7 +93,7 @@ exports.joinGame = function() {
 		
 			data.push(row);
 		}
-		// list of games
+		// List of games
 		var table = Ti.UI.createTableView({
 			top: 140,
 			height: 280,
@@ -99,7 +103,7 @@ exports.joinGame = function() {
 			borderWidth: 3,
 			data: data,
 		});
-		// header label	
+		// Header label	
 		var title = Ti.UI.createLabel({
 			text: '  Choose a Game',
 			color: '#fff',
@@ -113,12 +117,18 @@ exports.joinGame = function() {
 			backgroundColor: '#000'
 		})
 
-		// add the title label
-		view.add(title);
-		// add the table
-		view.add(table);
+		// Add the title label
+		instance.add(title);
+		// Add the table
+		instance.add(table);
 	});
 
+	
+	
+	/*--------------------------------------------------*/
+	
+	
+	
 	
 	// table click listener
 	Ti.App.addEventListener('gameSelected', function(data){
@@ -138,6 +148,9 @@ exports.joinGame = function() {
 		
 	});
 	
+	/*--------------------------------------------------*/
+	
+	
 	//creates back button
 	var backButton = Ti.UI.createButton({
 		title:'back',
@@ -145,14 +158,19 @@ exports.joinGame = function() {
 		width: 100,
 		bottom:0
 	});
-	view.add(backButton);
 	
 	//listens for click on back button
 	backButton.addEventListener('click', function(e){
 		var homePage = require('ui/common/homePage');
 		homePage();
 	});
+	
+	instance.add(backButton);
+	
+	
+	/*--------------------------------------------------*/
+	
 			
-	return view;
+	return instance;
 };
 

@@ -1,37 +1,61 @@
 exports.gameLobby = function (input) {
 	
+	//Create the Game Lobby Window
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
-		//backgroundColor:'#000'
 	});
+	
+	/*--------------------------------------------------*/
+	
+	// Simplifies Arguments  
 	
 	accessCode = input.accessCode;
 	gameID = input.gameID;
 	userID = Ti.Platform.id;
 	
 	
-	//loads the initial data
+	/*--------------------------------------------------*/
+	
+	
+	// Loads the initial data
 	var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
 	
-	//creates a lobby update timer
+	
+	/*--------------------------------------------------*/
+	
+	
+	// Creates a lobby update timer
 	lobbyUpdateTimer = setInterval(lobbyData, 5000);
 	
-	//calls gamePlayers to get list of players
+	
+	/*--------------------------------------------------*/
+	
+	
+	// Calls gamePlayers to get list of players
 	function lobbyData() {
 		var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
-	}
+	};
 	
-	// checks the game status
+	
+	/*--------------------------------------------------*/
+	
+	
+	// Checks the game status
 	function statusUpdate() {
 		var webAPI3 = new globals.xml.gameStatus(gameID);
-	}
+	};
 	
 	
-	//listens for data from gamePlayers
-	// displays list of registered players
+	/*--------------------------------------------------*/
+	
+	// Creates the Game Lobby Table with Game Players
+	
+	// Listens for data from gamePlayers
+	// Displays list of registered players
 	Ti.App.addEventListener('gamePlayers', function(input) {
-		//alert('data updated');
+
 		var data = [];
+		
 		for(var key in input.data){
 			var g = input.data[key]
 			var rowdata = {
@@ -39,6 +63,8 @@ exports.gameLobby = function (input) {
 			};
 			data.push(rowdata);
 		}
+		
+		// The Lobby Table
 		var lobbyTable = Ti.UI.createTableView({
 			top: 140,
 			height: 260,
@@ -48,6 +74,8 @@ exports.gameLobby = function (input) {
 			borderWidth: 3,
 			data: data,
 		});
+		
+		// The Table Title
 		var title = Ti.UI.createLabel({
 			text: '  Game Lobby',
 			color: '#fff',
@@ -59,61 +87,71 @@ exports.gameLobby = function (input) {
 			borderRadius: 2,	 
 			borderWidth: 3,
 			backgroundColor: '#000'
-		})
+		});
+		
 		//instance.remove(title);
 		//instance.remove(lobbyTable)
+		
 		instance.add(title);
 		instance.add(lobbyTable);
 	});
 	
-	//checks if current user is the game initiator
+	
+	/*--------------------------------------------------*/
+	
+	// This is what the 'Game Initiator will see
+	
+	
+	// Checks if current user is the game initiator
 	var webAPI2 = new globals.xml.gameInitiator(input.gameID, userID);
 	
 	
-	// gets information about whether current user is the game initiator
+	// Gets information about whether current user is the game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
 		
-		// if they are the game initiator
+		// If they are the game initiator
 		if (input.data == "true") {
 			
-			//creates a start button
+			// Creates a start button
 			var startButton = Ti.UI.createButton({
-				bottom: 15,
+				bottom: 25,
 				height:30,
 				width:100,
 				title: 'Start Game!'
 			});
+			
+			// Add the button to the Window
 			instance.add(startButton);
 				
-			// listens for start button to be clicked
+			// Listens for start button to be clicked
 			startButton.addEventListener('click', function() {	
-				//creates teams and assigns players to teams
-				//alert('start game clicked and game ID is' + gameID + userID);
 				
+				// Creates teams and assigns players to teams
 				var webAPI3 = new globals.xml.startGame(gameID);
-				var teamRoster = require('ui/common/teamRoster')
-				//alert('right before gameInformation call');
-				//gets information about who is on the user's team
-				clearInterval(lobbyUpdateTimer);
-				teamRoster({gameID: gameID, userID: userID});
+				var teamRoster = require('ui/common/teamRoster');
+				var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
+				teamRosterScreen.open();
+				
+				// Stop the Lobby Refresh
+				clearInterval(lobbyUpdateTimer);	
 			});
 		}
-		// if they just joined the game and aren't the initiator
+		// If they just joined the game and aren't the initiator
 		else {
-			//displays standby text
+			// Displays standby text
 			var standby = Ti.UI.createLabel({
 				text: 'Standby to Start the Game'
 			});
 			instance.add(standby);
 			
 			
-			//check if the game has started
+			// Check if the game has started
 			var webAPI3 = new globals.xml.gameStatus(gameID);
 			
-			//start game status timer
+			// Start game status timer
 			gameStatusTimer = setInterval(statusUpdate, 5000);
 			
-			//listens for the game status information
+			// Listens for the game status information
 			Ti.App.addEventListener('gameStatus', function(e){
 				// game has started
 				if(e.data == 'true') { //
@@ -134,7 +172,11 @@ exports.gameLobby = function (input) {
 	});
 	
 	
-	// displays the access code
+	/*--------------------------------------------------*/
+	
+	
+	// Displays the access code
+	
 	var accessCodeLabel = Ti.UI.createLabel({
 		text: 'Access Code: ' + accessCode,
 		color: '#fff',
@@ -147,11 +189,17 @@ exports.gameLobby = function (input) {
 		borderWidth: 3,
 		backgroundColor: '#000'
 	});
+	// Add the Access Code Label
 	instance.add(accessCodeLabel);
 	
 	
+	/*--------------------------------------------------*/
+	
 	
 	// Back Button
+	
+	
+	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
 		title:'back',
 		height: 20,
@@ -160,7 +208,7 @@ exports.gameLobby = function (input) {
 	});
 	instance.add(backButton);
 	
-	// listens for back button to be clicked
+	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
 		clearInterval(gameStatusTimer);
 		clearInterval(lobbyUpdateTimer);
@@ -173,9 +221,7 @@ exports.gameLobby = function (input) {
 		win1.add(Home);
 	});
 	
-	
+	/*--------------------------------------------------*/
 	
 	return instance;
-	
-	
-}
+};

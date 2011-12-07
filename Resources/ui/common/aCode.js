@@ -1,25 +1,32 @@
 exports.aCode = function(data) {
-	// new window
-	//var gameLobby = require ('ui/common/gameLobby')
 	
+	// Create Access Code Window
 	var instance = Ti.UI.createWindow({
 		backgroundImage: 'images/MediumLogoTop.jpg'
-		//backgroundColor:'#000'
 	});
-	instance.open();
-	// alert(data);
 	
-	//userID
+	/*--------------------------------------------------*/
+	
+	
+	// userID
 	userID = Ti.Platform.id;
 	
-	//gameID
+	// gameID
 	gameID = data.gameID;
 
 	
-	//what does this do? ***************
+	/*--------------------------------------------------*/
+	
+	
+	// Creates auto-adjusting text fields
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
 	
-	// what does this do? *************
+	
+	/*--------------------------------------------------*/
+	
+	
+	// GUI
+	
 	var joinGameLabel = Ti.UI.createLabel({
 		top: 180,
 		height: 200,
@@ -45,10 +52,10 @@ exports.aCode = function(data) {
 		left: 54,
 		color: '#d6d6d6',
 		text: "Enter a Username",
-		
-		
 	});
-	//creates a label for access code field
+	
+	
+	// creates a label for access code field
 	var accessCodeText = Ti.UI.createLabel({
 		font: {fontFamily:'Arial',fontSize:14},
 		top: 130,
@@ -57,6 +64,13 @@ exports.aCode = function(data) {
 		text: "Enter your Access Code",
 		
 	});
+	
+	
+	
+	/*--------------------------------------------------*/
+	
+	
+	// Enter User Info Fields
 	
 	//creates a user name input field
 	var userName = Ti.UI.createTextField({
@@ -80,6 +94,12 @@ exports.aCode = function(data) {
 		clearOnEdit:true	
 	})
 	
+	
+	
+	
+	/*--------------------------------------------------*/
+	
+	
 	//creates a join game button
 	var joinGameButton = Ti.UI.createButton({
 		height:50,
@@ -89,7 +109,7 @@ exports.aCode = function(data) {
 		data: data
 	})
 	
-	// listens for join game button to clicked
+	// Listens for join game button to clicked
 	joinGameButton.addEventListener('click', function(e){
 		//alert('The GameID is :' + e.source.data)
 		
@@ -103,7 +123,10 @@ exports.aCode = function(data) {
 	});
 	
 	
-	//listens for access code verification
+	/*--------------------------------------------------*/
+	
+	
+	// Listens for access code verification
 	Ti.App.addEventListener('checkCode', function(input){
 		//alert('fired before joinGame:' + data.gameID);
 		if (input.data == "true"){
@@ -122,18 +145,22 @@ exports.aCode = function(data) {
 	});
 	
 	
-	// listens for join game event
+	// Listens for join game event
 	Ti.App.addEventListener('joinGame', function(input){
 		
-		alert('info going into gameLobby: ' + gameID + ', ' + userID + ', ' + input.data.accessCode + '.' )
+		alert('info going into gameLobby(change1): ' + gameID + ', ' + userID + ', ' + input.data.accessCode + '.' )
 		
 		//load game lobby screen
 		var gameLobby = require('ui/common/gameLobby');
-		var gameLobbyScreen = new gameLobby({gameID: gameID, userID: userID, accessCode: input.data.accessCode});
+		var gameLobbyScreen = new gameLobby(input);
 		gameLobbyScreen.open();
 			
 	});
 	
+	
+	/*--------------------------------------------------*/
+	
+	// Adds the auto-adjusting fields to the window
 	
 	scrolly.add(joinGameLabel);
 	scrolly.add(userNameText);
@@ -143,6 +170,8 @@ exports.aCode = function(data) {
 	scrolly.add(userName);
 	scrolly.add(accessCode);
 	instance.add(scrolly);
+	
+	/*--------------------------------------------------*/
 	
 	
 	// Back Button
@@ -163,9 +192,9 @@ exports.aCode = function(data) {
 		win1.add(Home);
 	});
 	
+	/*--------------------------------------------------*/
 	
-	
-	// return window
+
 	return instance;
 };
 

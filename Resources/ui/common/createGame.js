@@ -1,11 +1,24 @@
 exports.createGame = function() {
 	
-	var view = Ti.UI.createWindow({
+	// Creates the Create Game Window
+	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/MediumLogoTop.jpg'
 		//backgroundColor:'#000'
 	});
 	
+	
+	
+	/*--------------------------------------------------*/
+	
+	// Creates auto-adjusting text fields
 	var scrolly = Titanium.UI.createScrollView({contentHeight:'auto'});
+	
+	
+	
+	/*--------------------------------------------------*/
+	
+	// GUI
+	
 	
 	var createGameLabel = Ti.UI.createLabel({
 		top: 180,
@@ -39,9 +52,14 @@ exports.createGame = function() {
 		left: 54,
 		color: '#d6d6d6',
 		text: "Enter a Username",
-		
-		
 	});
+	
+	
+	
+	
+	/*--------------------------------------------------*/
+	
+	// Creates the Text Fields for User Info
 	
 	var gameName = Ti.UI.createTextField({
 		top: 250,
@@ -64,12 +82,20 @@ exports.createGame = function() {
 		clearOnEdit:true	
 	})
 	
+	
+	
+	/*--------------------------------------------------*/
+	
+	// Create Button
 	var createButton = Ti.UI.createButton({
 		height:50,
 		top:390,
 		width:120,
 		title:'Create Game'
 	})
+	
+	
+	/*--------------------------------------------------*/
 	
 	// Get Location
 	
@@ -126,16 +152,50 @@ exports.createGame = function() {
 	Titanium.Geolocation.getCurrentPosition( updatePosition );   
 	
 	
-
+	/*--------------------------------------------------*/
 
 	
-	// listens for result of Create Game
+	// Listens for result of Create Game
 	Ti.App.addEventListener('createGame', function(input){
 		// alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
 		var gameLobbyScreen = new gameLobby(input);
 		gameLobbyScreen.open();
 	});
+	
+	
+	
+	/*--------------------------------------------------*/
+	
+	
+	// Back Button
+	
+	
+	// Creates a Back Button
+	var backButton = Ti.UI.createButton({
+		title:'back',
+		height: 20,
+		width: 100,
+		bottom:0
+	});
+	instance.add(backButton);
+	
+	// Listens for back button to be clicked
+	backButton.addEventListener('click', function(e){
+		clearInterval(gameStatusTimer);
+		clearInterval(lobbyUpdateTimer);
+		var win1 = Titanium.UI.createWindow();
+		win1.open()
+		var homePage = require('ui/common/homePage');
+		var Home = Titanium.UI.createWindow();
+		var homeScreen = new homePage();
+		Home.add(homeScreen);
+		win1.add(Home);
+	});
+	
+	/*--------------------------------------------------*/
+	
+	// Adds everything to the Window
 	
 	scrolly.add(createGameLabel);
 	scrolly.add(nameGameText);
@@ -144,8 +204,11 @@ exports.createGame = function() {
 	scrolly.add(createButton);
 	scrolly.add(gameName);
 	scrolly.add(userName);
-	view.add(scrolly);
+	instance.add(scrolly);
 	
 	
-	return view;
+	/*--------------------------------------------------*/
+	
+	
+	return instance;
 };

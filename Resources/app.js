@@ -19,10 +19,12 @@ var globals = {
 	if (globals.osname == 'iphone') {
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();
+		homeScreen.open();
 	}
 	else {
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();
+		homeScreen.open();
 	}
 	
 	

@@ -1,14 +1,24 @@
 exports.gamePage = function(input) {
+	
+	// Creates the Game Page Window
+	
 	var instance = Ti.UI.createWindow({
 		backgroundImage:'images/SmallLogoTop.jpg'
-		// backgroundColor:'#000'
 	});
+	
+	
+	/*--------------------------------------------------*/
+	
+	// Simplifies Arguments
 	
 	gameID = input.gameID
 	
-	/*----------------------------------------------------------------------------------------------------*/
 	
-	// starts up GPS service
+	/*--------------------------------------------------*/
+		
+	// Begin Geolocation Tracking
+	
+	
 	Ti.App.GeoApp = {};
 	Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
 	Ti.Geolocation.purpose = "testing";
@@ -18,15 +28,22 @@ exports.gamePage = function(input) {
 	if( Titanium.Geolocation.locationServicesEnabled === false ) {
 	    Ti.API.debug('Your device has GPS turned off. Please turn it on.');
 	}
-	/*----------------------------------------------------------------------------------------------------*/
 	
-	//checks if current user is a flag placer
+	
+	
+	/*--------------------------------------------------*/	
+	
+	
+	
+	// Checks if current user is a flag placer
+	
 	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//checks if flags are placed
+	// Checks if flags are placed
+	
 	function checkFlags() {
 		//alert('gameID for checking if flags are placed: ' + input.gameID);
 		var webAPI = new globals.xml.gameReady(input.gameID);
@@ -34,7 +51,9 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//listens for information determining if user is a flag placer
+	// Listens for information determining if user is a flag placer
+	
+	
 	Ti.App.addEventListener('userInfo', function(input) {
 		//check if the user is a flag placer
 		if(input.data.flagPlacer == '1') {
@@ -77,9 +96,12 @@ exports.gamePage = function(input) {
 		}
 	});
 	
-	/*----------------------------------------------------------------------------------------------------*/
+	/*--------------------------------------------------*/	
 	
-	// waits for game to be ready
+	
+	// Waits for game to be ready
+	
+	
 	Ti.App.addEventListener('gameReady', function(input){
 		// both flags are placed
 		if(input.data == 'true'){
@@ -97,9 +119,14 @@ exports.gamePage = function(input) {
 		}
 	});
 
-	/*----------------------------------------------------------------------------------------------------*/
+	
+	/*--------------------------------------------------*/	
+	
 	
 	//Sets up the Game
+	
+	
+	
 	function startGame() {
 		//get flag locations
 		var webAPI = new globals.xml.flagLocations({gameID:gameID});
@@ -116,7 +143,10 @@ exports.gamePage = function(input) {
 		
 	}
 	
-	/*----------------------------------------------------------------------------------------------------*/
+	/*--------------------------------------------------*/	
+	
+	// Game Play
+	
 	
 	//the update function called on an interval
 	//do everything you do every frame
@@ -140,8 +170,12 @@ exports.gamePage = function(input) {
 		
 	}
 
-	/*----------------------------------------------------------------------------------------------------*/
-
+	/*--------------------------------------------------*/
+	
+	
+	// Game Over
+	
+	
 	function gameOver() {
 		var webAPI = new globals.xml.checkScore(gameID);
 		
@@ -166,7 +200,10 @@ exports.gamePage = function(input) {
 		
 	}
 	
-	/*----------------------------------------------------------------------------------------------------*/
+	/*--------------------------------------------------*/	
+	
+	
+	// Update the Flags
 	
 	function updateFlags() {
 		var webAPI = new globals.xml.flagStatus({gameID:gameID});
@@ -176,13 +213,13 @@ exports.gamePage = function(input) {
 		});
 	}
 	
-	/*----------------------------------------------------------------------------------------------------*/
 	
+	/*--------------------------------------------------*/	
 	
 
-	/*----------------------------------------------------------------------------------------------------*/
 
-	//creates a Map View
+	// Creates a Map View
+	
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
 			region: {latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
@@ -195,8 +232,11 @@ exports.gamePage = function(input) {
 			borderRadius:4,
 	});	
 	
-	/*----------------------------------------------------------------------------------------------------*/
-
+	
+	/*--------------------------------------------------*/	
+	
+	// Update Positions 
+	
 	function updatePosition(e) {
 	 
 	    if( ! e.success || e.error ) {
@@ -211,9 +251,12 @@ exports.gamePage = function(input) {
 	    });
 	};
 	
-	/*----------------------------------------------------------------------------------------------------*/
 	
-	//listens for updatePositions to finish
+	/*--------------------------------------------------*/	
+	
+	// Listens for updatePositions to finish
+	
+	
 	Ti.App.addEventListener("app:got.location", function(d) {
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
@@ -237,8 +280,9 @@ exports.gamePage = function(input) {
 	 
 	});
 	
-	/*----------------------------------------------------------------------------------------------------*/
+	/*--------------------------------------------------*/
 	
+		
 	//listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
 		
@@ -307,19 +351,20 @@ exports.gamePage = function(input) {
 		// alert('other locations recieved' + data);
 	// }
 	
-	/*----------------------------------------------------------------------------------------------------*/
 	
-	//Titanium.Geolocation.getCurrentPosition( updatePosition );   
-	//Titanium.Geolocation.addEventListener( 'location', updatePosition ); 
+	/*--------------------------------------------------*/	
 	
+	// Add Everything to the Window
 	
 	instance.add(mapCreateView);
-	
 	instance.open();
 	
+	/*--------------------------------------------------*/
 	
 	
 	// Back Button
+	
+	
 	var back = Ti.UI.createButton({
 		title:'back',
 		height: 20,
@@ -337,9 +382,9 @@ exports.gamePage = function(input) {
 		win1.add(Home);
 	});
 	
-	//
+	/*--------------------------------------------------*/
 	
-	return instance	
+	return instance;	
 
 };
 
