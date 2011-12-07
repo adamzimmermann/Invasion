@@ -156,8 +156,32 @@ exports.gamePage = function(input) {
 			flagsPlacedTimer = setInterval(checkFlags, 5000);	
 		}
 		};
-	//});
+		 var region={
+            latitude: d.coords.latitude,
+            longitude: d.coords.longitude,
+            animate:true,
+            latitudeDelta:0.003,
+            longitudeDelta:0.003
+        };
+        mapCreateView.setLocation(region);
 	});
+	//});
+	/*----------------------------------------------------------------------------------------------------*/
+
+	// Creates a Map View
+	var mapCreateView = Titanium.Map.createView({
+			mapType: Titanium.Map.STANDARD,
+			height:350,
+			width:275,
+			top: 100,
+			userLocation: true,
+			borderColor: '#d6d6d6',
+			borderWidth:5,
+			borderRadius:4,
+	});	
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
 	
 	
 	/*----------------------------------------------------------------------------------------------------*/
@@ -356,22 +380,6 @@ exports.gamePage = function(input) {
 	
 	
 
-	/*----------------------------------------------------------------------------------------------------*/
-
-	// Creates a Map View
-	var mapCreateView = Titanium.Map.createView({
-			mapType: Titanium.Map.STANDARD,
-			region: {latitude:40.697966, longitude:-89.615815, latitudeDelta:0.003, longitudeDelta:0.003},
-			height:350,
-			width:275,
-			top: 100,
-			userLocation: true,
-			borderColor: '#d6d6d6',
-			borderWidth:5,
-			borderRadius:4,
-	});	
-	
-	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Update Player Position
 	
