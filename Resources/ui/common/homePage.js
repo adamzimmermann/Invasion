@@ -70,10 +70,11 @@ exports.homePage = function() {
 			aboutScreen.open();
 			instance.close();
 		} else if (globals.osname == 'android'){
+			var newWin = Ti.UI.createWindow({backgroundColor: '#000'})
+			newWin.open();
 			var aboutPage = require('ui/common/aboutPage');
 			var aboutScreen = new aboutPage();
-			aboutScreen.open();
-			instance.close();
+			newWin.add(aboutScreen);
 		}
  
 	});

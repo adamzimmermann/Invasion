@@ -5,7 +5,7 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 2 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.054865 seconds on emulator to get ready
+[DEBUG] waited 0.065927 seconds on emulator to get ready
 [DEBUG] edu.bradley.im.invasion installed? False
 [INFO] Copying project resources..
 [INFO] Detected tiapp.xml change (or assets deleted), forcing full re-build...
@@ -255,6 +255,6 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 2 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.194136 seconds on emulator to get ready
+[DEBUG] waited 0.131628 seconds on emulator to get ready
 [INFO] Installing application on emulator
 [INFO] Application installed. Launch from drawer on Home Screen

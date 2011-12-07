@@ -209,7 +209,7 @@ exports.gameLobby = function (input) {
 	
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
-		title:'back',
+		title:'Home',
 		height: 20,
 		width: 100,
 		bottom:10
@@ -219,6 +219,7 @@ exports.gameLobby = function (input) {
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
 		clearInterval(lobbyUpdateTimer);
+		clearInterval(gameStatusTimer);
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();
