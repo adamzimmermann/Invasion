@@ -130,6 +130,10 @@ exports.gameLobby = function (input) {
 			startButton.addEventListener('click', function() {	
 				
 				// Creates teams and assigns players to teams
+				
+				
+				
+		
 				var webAPI3 = new globals.xml.startGame(gameID);
 				var teamRoster = require('ui/common/teamRoster');
 				var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});

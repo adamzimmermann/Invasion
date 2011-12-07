@@ -9,8 +9,8 @@ exports.gamePage = function(input) {
 	
 	
 	// Simplify the Arguments
-	
-	gameID = input.gameID
+	playerID = Ti.Platform.id;
+	gameID = input.gameID;
 	
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -149,6 +149,11 @@ exports.gamePage = function(input) {
 							});
 							mapCreateView.addAnnotation(flag);
 						}
+						//place flag button clicked
+						Ti.API.debug('place flag button clicked')
+						alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
+						//saves the flag location
+						var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
 						
 					});
 				
@@ -156,13 +161,7 @@ exports.gamePage = function(input) {
 					instance.remove(placeFlagButton);
 					placeFlagButton.removeEventListener('click', function(){});
 					
-					//place flag button clicked
-					Ti.API.debug('place flag button clicked')
-					alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
-					//saves the flag location
-					var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
 					
-					onlyOnce = 1;
 				});	
 			}
 			else {
@@ -227,32 +226,35 @@ exports.gamePage = function(input) {
 			/*-------------------------------*/
 			
 			// if both flags placed **** gonna need this from the XML
+			for (key in input.data) {
+				
+				var flag = input.data[key]
 			
-			if (input.teamID = 'Human'){
-				var humanFlag = Ti.Map.createAnnotation({
-					animate:true,
-					image: 'images/miniIcons/Human/Human_Flag.png',
-					latitude: input.latitude,
-					longitude: input.longitude
-				});
-				mapCreateView.addAnnotation(humanFlag);
-			} else if (input.team = 'Alien') {
-				var alienFlag = Ti.Map.createAnnotation({
-					animate:true,
-					image: 'images/miniIcons/Alien/Alien_Flag.png',
-					latitude: input.latitude,
-					longitude: input.longitude
-				});
-				mapCreateView.addAnnotation(alienFlag);
+				if (flag.teamName= 'Humans'){
+					var humanFlag = Ti.Map.createAnnotation({
+						animate:true,
+						image: 'images/miniIcons/Human/Human_Flag.png',
+						latitude: flag.latitude,
+						longitude: flag.longitude
+					});
+					mapCreateView.addAnnotation(humanFlag);
+				} else if (flag.teamName = 'Aliens') {
+					var alienFlag = Ti.Map.createAnnotation({
+						animate:true,
+						image: 'images/miniIcons/Alien/Alien_Flag.png',
+						latitude: flag.latitude,
+						longitude: flag.longitude
+					});
+					mapCreateView.addAnnotation(alienFlag);
+				};
 			};
-			
-			/*-------------------------------*/
-		});
-		Ti.App.addEventListener('flagsPlaced', function(){
 			alert('Both flags placed. Get ready.');
 			gameTimer = setInterval(gamePlay, 5000);
 			gamePlay();
+			
+			/*-------------------------------*/
 		});
+		
 		//start game timer
 		
 		
@@ -269,12 +271,24 @@ exports.gamePage = function(input) {
 	function gamePlay() {
 			
 		//update location data & player icons
-		Titanium.Geolocation.getCurrentPosition( updatePosition ); 
-		
+		//Titanium.Geolocation.getCurrentPosition( updatePosition ); 
+		getLocation();
 		//check tagging conditions
-		
-		checkConditions();
-		
+		Ti.App.addEventListener("app:got.location", function(d) {
+			checkConditions();
+			alert('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
+			// WebAPI = new globals.xml.playerData({
+				// // game id
+				// gameID: gameID
+				// // player id
+// 				
+				// // latitude
+				// // long
+				// // can tag
+				// // can be tagged
+				// // has flag
+			// })
+		});
 		// if (distance(player, players) < 10)
 		
 		

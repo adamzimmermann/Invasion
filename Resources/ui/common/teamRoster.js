@@ -7,6 +7,8 @@ exports.teamRoster = function(input){
 	
 	/*--------------------------------------------------*/
 	
+	
+	alert(input);
 	// Game & Team Information Calls
 	
 	// gameInformation({gameID: input.gameID, userID: input.userID});
@@ -19,9 +21,7 @@ exports.teamRoster = function(input){
 		Ti.API.debug('userID: ' + input.userID)
 		//alert('the values: ' + input.userID);
 		var webAPI9 = new globals.xml.teamInformation({gameID:input.gameID, userID: input.userID});
-		//var instructions = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory/data, 'instructions.txt');
-	// }
-	
+		//}	
 	/*--------------------------------------------------*/
 	
 	
