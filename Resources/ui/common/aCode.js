@@ -154,7 +154,7 @@ exports.aCode = function(data) {
 		
 		//load game lobby screen
 		var gameLobby = require('ui/common/gameLobby');
-		var gameLobbyScreen = new gameLobby({gameID: input.gameID, userID: input.userID, accessCode: input.data.accessCode});
+		var gameLobbyScreen = new gameLobby({gameID: gameID, userID: userID, accessCode: input.data.accessCode});
 		gameLobbyScreen.open();
 			
 	});

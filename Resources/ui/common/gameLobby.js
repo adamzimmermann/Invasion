@@ -219,7 +219,9 @@ exports.gameLobby = function (input) {
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
 		clearInterval(lobbyUpdateTimer);
-		clearInterval(gameStatusTimer);
+		if (exists(gameStatusTimer)){
+			clearInterval(gameStatusTimer);
+		};
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();
