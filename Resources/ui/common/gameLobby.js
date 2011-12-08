@@ -128,7 +128,7 @@ exports.gameLobby = function (input) {
 		// If they are the game initiator
 		if (input.data == "true") {
 			
-			startGameReadyTimer = setInterval(gameReady, 5000);
+			startGameReadyTimer = setInterval(startGameReady, 5000);
 			
 			Ti.App.addEventListener('startGameReady', function(input){
 				if(input.data == 'true') {
@@ -249,10 +249,10 @@ exports.gameLobby = function (input) {
 		clearInterval(lobbyUpdateTimer);
 		if (typeof gameStatusTimer != 'undefined') {
 			clearInterval(gameStatusTimer);
-		};
+		}
 		if (typeof startGameReadyTimer != 'undefined') {
 			clearInterval(startGameReadyTimer);
-		};
+		}
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();
