@@ -59,7 +59,7 @@ function gamePlayers (gameID, players) {
 	});
 	
 	xhr.onload = function(e) {
-		Ti.API.debug(this.responseText);
+		//Ti.API.debug(this.responseText);
 		
 		//alert('response: ' + this.responseText);
 		
@@ -584,7 +584,7 @@ function startGameReady (input) {
 		gameID: input.gameID
 	});
 	xhr.onload = function(e) {	
-	    alert('startGameReady condition: ' + this.responseText);
+	    //alert('startGameReady condition: ' + this.responseText);
 	    Ti.App.fireEvent('startGameReady', {data:this.responseText});
 	}
 }
