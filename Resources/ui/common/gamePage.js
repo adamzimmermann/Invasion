@@ -242,26 +242,37 @@ exports.gamePage = function(input) {
 			
 			// if both flags placed **** gonna need this from the XML
 			for (key in input.data) {
-				
+			
+					humanCenterLat;
 				var flag = input.data[key]
 			
 				if (flag.teamName= 'Humans'){
+					var humanCenterLat;
 					var humanFlag = Ti.Map.createAnnotation({
 						animate:true,
 						image: 'images/miniIcons/Human/Human_Flag.png',
 						latitude: flag.latitude,
 						longitude: flag.longitude
 					});
+					var humanCenterLat = flag.latitude;
+					Ti.API.debug('human center lat is: ' + humanCenterLat)
 					mapCreateView.addAnnotation(humanFlag);
 				} else if (flag.teamName = 'Aliens') {
+					var alienCenterLan;
 					var alienFlag = Ti.Map.createAnnotation({
 						animate:true,
 						image: 'images/miniIcons/Alien/Alien_Flag.png',
 						latitude: flag.latitude,
 						longitude: flag.longitude
 					});
+					var alienCenterLat = flag.latitude;
+					Ti.API.debug('alien center lat is: ' + alienCenterLat)
 					mapCreateView.addAnnotation(alienFlag);
 				};
+				
+				// Ti.API.debug('flag location lats are: )
+				// centerPoint = (humanCenterLat + humanCenterLat) / 2;
+				// Ti.API.debug('center lat is: ' + centerPoint);
 			};
 			alert('Both flags placed. Get ready.');
 			gameTimer = setInterval(gamePlay, 5000);
