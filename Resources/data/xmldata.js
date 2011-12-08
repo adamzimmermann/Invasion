@@ -274,11 +274,11 @@ function flagsPlaced (gameID) {
 // xml array of locations if other players found or “false” if no results found
 function playerData (values) { 
 	var data = [];
+	Ti.API.debug('values thrown to playerData: ' + values.playerID + ' ' + values.gameID);
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
-	
 	xhr.send({
-		action: 'getLocations',
+		action: 'playerData',
 		gameID: values.gameID,
 		playerID: values.playerID,
 		latitude: values.latitude,
@@ -290,9 +290,9 @@ function playerData (values) {
 	
 	xhr.onload = function(e) {
 		var xml = this.responseXML;
-	  		
+	
 		var values = xml.documentElement.getElementsByTagName("player");
-			
+		
 		for (var i = 0; i < values.length; i++) {	
 	    	data.push({
 	    		playerID: values.item(i).getElementsByTagName("playerID").item(0).text,
@@ -301,9 +301,13 @@ function playerData (values) {
 	    		canTag: values.item(i).getElementsByTagName("canTag").item(0).text,
 	    		canBeTagged: values.item(i).getElementsByTagName("canBeTagged").item(0).text,
 	    		hasFlag: values.item(i).getElementsByTagName("hasFlag").item(0).text,
+	    		teamName: values.item(i).getElementsByTagName("teamName").item(0).text,
+				userName: values.item(i).getElementsByTagName("userName").item(0).text,
+	    		
+	    		
 	    	}); 	
 		}
-		alert('firing');
+	
 	 	Ti.App.fireEvent('playerData', {data:data});
 	 	
 	}
@@ -547,7 +551,6 @@ function userInfo (input) {
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
-	
 	xhr.send({
 		action: 'userInfo',
 		gameID: input.gameID,
@@ -555,7 +558,6 @@ function userInfo (input) {
 	});
 	xhr.onload = function(e) {	
 	 	var xml = this.responseXML;
-		
     	var data = {
     		flagPlacer: xml.documentElement.getElementsByTagName("flagPlacer").item(0).text,
     		teamID: xml.documentElement.getElementsByTagName("teamID").item(0).text,

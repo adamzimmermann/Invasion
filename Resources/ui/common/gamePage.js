@@ -12,7 +12,7 @@ exports.gamePage = function(input) {
 	playerID = Ti.Platform.id;
 	gameID = input.gameID;
 	
-
+	Ti.API.debug(playerID);
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Begin Geolocation Services
@@ -289,8 +289,8 @@ exports.gamePage = function(input) {
 		//Titanium.Geolocation.getCurrentPosition( updatePosition ); 
 		getPlayerLocation();
 		//check tagging conditions
-		Ti.App.addEventListener("app:got.Playerlocation", function(d) {
-			Ti.App.removeEventListener("app:got.Playerlocation", updatePlayerPosition);
+		Ti.App.addEventListener("app:got.Playerlocation", fooFunction2 = function(d) {
+			Ti.App.removeEventListener("app:got.Playerlocation", fooFunction2);
 			checkConditions();
 			Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
 			var web = new globals.xml.playerData({
@@ -307,21 +307,21 @@ exports.gamePage = function(input) {
 		
 		// Create constantly updating annotations
 		
-		Ti.App.addEventListener('playerData', function(input){
-			var data = [];
-			for(var key in input.data){
-				var g = input.data[key]
-				var annotData = {
-					title: g.playerID,
-					latitude: g.latitude,
-					longitude: g.longitude
-				};
-				data.push(data);
-			};
-			alert(data);
-			mapCreateView.setAnnotations(data);
-		});
-		
+		// Ti.App.addEventListener('playerData', function(input){
+			// var data = [];
+			// for(var key in input.data){
+				// var g = input.data[key]
+				// var annotData = {
+					// title: g.playerID,
+					// latitude: g.latitude,
+					// longitude: g.longitude
+				// };
+				// data.push(data);
+			// };
+			// alert(data);
+			// mapCreateView.setAnnotations(data);
+		// });
+// 		
 		
 		//update flag conditions
 		//updateFlags();	
@@ -448,7 +448,8 @@ exports.gamePage = function(input) {
 	
 	
 	// Listens for updatePositions to finish
-	Ti.App.addEventListener("app:got.location", function(d) {
+	Ti.App.addEventListener("app:got.location", fooFunction = function(d) {
+	  	Ti.App.removeEventListener('app:got.location', fooFunction)
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
 	    Ti.API.debug(JSON.stringify(d));
@@ -468,19 +469,21 @@ exports.gamePage = function(input) {
 	    };
 	    
 	    var webAPI = new globals.xml.playerData(data);
+	    
 	 
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
-	
+	i = 0
 	//Listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
 		
+		Ti.API.debug('playerData firing: ' + i++)
 		// set up array to contain annotation of everything
 		var mapData = [];
 		
 		// for loop to pull the data for each event
-		for (var key in data) {
+		for (var key in data.data) {
 			// key the events in "e"
 			var player = data.data[key];
 			// pull the data from e and set it to lat, lon, and title
@@ -524,16 +527,19 @@ exports.gamePage = function(input) {
 			var playerData = {
 				latitude:player.latitude,
 				longitude:player.longitude,
-				title: 'test',
-				image: image	
+				title: player.userName,
+				image: image,
+				//animate: true
 			}
 			
 		
 			// push this all back to the data array
 			mapData.push(playerData);
 		}
-	
-		mapCreateView.setAnnotations(array)
+		mapCreateView.zoom(1); 
+		mapCreateView.zoom(-1);	
+		mapCreateView.annotations = []
+		mapCreateView.setAnnotations(mapData)
 	});
 	
 	//updates maps view
