@@ -223,7 +223,7 @@ exports.gameLobby = function (input) {
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
 		clearInterval(lobbyUpdateTimer);
-		if (exists(gameStatusTimer)){
+		if (gameStatusTimer) {
 			clearInterval(gameStatusTimer);
 		};
 		var homePage = require('ui/common/homePage')
