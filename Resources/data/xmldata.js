@@ -41,32 +41,46 @@ function findGames (latitude, longitude) {
 
 // Return Value:
 // xml data of player’s name and ID number
-function gamePlayers (gameID) { 
+function gamePlayers (gameID, players) { 
 	var data = [];
 
 	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
+	var playersJSON = JSON.stringify(players);
+	
+	//alert('playerJSON going to web: ' + playersJSON);
+	
 	xhr.send({
 		action:'gamePlayers',
-		gameID:gameID
+		gameID:gameID,
+		players: playersJSON
 	});
 	
 	xhr.onload = function(e) {
-		var xml = this.responseXML;
-	  		
-		var games = xml.documentElement.getElementsByTagName("player");
-			
-		for (var i = 0; i < games.length; i++) {	
-	    	data.push({
-	    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
-	    		playerID: games.item(i).getElementsByTagName("playerID").item(0).text,
-	    	}); 	
-		}	
-	 	Ti.App.fireEvent('gamePlayers', {data:data});
+		Ti.API.debug(this.responseText);
+		
+		//alert('response: ' + this.responseText);
+		
+		//checks if no data is returned
+		if(this.responseText != 'false') {
+		
+			var xml = this.responseXML;
+		  		
+			var games = xml.documentElement.getElementsByTagName("player");
+				
+			for (var i = 0; i < games.length; i++) {	
+		    	data.push({
+		    		userName: games.item(i).getElementsByTagName("userName").item(0).text,
+		    		playerID: games.item(i).getElementsByTagName("playerID").item(0).text,
+		    	}); 	
+			}	
+		 	Ti.App.fireEvent('gamePlayers', {data:data});
+		 }
 	}
 }
+
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -554,6 +568,28 @@ function userInfo (input) {
     	Ti.App.fireEvent('userInfo', {data:data});
 	}
 }
+/*------------------------------------------------------------------------------------------*/
+
+// Called when a team's flag is taken, but not captured
+
+// Return Value:
+// true if it worked or false if it didn't work
+function startGameReady (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'startGameReady',
+		gameID: input.gameID
+	});
+	xhr.onload = function(e) {	
+	    
+	    Ti.App.fireEvent('startGameReady', {data:this.responseText});
+	}
+}
+
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -577,6 +613,7 @@ api.flagTaken = flagTaken;
 api.flagLocations = flagLocations;
 api.userInfo = userInfo;
 api.checkScore = checkScore;
+api.startGameReady = startGameReady;
 
 //public interface
 exports.api = api;

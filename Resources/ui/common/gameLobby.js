@@ -8,17 +8,18 @@ exports.gameLobby = function (input) {
 	/*--------------------------------------------------*/
 	
 	// Simplifies Arguments  
-	
 	accessCode = input.accessCode;
 	gameID = input.gameID;
 	userID = Ti.Platform.id;
 	
+	//current list of players
+	var players = [];
 	
 	/*--------------------------------------------------*/
 	
 	
 	// Loads the initial data
-	var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
+	var gamePlayerData = new globals.xml.gamePlayers(input.gameID, {"initial": true});
 	
 	
 	/*--------------------------------------------------*/
@@ -33,7 +34,16 @@ exports.gameLobby = function (input) {
 	
 	// Calls gamePlayers to get list of players
 	function lobbyData() {
-		var gamePlayerData = new globals.xml.gamePlayers(input.gameID);
+		//alert('list of local players: ' + players);
+		
+		//puts all players into json object
+    	var jObject={};	
+    	for(i in players)
+	    {
+	        jObject[i] = players[i];
+	    }
+		//checks web for new players
+		var gamePlayerData = new globals.xml.gamePlayers(input.gameID, jObject);
 	};
 	
 	
@@ -47,13 +57,11 @@ exports.gameLobby = function (input) {
 	
 	
 	/*--------------------------------------------------*/
-	
-	// Creates the Game Lobby Table with Game Players
+
 	
 	// Listens for data from gamePlayers
-	// Displays list of registered players
+	// event only fired when there are new players
 	Ti.App.addEventListener('gamePlayers', function(input) {
-
 		var data = [];
 		
 		for(var key in input.data){
@@ -61,40 +69,48 @@ exports.gameLobby = function (input) {
 			var rowdata = {
 				title: g.userName
 			};
-			data.push(rowdata);
+			//puts new players into an array to display
+			data.push(rowdata); //needs to update table
+			
+			//puts new players into an array to find new ones
+			players.push(g.playerID);
+			
+			//adds player to table
+			lobbyTable.appendRow(rowdata);
 		}
 		
-		// The Lobby Table
-		var lobbyTable = Ti.UI.createTableView({
-			top: 140,
-			height: 170,
-			width: 250,
-			borderColor: '#d6d6d6',
-			borderRadius: 2,	 
-			borderWidth: 3,
-			data: data,
-		});
 		
-		// The Table Title
-		var title = Ti.UI.createLabel({
-			text: '  Game Lobby',
-			color: '#fff',
-			bottom: 315,
-			height:50,
-			width: 250,
-			font: {fontFamily:'arial', fontSize: 22},
-			borderColor: '#d6d6d6',
-			borderRadius: 2,	 
-			borderWidth: 3,
-			backgroundColor: '#000'
-		});
-		
-		//instance.remove(title);
-		//instance.remove(lobbyTable)
-		
-		instance.add(title);
-		instance.add(lobbyTable);
 	});
+	
+	/*--------------------------------------------------*/
+	
+	// create Lobby Table
+	var lobbyTable = Ti.UI.createTableView({
+		top: 140,
+		height: 170,
+		width: 250,
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		//data: data,
+	});
+	
+	// The Table Title
+	var title = Ti.UI.createLabel({
+		text: '  Game Lobby',
+		color: '#fff',
+		bottom: 315,
+		height:50,
+		width: 250,
+		font: {fontFamily:'arial', fontSize: 22},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		backgroundColor: '#000'
+	});
+	
+	instance.add(title);
+	instance.add(lobbyTable);
 	
 	
 	/*--------------------------------------------------*/
@@ -109,39 +125,40 @@ exports.gameLobby = function (input) {
 	// Gets information about whether current user is the game initiator
 	Ti.App.addEventListener('gameInitiator', function(input){
 		
-		// just a test. this has to key the number of players
-		numPlayers = 2;
-		
 		// If they are the game initiator
-		if (input.data == "true" & numPlayers >= 2) {
+		if (input.data == "true") {
 			
-			// Creates a start button
-			var startButton = Ti.UI.createButton({
-				bottom: 35,
-				height:25,
-				width:100,
-				title: 'Start Game!'
-			});
+			startGameReadyTimer = setInterval(gameReady, 5000);
 			
-			// Add the button to the Window
-			instance.add(startButton);
-				
-			// Listens for start button to be clicked
-			startButton.addEventListener('click', function() {	
-				
-				// Creates teams and assigns players to teams
-				
-				
-				
-		
-				var webAPI3 = new globals.xml.startGame(gameID);
-				var teamRoster = require('ui/common/teamRoster');
-				var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
-				teamRosterScreen.open();
-				
-				// Stop the Lobby Refresh
-				clearInterval(lobbyUpdateTimer);	
-			});
+			Ti.App.addEventListener('startGameReady', function(input){
+				if(input.data == 'true') {
+					clearInterval(startGameReadyTimer);
+					
+					// Creates a start button
+					var startButton = Ti.UI.createButton({
+						bottom: 35,
+						height:25,
+						width:100,
+						title: 'Start Game!'
+					});
+					
+					// Add the button to the Window
+					instance.add(startButton);
+						
+					// Listens for start button to be clicked
+					startButton.addEventListener('click', function() {	
+						
+						// Creates teams and assigns players to teams
+						var webAPI3 = new globals.xml.startGame(gameID);
+						var teamRoster = require('ui/common/teamRoster');
+						var teamRosterScreen = new teamRoster({gameID: gameID, userID: userID});
+						teamRosterScreen.open();
+						
+						// Stop the Lobby Refresh
+						clearInterval(lobbyUpdateTimer);	
+					});
+				}
+			});	
 		}
 		// If they just joined the game and aren't the initiator
 		else {
@@ -183,6 +200,13 @@ exports.gameLobby = function (input) {
 		}
 	});
 	
+	/*--------------------------------------------------*/
+	
+	//check if more than 1 player is in the game
+	function startGameReady() {
+		var webAPI8 = new globals.xml.startGameReady(gameID);
+	}
+	
 	
 	/*--------------------------------------------------*/
 	
@@ -223,8 +247,11 @@ exports.gameLobby = function (input) {
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
 		clearInterval(lobbyUpdateTimer);
-		if (gameStatusTimer) {
+		if (typeof gameStatusTimer != 'undefined') {
 			clearInterval(gameStatusTimer);
+		};
+		if (typeof startGameReadyTimer != 'undefined') {
+			clearInterval(startGameReadyTimer);
 		};
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();

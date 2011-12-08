@@ -12,7 +12,7 @@ exports.homePage = function() {
 		url: 'sounds/StartS.mp3',
 		looping: true
 	});
-	bgTunes.play();
+	//bgTunes.play();
 	
 	/*--------------------------------------------------*/
 	
@@ -104,6 +104,24 @@ exports.homePage = function() {
 	instance.add(button1);
 	instance.add(button2);
 	instance.add(button3);
+	
+	/*--------------------------------------------------*/
+	
+	// Skip to Lobby Button
+	var lobbyButton = Ti.UI.createButton({
+		title:'Skip to Lobby',
+		height:30,
+		width:150,
+		top:100
+	});
+	lobbyButton.addEventListener('click', function(input){
+		//load game lobby screen
+		var gameLobby = require('ui/common/gameLobby');
+		var gameLobbyScreen = new gameLobby({gameID: 117, userID: Ti.Platform.id, accessCode: 157});
+		gameLobbyScreen.open();
+			
+	});
+	instance.add(lobbyButton);
 	
 	/*--------------------------------------------------*/
 	
