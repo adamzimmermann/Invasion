@@ -670,8 +670,12 @@ exports.gamePage = function(input) {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
-		clearInterval(checkFlags);
-		clearInterval(gamePlay);
+		if (typeof flagsPlacedTimer != 'undefined') {
+			clearInterval(flagsPlacedTimer);
+		};
+		if (typeof gameTimer != 'undefined') {
+			clearInterval(gameTimer);
+		};
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();
