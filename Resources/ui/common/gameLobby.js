@@ -131,6 +131,7 @@ exports.gameLobby = function (input) {
 			startGameReadyTimer = setInterval(startGameReady, 5000);
 			
 			Ti.App.addEventListener('startGameReady', function(input){
+				
 				if(input.data == 'true') {
 					clearInterval(startGameReadyTimer);
 					
@@ -204,7 +205,7 @@ exports.gameLobby = function (input) {
 	
 	//check if more than 1 player is in the game
 	function startGameReady() {
-		var webAPI8 = new globals.xml.startGameReady(gameID);
+		var webAPI8 = new globals.xml.startGameReady({gameID:gameID});
 	}
 	
 	

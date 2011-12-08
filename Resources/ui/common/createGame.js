@@ -138,6 +138,7 @@ exports.createGame = function() {
 			// alert('create clicked');
 			if((gameName.value != '') && (userName.value != '')) {
 				userID = Ti.Platform.id;
+				Ti.API.debug('create game call');
 				var webAPI = new globals.xml.createGame(userID, gameName.value, userName.value, d.coords.latitude, d.coords.longitude);
 			}
 			else if(gameName.value == '') {

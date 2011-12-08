@@ -585,7 +585,7 @@ function startGameReady (input) {
 		gameID: input.gameID
 	});
 	xhr.onload = function(e) {	
-	    
+	    alert('startGameReady condition: ' + this.responseText);
 	    Ti.App.fireEvent('startGameReady', {data:this.responseText});
 	}
 }
