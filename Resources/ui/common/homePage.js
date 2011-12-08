@@ -1,3 +1,4 @@
+require('lib/require').monkeypatch(this);
 exports.homePage = function() {
 	
 	// Create the Home Page Window
@@ -64,18 +65,10 @@ exports.homePage = function() {
 	
 	// Open the About Screen
 	button3.addEventListener('click', function(){
-		if (globals.osname == 'iphone'){
-			var aboutPage = require('ui/common/aboutPage');
-			var aboutScreen = new aboutPage();
-			aboutScreen.open();
-			instance.close();
-		} else if (globals.osname == 'android') {
-			var newWin = Ti.UI.createWindow({backgroundColor: '#000'})
-			newWin.open();
-			aboutPage = require('ui/common/aboutPage');
-			aboutPage.open();
-		}
- 
+		var aboutPage = require('ui/common/aboutPage');
+		var aboutScreen = new aboutPage();
+		aboutScreen.open();
+		instance.close();
 	});
 	
 	/*--------------------------------------------------*/
@@ -109,3 +102,6 @@ exports.homePage = function() {
 	
 	return instance;
 };
+
+
+

@@ -1,11 +1,11 @@
 Logfile initialized
 [INFO] logfile = /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453/build.log
-[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/builder.py install Invasion /Users/seonte/Downloads/android-sdk-mac_x86 /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453 edu.bradley.im.invasion 6
+[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/1.7.3/android/builder.py install Invasion /Users/seonte/Downloads/android-sdk-mac_x86 /Users/seonte/InvasionGit/git@git.assembla.com:im443_53_63_cis_453 edu.bradley.im.invasion 7
 [INFO] Titanium SDK version: 1.7.3 (10/17/11 13:44 dcf4257)
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.024033 seconds on emulator to get ready
+[DEBUG] waited 0.025035 seconds on emulator to get ready
 [DEBUG] edu.bradley.im.invasion installed? False
 [INFO] Copying project resources..
 [INFO] Detected tiapp.xml change (or assets deleted), forcing full re-build...
@@ -255,6 +255,6 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.012491 seconds on emulator to get ready
+[DEBUG] waited 0.014373 seconds on emulator to get ready
 [INFO] Installing application on emulator
 [INFO] Application installed. Launch from drawer on Home Screen

@@ -12,6 +12,8 @@ var globals = {
 
 // Opens either the iOS Home Page or the Android Home Page
 (function() {
+	
+		
 	if (globals.osname == 'iphone') {
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();

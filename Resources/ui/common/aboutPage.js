@@ -1,5 +1,5 @@
+require('lib/require').monkeypatch(this);
 exports.aboutPage = function() {
-	
 	
 	// Creates the About Page Window
 	var instance = Ti.UI.createWindow({
@@ -18,7 +18,7 @@ exports.aboutPage = function() {
 	var readContents;
 	var resourcesDir = Titanium.Filesystem.getResourcesDirectory();
     var readFile = Titanium.Filesystem.getFile(resourcesDir, 'data/instructions.txt');
-   
+    
 	if (readFile.exists()) {
 	     readContents = readFile.read().toString();
 	}
@@ -34,7 +34,7 @@ exports.aboutPage = function() {
 		borderWidth: 3,
 	
 	});
-	
+ 	
 	// Text area that holds instructions
 	var instructionsText = Ti.UI.createTextArea({
 		color: '#fff',
@@ -95,3 +95,7 @@ exports.aboutPage = function() {
 	
 	return instance;
 };
+
+
+
+
