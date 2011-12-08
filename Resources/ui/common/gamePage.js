@@ -292,19 +292,35 @@ exports.gamePage = function(input) {
 		Ti.App.addEventListener("app:got.Playerlocation", function(d) {
 			Ti.App.removeEventListener("app:got.Playerlocation", updatePlayerPosition);
 			checkConditions();
-			alert('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
-			// webAPI = new globals.xml.playerData({
-				// gameID: gameID,
-				// playerID: playerID,
-				// latitude: d.coords.latitude,
-				// longitude: d.coords.longitude,
-				// canTag: 0,
-				// canBeTagged: 0,
-				// hasFlag: 0
-			// });
+			Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
+			var web = new globals.xml.playerData({
+				gameID: gameID,
+				playerID: playerID,
+				latitude: d.coords.latitude,
+				longitude: d.coords.longitude,
+				canTag: 0,
+				canBeTagged: 0,
+				hasFlag: 0
+			});
 		});
 		// if (distance(player, players) < 10)
 		
+		// Create constantly updating annotations
+		
+		Ti.App.addEventListener('playerData', function(input){
+			var data = [];
+			for(var key in input.data){
+				var g = input.data[key]
+				var annotData = {
+					title: g.playerID,
+					latitude: g.latitude,
+					longitude: g.longitude
+				};
+				data.push(data);
+			};
+			alert(data);
+			mapCreateView.setAnnotations(data);
+		});
 		
 		
 		//update flag conditions

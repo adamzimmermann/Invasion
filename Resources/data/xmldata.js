@@ -260,7 +260,6 @@ function flagsPlaced (gameID) {
 // xml array of locations if other players found or “false” if no results found
 function playerData (values) { 
 	var data = [];
-	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	
@@ -290,8 +289,8 @@ function playerData (values) {
 	    		hasFlag: values.item(i).getElementsByTagName("hasFlag").item(0).text,
 	    	}); 	
 		}
-	
-	 	Ti.App.fireEvent('playerData', data);
+		alert('firing');
+	 	Ti.App.fireEvent('playerData', {data:data});
 	 	
 	}
 }
