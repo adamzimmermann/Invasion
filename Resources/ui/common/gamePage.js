@@ -42,6 +42,17 @@ exports.gamePage = function(input) {
 		Ti.App.fireEvent("app:got.location", {"coords" : e.coords});
 		
 	};
+	function updatePlayerPosition(e) {
+		if( ! e.success || e.error ) {
+		    alert("Unable to get your location.");
+		    Ti.API.debug(JSON.stringify(e));
+		    Ti.API.debug(e);
+		    return;
+		}
+		
+		Ti.App.fireEvent("app:got.Playerlocation", {"coords" : e.coords});
+		
+	};
 	
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -51,11 +62,14 @@ exports.gamePage = function(input) {
 		Titanium.Geolocation.getCurrentPosition( updatePosition );
 	}
 	
+	function getPlayerLocation() {
+		Titanium.Geolocation.getCurrentPosition( updatePlayerPosition );
+	}
+	
 	
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	alert(input);
 	
 	// Checks if current user is a flag placer
 	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
@@ -97,7 +111,7 @@ exports.gamePage = function(input) {
 			});
 			
 			
-			alert('Team Name is: ' + input.data.teamName)
+			//alert('Team Name is: ' + input.data.teamName)
 			//they are the flag placer
 			if(input.data.flagPlacer == '1') {
 				//notify them and have them navigate to the desired location
@@ -130,7 +144,7 @@ exports.gamePage = function(input) {
 					
 						//place human flag
 						if(input.data.teamName == 'Humans') {
-							alert('In the humans conditional')
+							//alert('In the humans conditional')
 							var flag = Ti.Map.createAnnotation({
 								animate:true,
 								image: 'images/miniIcons/Human/Human_Flag.png',
@@ -151,7 +165,7 @@ exports.gamePage = function(input) {
 						}
 						//place flag button clicked
 						Ti.API.debug('place flag button clicked')
-						alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
+						//alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
 						//saves the flag location
 						var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
 						
@@ -160,6 +174,7 @@ exports.gamePage = function(input) {
 					//removes place flag button
 					instance.remove(placeFlagButton);
 					placeFlagButton.removeEventListener('click', function(){});
+					
 					
 					
 				});	
@@ -272,29 +287,28 @@ exports.gamePage = function(input) {
 			
 		//update location data & player icons
 		//Titanium.Geolocation.getCurrentPosition( updatePosition ); 
-		getLocation();
+		getPlayerLocation();
 		//check tagging conditions
-		Ti.App.addEventListener("app:got.location", function(d) {
+		Ti.App.addEventListener("app:got.Playerlocation", function(d) {
+			Ti.App.removeEventListener("app:got.Playerlocation", updatePlayerPosition);
 			checkConditions();
 			alert('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
-			// WebAPI = new globals.xml.playerData({
-				// // game id
-				// gameID: gameID
-				// // player id
-// 				
-				// // latitude
-				// // long
-				// // can tag
-				// // can be tagged
-				// // has flag
-			// })
+			// webAPI = new globals.xml.playerData({
+				// gameID: gameID,
+				// playerID: playerID,
+				// latitude: d.coords.latitude,
+				// longitude: d.coords.longitude,
+				// canTag: 0,
+				// canBeTagged: 0,
+				// hasFlag: 0
+			// });
 		});
 		// if (distance(player, players) < 10)
 		
 		
 		
 		//update flag conditions
-		updateFlags();	
+		//updateFlags();	
 			
 		
 		
@@ -302,7 +316,7 @@ exports.gamePage = function(input) {
 
 
 	function checkConditions(){
-		alert('checking conditions')
+		//alert('checking conditions')
 	};
 	
 	
@@ -405,11 +419,11 @@ exports.gamePage = function(input) {
 	
 	//updates flag icons on the map
 	function updateFlags() {
-		Ti.API.debug('checking flagStatus');
+		Ti.API.debug('checking the flag status');
 		var webAPI = new globals.xml.flagStatus({gameID:gameID});
 		
 		Ti.App.addEventListener('flagStatus', function(input){
-			
+			Ti.API.log('new flag status information recieved');
 			
 		});
 	}

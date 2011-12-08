@@ -462,8 +462,9 @@ function flagStatus (input) {
 		
 		for (var i = 0; i < results.length; i++) {	
 	    	data.push({
-	    		flagCaputured: results.item(i).getElementsByTagName("flagCaptured").item(0).text,
+	    		flagTaken: results.item(i).getElementsByTagName("flagTaken").item(0).text,
 	    		teamID: results.item(i).getElementsByTagName("teamID").item(0).text,
+	    		teamName: results.item(i).getElementsByTagName("teamName").item(0).text,
 	    	});
 	    }
 	    
@@ -549,7 +550,7 @@ function userInfo (input) {
     		userID: xml.documentElement.getElementsByTagName("playerID").item(0).text,
     		userName: xml.documentElement.getElementsByTagName("userName").item(0).text,
     	};
-    	alert('team name is: ' + data.teamName);
+ 
     	Ti.App.fireEvent('userInfo', {data:data});
 	}
 }
