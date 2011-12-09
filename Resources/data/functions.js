@@ -10,7 +10,8 @@ function playerProximity(input) {
 		//PARAMETERS
 		//current player object from loop
 		//array of player objects from from playerData
-		checkPlayer({player:input[key], players:input.players});
+		//array of flag objects from flagLocations
+		checkPlayer({player:input[key], players:input.players, flags: input.flags});
 		
 		//PARAMETERS
 		//current player object from loop
@@ -34,15 +35,14 @@ function checkPlayer(input) {
 		//set location based variables
 	
 		//if they are in their territory
-		if(condition) {	
+		if(ownTerritory({player: input.player, flags:input.flags})) {	
 			//if they aren't tagged
 			if(input.player.tagged == 0) {
 				//enable tagging
 				input.player.canTag = 1;
 				//disable can be tagged
 				input.player.canBeTagged = 0;
-			}
-			
+			}		
 		}
 		
 		//if they are in enemy territory
@@ -69,17 +69,22 @@ function checkPlayer(input) {
 					//disable tagging
 					input.players[key].canTag = 0;
 					
+					
+					
+					if(input.players[key].playerID = playerID) {
+						//set timer
+						countdown_init({player: input.players[key]})
+					}
+					
+					
 					//if they were carrying a flag
 					if(input.player.hasFlag == 1) {
 						//remove the flag
 						input.player.hasFlag = 0;
 						
 						//reset the flag
-						//**********
-						//write xml function to reset flag that accepts teamID as parameter
-						//find opposing teamID in sql call WHERE gameID = '$gameID' AND teamID != '$teamID'
-						//globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
-						//SELECT * FROM x WHERE x.a NOT LIKE '%text%';
+						globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
+						
 					}
 				}
 			}
@@ -145,10 +150,68 @@ function distance(input) {
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-function ownTerritory() {
+function ownTerritory(input) {
 	
+	//need to determine which flag has a higher location
+	if(input.flags[0].latitude > input.flags[1].latitude) {
+		var topFlag = input.flags[0].teamID;
+	}
+	else {
+		var topFlag = input.flags[1].teamID;
+	}
+	
+	//if player's team has top flag
+	if(input.player.teamID == topFlag){
+		//if player is in their region
+		if(input.player.latitude > centerLat) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	//player's team has bottom flag
+	else {
+		//player is in their region
+		if(input.player.latitude < centerLat) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
 
 
+var countdown;
+var countdown_number;
+
+
+function countdown_init(input) {
+    countdown_number = 31;
+    countdown_trigger({player:input.player});
+}
+
+function countdown_trigger(input) {
+    if(countdown_number > 0) {
+        countdown_number--;
+        
+        Ti.API.debug('player: ' + input.player.playerID + ' disabled for ' + countdown_number + ' seconds');
+        
+        if(countdown_number > 0) {
+            countdown = setTimeout('countdown_trigger()', 1000, input);
+        }
+    }
+    else {
+    	//re-enable the player
+    	input.player.tagged = 0;
+    	countdown_clear();
+    }
+}
+
+function countdown_clear() {
+    clearTimeout(countdown);
+}
 

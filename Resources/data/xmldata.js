@@ -592,6 +592,29 @@ function startGameReady (input) {
 	}
 }
 
+/*------------------------------------------------------------------------------------------*/
+
+// checks if 2 or more people are in a game
+
+// Return Value:
+// true if 2 or more, otherwise false
+function resetFlag (input) { 
+	var data = [];
+	
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	
+	xhr.send({
+		action: 'resetFlag',
+		gameID: input.gameID,
+		teamID: input.teamID
+	});
+	xhr.onload = function(e) {	
+	    //alert('startGameReady condition: ' + this.responseText);
+	    Ti.App.fireEvent('resetFlag', {data:this.responseText});
+	}
+}
+
 
 /*------------------------------------------------------------------------------------------*/
 
@@ -616,6 +639,7 @@ api.flagLocations = flagLocations;
 api.userInfo = userInfo;
 api.checkScore = checkScore;
 api.startGameReady = startGameReady;
+api.resetFlag = resetFlag;
 
 //public interface
 exports.api = api;
