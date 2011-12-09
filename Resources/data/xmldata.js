@@ -300,6 +300,7 @@ function playerData (values) {
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
 	    		canTag: values.item(i).getElementsByTagName("canTag").item(0).text,
 	    		canBeTagged: values.item(i).getElementsByTagName("canBeTagged").item(0).text,
+	    		tagged: values.item(i).getElementsByTagName("tagged").item(0).text,
 	    		hasFlag: values.item(i).getElementsByTagName("hasFlag").item(0).text,
 	    		teamName: values.item(i).getElementsByTagName("teamName").item(0).text,
 				userName: values.item(i).getElementsByTagName("userName").item(0).text,
@@ -571,10 +572,10 @@ function userInfo (input) {
 }
 /*------------------------------------------------------------------------------------------*/
 
-// Called when a team's flag is taken, but not captured
+// checks if 2 or more people are in a game
 
 // Return Value:
-// true if it worked or false if it didn't work
+// true if 2 or more, otherwise false
 function startGameReady (input) { 
 	var data = [];
 	
