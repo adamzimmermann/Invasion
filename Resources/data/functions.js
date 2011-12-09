@@ -10,7 +10,8 @@ function playerProximity(input) {
 		//PARAMETERS
 		//current player object from loop
 		//array of player objects from from playerData
-		checkPlayer({player:input[key], players:input.players});
+		//array of flag objects from flagLocations
+		checkPlayer({player:input[key], players:input.players, flags: input.flags});
 		
 		//PARAMETERS
 		//current player object from loop
@@ -34,15 +35,14 @@ function checkPlayer(input) {
 		//set location based variables
 	
 		//if they are in their territory
-		if(condition) {	
+		if(ownTerritory({player: input.player, flags:input.flags})) {	
 			//if they aren't tagged
 			if(input.player.tagged == 0) {
 				//enable tagging
 				input.player.canTag = 1;
 				//disable can be tagged
 				input.player.canBeTagged = 0;
-			}
-			
+			}		
 		}
 		
 		//if they are in enemy territory
@@ -145,8 +145,36 @@ function distance(input) {
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-function ownTerritory() {
+function ownTerritory(input) {
 	
+	//need to determine which flag has a higher location
+	if(input.flags[0].latitude > input.flags[1].latitude) {
+		var topFlag = input.flags[0].teamID;
+	}
+	else {
+		var topFlag = input.flags[1].teamID;
+	}
+	
+	//if player's team has top flag
+	if(input.player.teamID == topFlag){
+		//if player is in their region
+		if(input.player.latitude > centerLat) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	//player's team has bottom flag
+	else {
+		//player is in their region
+		if(input.player.latitude < centerLat) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
 
