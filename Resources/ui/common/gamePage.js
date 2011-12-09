@@ -301,7 +301,7 @@ exports.gamePage = function(input) {
 						latitude: centerLat,
 						longitude: centerLon
 					});
-					mapCreateView.setAnnotation(centerMarker);
+					mapCreateView.addAnnotation(centerMarker);
 			};
 			
 			// Place the center flag

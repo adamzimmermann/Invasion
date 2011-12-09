@@ -132,7 +132,7 @@ exports.gameLobby = function (input) {
 			
 			Ti.App.addEventListener('startGameReady', function(input){
 				
-				if(input.data == 'true') {
+				if(input.data == "true") {
 					clearInterval(startGameReadyTimer);
 					
 					// Creates a start button
