@@ -68,6 +68,8 @@ function checkPlayer(input) {
 					input.players[key].canBeTagged = 0;
 					//disable tagging
 					input.players[key].canTag = 0;
+					//set timer
+					setTimeout('enablePlayer()', 30000);
 					
 					//if they were carrying a flag
 					if(input.player.hasFlag == 1) {
@@ -75,11 +77,8 @@ function checkPlayer(input) {
 						input.player.hasFlag = 0;
 						
 						//reset the flag
-						//**********
-						//write xml function to reset flag that accepts teamID as parameter
-						//find opposing teamID in sql call WHERE gameID = '$gameID' AND teamID != '$teamID'
-						//globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
-						//SELECT * FROM x WHERE x.a NOT LIKE '%text%';
+						globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
+						
 					}
 				}
 			}
@@ -177,6 +176,45 @@ function ownTerritory(input) {
 	}
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+/*
+var countdown;
+var countdown_number;
+
+function countdownTimer() {
+    function someMethod() {
+
+        alert('boo');
+
+    }
+
+}
+o_obj = new someObj();
 
 
+function countdown_init(input) {
+    countdown_number = 31;
+    countdown_trigger({player:input.player});
+}
 
+function countdown_trigger(input) {
+    if(countdown_number > 0) {
+        countdown_number--;
+        
+        Ti.API.debug('player: ' + input.player.playerID + ' disabled for ' + countdown_number + ' seconds');
+        
+        if(countdown_number > 0) {
+            countdown = setTimeout('countdown_trigger()', 1000, input);
+        }
+    }
+    else {
+    	//re-enable the player
+    	input.player.tagged = 0;
+    }
+}
+
+function countdown_clear() {
+    clearTimeout(countdown);
+}
+*/
