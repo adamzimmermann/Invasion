@@ -585,7 +585,6 @@ exports.gamePage = function(input) {
 		}
 		mapCreateView.zoom(1); 
 		mapCreateView.zoom(-1);	
-		//mapCreateView.annotations = []
 		mapCreateView.addAnnotations(mapData)
 	});
 	
