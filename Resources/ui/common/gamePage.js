@@ -12,7 +12,7 @@ exports.gamePage = function(input) {
 	playerID = Ti.Platform.id;
 	gameID = input.gameID;
 	
-	Ti.API.debug(playerID);
+	Ti.API.debug('my player id is ' + playerID);
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Begin Geolocation Services
@@ -151,6 +151,7 @@ exports.gamePage = function(input) {
 								latitude: d.coords.latitude,
 								longitude: d.coords.longitude
 							});
+							
 							mapCreateView.addAnnotation(flag);
 						}
 						//place alien flag
@@ -161,12 +162,19 @@ exports.gamePage = function(input) {
 								latitude: d.coords.latitude,
 								longitude: d.coords.longitude
 							});
+							
 							mapCreateView.addAnnotation(flag);
 						}
 						//place flag button clicked
 						Ti.API.debug('place flag button clicked')
 						//alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
 						//saves the flag location
+						
+						// Ti.API.debug('flag location lats are: )
+						
+						// Ti.API.debug('center lat is: ' + centerPoint);
+						
+						
 						var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
 						
 					});
@@ -230,7 +238,7 @@ exports.gamePage = function(input) {
 	});
 
 	/*----------------------------------------------------------------------------------------------------*/
-	
+	var centerLat;
 	//Sets up the Game
 	function startGame() {
 		//get flag locations
@@ -239,41 +247,69 @@ exports.gamePage = function(input) {
 		//receives flag location data
 		Ti.App.addEventListener('flagLocations', function(input){
 			/*-------------------------------*/
-			
+			var hDone = 0;
+			var aDone = 0;
 			// if both flags placed **** gonna need this from the XML
 			for (key in input.data) {
-			
-					humanCenterLat;
+				
+				
 				var flag = input.data[key]
-			
-				if (flag.teamName= 'Humans'){
-					var humanCenterLat;
-					var humanFlag = Ti.Map.createAnnotation({
-						animate:true,
-						image: 'images/miniIcons/Human/Human_Flag.png',
-						latitude: flag.latitude,
-						longitude: flag.longitude
-					});
-					var humanCenterLat = flag.latitude;
-					Ti.API.debug('human center lat is: ' + humanCenterLat)
-					mapCreateView.addAnnotation(humanFlag);
-				} else if (flag.teamName = 'Aliens') {
-					var alienCenterLan;
-					var alienFlag = Ti.Map.createAnnotation({
-						animate:true,
-						image: 'images/miniIcons/Alien/Alien_Flag.png',
-						latitude: flag.latitude,
-						longitude: flag.longitude
-					});
-					var alienCenterLat = flag.latitude;
-					Ti.API.debug('alien center lat is: ' + alienCenterLat)
-					mapCreateView.addAnnotation(alienFlag);
+				switch (flag.teamName) {
+					case 'Humans':
+						var humanCenterLat;
+						var humanCenterLon;
+						var humanFlag = Ti.Map.createAnnotation({
+							animate:true,
+							image: 'images/miniIcons/Human/Human_Flag.png',
+							latitude: flag.latitude,
+							longitude: flag.longitude
+						});
+						var humanCenterLat = flag.latitude;
+						var humanCenterLon = flag.longitude;
+						
+						mapCreateView.addAnnotation(humanFlag);
+						hDone = 1;
+						break;
+						
+					case 'Aliens':
+						var alienCenterLan;
+						var alienFlag = Ti.Map.createAnnotation({
+							animate:true,
+							image: 'images/miniIcons/Alien/Alien_Flag.png',
+							latitude: flag.latitude,
+							longitude: flag.longitude
+						});
+						var alienCenterLat = flag.latitude;
+						var alienCenterLon = flag.longitude;
+	
+						
+						mapCreateView.addAnnotation(alienFlag);
+						aDone = 1;
+						break;
 				};
 				
-				// Ti.API.debug('flag location lats are: )
-				// centerPoint = (humanCenterLat + humanCenterLat) / 2;
-				// Ti.API.debug('center lat is: ' + centerPoint);
+				//mapCreateView.add(centerMarker);
+				
 			};
+			if (hDone == 1 && aDone == 1){
+					centerLat = (parseFloat(humanCenterLat) + parseFloat(alienCenterLat)) / 2;
+					centerLon = (parseFloat(humanCenterLon) + parseFloat(alienCenterLon)) / 2;
+					
+					
+					Ti.API.debug('Center Latitude = ' + centerLat + centerLon)
+					var centerMarker = Ti.Map.createAnnotation({
+						latitude: centerLat,
+						longitude: centerLon
+					});
+					mapCreateView.setAnnotation(centerMarker);
+			};
+			
+			// Place the center flag
+			
+			
+			
+			
+			
 			alert('Both flags placed. Get ready.');
 			gameTimer = setInterval(gamePlay, 5000);
 			gamePlay();
@@ -283,7 +319,7 @@ exports.gamePage = function(input) {
 		
 		//start game timer
 		
-		
+		return centerLat;
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
@@ -295,7 +331,7 @@ exports.gamePage = function(input) {
 	//this will be like on update in Unity
 	//the timing can be set in startGame()
 	function gamePlay() {
-			
+		Ti.API.debug(' the center lat in the global scope is: ' + centerLat);	
 		//update location data & player icons
 		//Titanium.Geolocation.getCurrentPosition( updatePosition ); 
 		getPlayerLocation();
@@ -549,8 +585,8 @@ exports.gamePage = function(input) {
 		}
 		mapCreateView.zoom(1); 
 		mapCreateView.zoom(-1);	
-		mapCreateView.annotations = []
-		mapCreateView.setAnnotations(mapData)
+		//mapCreateView.annotations = []
+		mapCreateView.addAnnotations(mapData)
 	});
 	
 	//updates maps view
