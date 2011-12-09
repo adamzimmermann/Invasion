@@ -68,8 +68,14 @@ function checkPlayer(input) {
 					input.players[key].canBeTagged = 0;
 					//disable tagging
 					input.players[key].canTag = 0;
-					//set timer
-					setTimeout('enablePlayer()', 30000);
+					
+					
+					
+					if(input.players[key].playerID = playerID) {
+						//set timer
+						countdown_init({player: input.players[key]})
+					}
+					
 					
 					//if they were carrying a flag
 					if(input.player.hasFlag == 1) {
@@ -178,19 +184,9 @@ function ownTerritory(input) {
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-/*
+
 var countdown;
 var countdown_number;
-
-function countdownTimer() {
-    function someMethod() {
-
-        alert('boo');
-
-    }
-
-}
-o_obj = new someObj();
 
 
 function countdown_init(input) {
@@ -211,10 +207,11 @@ function countdown_trigger(input) {
     else {
     	//re-enable the player
     	input.player.tagged = 0;
+    	countdown_clear();
     }
 }
 
 function countdown_clear() {
     clearTimeout(countdown);
 }
-*/
+
