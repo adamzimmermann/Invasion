@@ -521,20 +521,30 @@ exports.gamePage = function(input) {
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
-	i = 0
+	mapCount = 0
+	var mapData = [];
 	//Listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
-		
-		Ti.API.debug('playerData firing: ' + i++)
+		//alert('this is whats in map data: ' + mapData);
+		Ti.API.debug('playerData firing: ' + mapCount++)
 		// set up array to contain annotation of everything
-		var mapData = [];
+		//mapCreateView.removeAnnotations(mapData);
 		
+		//var mapData = [];
+		if (mapCount>2){
+			for (key in mapData){
+				mapCreateView.removeAnnotation(mapData[key]);
+				//alert('going to remove Annotations')
+			};
+			
+		}
+		mapData = [];
 		// for loop to pull the data for each event
 		for (var key in data.data) {
 			// key the events in "e"
 			var player = data.data[key];
 			// pull the data from e and set it to lat, lon, and title
-			
+			if (player.playerID != playerID){
 			switch(player.teamName) {
 				case 'Humans':
 					// can be tagged
@@ -571,21 +581,24 @@ exports.gamePage = function(input) {
 				break;
 				
 			};
-			var playerData = {
+			};
+			var playerData = Ti.Map.createAnnotation({
 				latitude:player.latitude,
 				longitude:player.longitude,
 				title: player.userName,
 				image: image,
 				//animate: true
-			}
+			});
 			
-		
+			//mapCreateView.removeAnnotations(mapData);
 			// push this all back to the data array
 			mapData.push(playerData);
 		}
 		mapCreateView.zoom(1); 
 		mapCreateView.zoom(-1);	
-		mapCreateView.addAnnotations(mapData)
+		mapCreateView.addAnnotations(mapData);
+		mapCount++
+		
 	});
 	
 	//updates maps view
