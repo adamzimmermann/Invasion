@@ -1,3 +1,19 @@
+/*
+
+Copyright (c) 2011 MIT
+
+Bradley University - Interactive Media Department
+
+Authors-
+Adam Zimmerman
+Jesse White
+
+*/
+
+/*-------------------------------------------------------------------*/
+
+
+
 exports.instructionPage = function(input) {
 	
 	// Creates the Instruction Page Window

@@ -1,3 +1,20 @@
+/*
+
+Copyright (c) 2011 MIT
+
+Bradley University - Interactive Media Department
+
+Authors-
+Adam Zimmerman
+Jesse White
+
+*/
+
+/*-------------------------------------------------------------------*/
+
+
+
+
 var api = {};
 
 /*------------------------------------------------------------------------------------------*/

@@ -1,3 +1,21 @@
+/*
+
+Copyright (c) 2011 MIT
+
+Bradley University - Interactive Media Department
+
+Authors-
+Adam Zimmerman
+Jesse White
+
+*/
+
+/*-------------------------------------------------------------------*/
+
+
+
+
+
 
 // Monkey patch "require" in the global scope
 require('lib/require').monkeypatch(this);

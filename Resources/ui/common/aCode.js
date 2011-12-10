@@ -1,3 +1,21 @@
+/*
+
+Copyright (c) 2011 MIT
+
+Bradley University - Interactive Media Department
+
+Authors-
+Adam Zimmerman
+Jesse White
+
+*/
+
+/*-------------------------------------------------------------------*/
+
+
+
+
+
 exports.aCode = function(data) {
 	
 	// Create Access Code Window
