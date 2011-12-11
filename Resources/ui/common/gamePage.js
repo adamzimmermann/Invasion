@@ -29,8 +29,22 @@ exports.gamePage = function(input) {
 	// Simplify the Arguments
 	playerID = Ti.Platform.id;
 	gameID = input.gameID;
+	var flagLocations;
+	Ti.App.addEventListener('flagData', function(input) {
+		flagLocations = input.flags;
+		//alert('flag locations in global scope: ' + flagLocations);
+	});
 	
-	Ti.API.debug('my player id is ' + playerID);
+	
+	
+	//puts the center lat in the global scope
+	Ti.App.addEventListener('centerLocation', function(input) {
+		var centerLat = input.centerLat;
+	});
+	
+	//var flagLocations = ['something', 'something'];
+	
+	//Ti.API.debug('my player id is ' + playerID);
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Begin Geolocation Services
@@ -247,7 +261,12 @@ exports.gamePage = function(input) {
 			Ti.API.debug('the game is beginning');
 			
 			//starts the game
-			startGame();
+			var info = startGame();
+			
+			//var centerLat = info.centerLat;
+			//alert('data: ' + info.flagLocations);
+			
+			//flagLocations = info.flagLocations;
 		}
 		// flags not placed yet
 		else {
@@ -256,15 +275,21 @@ exports.gamePage = function(input) {
 	});
 
 	/*----------------------------------------------------------------------------------------------------*/
-	var centerLat;
+	
+
 	//Sets up the Game
 	function startGame() {
 		//get flag locations
+	
 		var webAPI = new globals.xml.flagLocations({gameID:gameID});
 		
 		//receives flag location data
 		Ti.App.addEventListener('flagLocations', function(input){
 			/*-------------------------------*/
+			
+			Ti.App.fireEvent('flagData', {flags:input.data});
+			
+			//flagLocations=input.data;
 			var hDone = 0;
 			var aDone = 0;
 			// if both flags placed **** gonna need this from the XML
@@ -319,25 +344,31 @@ exports.gamePage = function(input) {
 						latitude: centerLat,
 						longitude: centerLon
 					});
+					// Place the center flag
 					mapCreateView.addAnnotation(centerMarker);
 			};
 			
-			// Place the center flag
 			
 			
-			
+			//return centerLat to local global scope
+			Ti.App.fireEvent('centerLocation', {centerLat:centerLat});
 			
 			
 			alert('Both flags placed. Get ready.');
+			
+			//start game timer
 			gameTimer = setInterval(gamePlay, 5000);
-			gamePlay();
+			//gamePlay({flags:input.data});
+			
+			
+			
 			
 			/*-------------------------------*/
 		});
 		
-		//start game timer
 		
-		return centerLat;
+		
+		//return {centerLat:centerLat, flagLocations:flagLocations};
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
@@ -350,14 +381,23 @@ exports.gamePage = function(input) {
 	//the timing can be set in startGame()
 	function gamePlay() {
 		Ti.API.debug(' the center lat in the global scope is: ' + centerLat);	
-		//update location data & player icons
-		//Titanium.Geolocation.getCurrentPosition( updatePosition ); 
+		
+		
+		//Titanium.Geolocation.getCurrentPosition( updatePosition );
+		
+		
+		
+		//gets the current location of the user
 		getPlayerLocation();
+		
 		//check tagging conditions
 		Ti.App.addEventListener("app:got.Playerlocation", fooFunction2 = function(d) {
 			Ti.App.removeEventListener("app:got.Playerlocation", fooFunction2);
-			checkConditions();
+			
+			
 			Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
+			
+			//updates player data on server and returns other player's locations
 			var web = new globals.xml.playerData({
 				gameID: gameID,
 				playerID: playerID,
@@ -394,12 +434,6 @@ exports.gamePage = function(input) {
 		
 		
 	}
-
-
-	function checkConditions(){
-		//alert('checking conditions')
-	};
-	
 	
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -533,7 +567,7 @@ exports.gamePage = function(input) {
 	    	hasFlag: 0,    	
 	    };
 	    
-	    var webAPI = new globals.xml.playerData(data);
+	    //var webAPI = new globals.xml.playerData(data);
 	    
 	 
 	});
@@ -543,79 +577,89 @@ exports.gamePage = function(input) {
 	var mapData = [];
 	//Listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
-		//alert('this is whats in map data: ' + mapData);
-		Ti.API.debug('playerData firing: ' + mapCount++)
-		// set up array to contain annotation of everything
-		//mapCreateView.removeAnnotations(mapData);
 		
-		//var mapData = [];
-		if (mapCount>2){
-			for (key in mapData){
-				mapCreateView.removeAnnotation(mapData[key]);
-				//alert('going to remove Annotations')
-			};
+		
+		//alert(' flag Locations are: ' + flagLocations)
+		playerProximity({players: data.data, flags: flagLocations});
+		
+		Ti.App.addEventListener('playerProximity', fooFunction3 = function(){
+			Ti.App.removeEventListener('playerProximity', fooFunction3);
 			
-		}
-		mapData = [];
-		// for loop to pull the data for each event
-		for (var key in data.data) {
-			// key the events in "e"
-			var player = data.data[key];
-			// pull the data from e and set it to lat, lon, and title
-			if (player.playerID != playerID){
-			switch(player.teamName) {
-				case 'Humans':
-					// can be tagged
-					if(player.canBeTagged == 'true') {
-						// change player 'flag carrier human'
-						if(player.hasFlag == 'false'){
-							var image = 'images/miniIcons/Human/Human.png';
-						}
-						else {
-							var image = 'images/miniIcons/Human/Human_Carrier.png';
-						}			
-					}
-					// can't be tagged
-					else {
-						var image = 'images/miniIcons/Human/Human_Tagged.png';
-					}
-				
-				break;
-				
-				//---------------------------------------------
-				case 'Aliens':
-					// can be tagged
-					if(player.canBeTagged == 'true'){
-						if(player.hasFlag == 'false'){
-							var image = 'images/miniIcons/Human/Alien.png';
-						}
-						else {
-							var image = 'images/miniIcons/Human/Alien_Carrier.png';
-						}
-					}
-					else {
-						var image = 'images/miniIcons/Alien/Alien_Tagged.png';
-					}			
-				break;
-				
-			};
-			};
-			var playerData = Ti.Map.createAnnotation({
-				latitude:player.latitude,
-				longitude:player.longitude,
-				title: player.userName,
-				image: image,
-				//animate: true
-			});
-			
+			//alert('this is whats in map data: ' + mapData);
+			Ti.API.debug('playerData firing: ' + mapCount)
+			// set up array to contain annotation of everything
 			//mapCreateView.removeAnnotations(mapData);
-			// push this all back to the data array
-			mapData.push(playerData);
-		}
-		mapCreateView.zoom(1); 
-		mapCreateView.zoom(-1);	
-		mapCreateView.addAnnotations(mapData);
-		mapCount++
+			
+			//var mapData = [];
+			if (mapCount>2){
+				for (key in mapData){
+					mapCreateView.removeAnnotation(mapData[key]);
+					//alert('going to remove Annotations')
+				};
+				
+			}
+			mapData = [];
+			// for loop to pull the data for each event
+			for (var key in data.data) {
+				// key the events in "e"
+				var player = data.data[key];
+				// pull the data from e and set it to lat, lon, and title
+				if (player.playerID != playerID){
+				switch(player.teamName) {
+					case 'Humans':
+						// can be tagged
+						if(player.canBeTagged == 'true') {
+							// change player 'flag carrier human'
+							if(player.hasFlag == 'false'){
+								var image = 'images/miniIcons/Human/Human.png';
+							}
+							else {
+								var image = 'images/miniIcons/Human/Human_Carrier.png';
+							}			
+						}
+						// can't be tagged
+						else {
+							var image = 'images/miniIcons/Human/Human_Tagged.png';
+						}
+					
+					break;
+					
+					//---------------------------------------------
+					case 'Aliens':
+						// can be tagged
+						if(player.canBeTagged == 'true'){
+							if(player.hasFlag == 'false'){
+								var image = 'images/miniIcons/Human/Alien.png';
+							}
+							else {
+								var image = 'images/miniIcons/Human/Alien_Carrier.png';
+							}
+						}
+						else {
+							var image = 'images/miniIcons/Alien/Alien_Tagged.png';
+						}			
+					break;
+					
+				};
+				};
+				var playerData = Ti.Map.createAnnotation({
+					latitude:player.latitude,
+					longitude:player.longitude,
+					title: player.userName,
+					image: image,
+					//animate: true
+				});
+				
+				//mapCreateView.removeAnnotations(mapData);
+				// push this all back to the data array
+				mapData.push(playerData);
+			}
+			mapCreateView.zoom(1); 
+			mapCreateView.zoom(-1);	
+			mapCreateView.addAnnotations(mapData);
+			mapCount++
+		
+		});
 		
 	});
 	
@@ -626,7 +670,251 @@ exports.gamePage = function(input) {
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	function playerProximity(input) {
+	//loops through all players
+		for(var key in input.players) {
+			
+				//PARAMETERS
+				//current player object from loop
+				//array of player objects from from playerData
+				//array of flag objects from flagLocations
+				
+				//alert('current player: ' + input.players[key]);
+				//alert('players: ' + input.players);
+				//alert('flags: ' + input.flags);
+				
+				
+				checkPlayer({player:input.players[key], players:input.players, flags: input.flags});
+				
+				
+				
+				
+				//PARAMETERS
+				//current player object from loop
+				//array of flag objects from gameInfo 
+				checkFlagsProximity({player:input.players[key], flags:input.flags});
+		};
+		Ti.App.fireEvent('playerProximity');
+	};
 	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	//checks other players in relation to one player
+	function checkPlayer(input) {
+		//loops through all other players
+		for(var key in input.players) {
+			//create a variable for other player
+			var otherPlayer = input.players[key]; 
+			
+			//*******************************
+			//set location based variables
+		
+			//if they are in their territory
+			if(ownTerritory({player: input.player, flags:input.flags})) {	
+				//if they aren't tagged
+				if(input.player.tagged == 0) {
+					//enable tagging
+					input.player.canTag = 1;
+					//disable can be tagged
+					input.player.canBeTagged = 0;
+				}		
+			}
+			
+			//if they are in enemy territory
+			else {
+				//enable can be tagged
+				input.player.canBeTagged = 1;
+				//disable tagging
+				input.player.canTag = 0;
+			}
+			
+			//*******************************
+			//set proximity based variables
+			
+			//on opposite teams
+			if(input.player.teamID != otherPlayer.teamID) {
+				//if they are close
+				if(distance({one:{latitude:input.player.latidude, longitude:input.player.longitude}, two:{latitude:input.players[key].latitude, longitude:input.players[key].longitude}}) < .005) {
+					//if tagging conditions met
+					if(input.player.canTag == 1 && otherPlayer.canBeTagged == 1) {
+						//tag the player
+						input.players[key].tagged = 1;
+						//disable others from tagging them
+						input.players[key].canBeTagged = 0;
+						//disable tagging
+						input.players[key].canTag = 0;
+						
+						
+						
+						if(input.players[key].playerID = playerID) {
+							//set timer
+							countdown_init({player: input.players[key]})
+						}
+						
+						
+						//if they were carrying a flag
+						if(input.player.hasFlag == 1) {
+							//remove the flag
+							input.player.hasFlag = 0;
+							
+							//reset the flag
+							globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
+							
+						}
+					}
+				}
+			}
+			//on the same team
+			else {
+				//do nothing.
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	
+	//checks player proximity to either flag
+	function checkFlagsProximity(input) {
+		//loops through both flags
+		for(var key in input.flags) {
+			//player is on opposite team as the flag
+			if(input.player.teamID != input.flags[key].teamID) {
+				//alert('check flag proximity player data for opposite team: ' + input.player.latitude);
+				
+				//check if they are at the other team's base
+				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
+					//send data about which flag was taken
+					webAPI = globals.xml.flagTaken({teamID:input.flags[key].teamID})
+					//update the player status
+					input.player.hasFlag = 1;
+					
+				}
+			}
+			//player is on the same team as the flag
+			else {
+				//alert('check flag proximity player data for same team: ' + input.player.latitude);
+				
+				//close to the base
+				if (distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .006){
+					//disable the player's ability to tag
+					input.player.canTag = 0;
+					
+					//check if they are carrying a flag
+					if(input.player.hasFlag) {
+						//check if they are at the base
+						if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
+							//update the score
+							webAPI = globals.xml.flagCaptured(input.flags[key].teamID)
+						}
+						//reset the hasFlag value for the player
+						input.player.hasFlag = 0;
+						alert('flag Proximity: ' + one + two)
+					}
+				}
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	
+	//calculates distance between 2 pairs of coordinates
+	//accepts objects structed in the following format
+	//{1:{latitude:value, longitude:value}, 2:{latitude:value, longitude:value}}
+	function distance(input) {
+		var lat1 = input.one.latitude;
+		var	lon1 = input.one.longitude;
+		var lat2 = input.two.latitude;
+		var lon2 = input.two.longitude;
+		
+		//alert('Lat and Lons are: Lat 1: ' + lat1 + 'Lon 1: ' + lon1 + 'Lat 2: ' + lat2 + 'Lon 2: ' + lon2);
+		
+		
+		var R = 6371; // km
+		var dLat = (lat2-lat1) * Math.PI / 180;
+		var dLon = (lon2-lon2) * Math.PI / 180;
+		var lat1 = lat1 * Math.PI / 180;
+		var lat2 = lat2 * Math.PI / 180;
+		
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				   Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+				   Math.sin(dLon/2) * Math.sin(dLon/2);
+				   
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		
+		var d = R * c;
+		
+		Ti.API.debug('Distance between the points is: ' + d)
+		
+		return d;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	
+	function ownTerritory(input) {
+		
+		//need to determine which flag has a higher location
+		if(input.flags[0].latitude > input.flags[1].latitude) {
+			var topFlag = input.flags[0].teamID;
+		}
+		else {
+			var topFlag = input.flags[1].teamID;
+		}
+		
+		//if player's team has top flag
+		if(input.player.teamID == topFlag){
+			//if player is in their region
+			if(input.player.latitude > centerLat) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		//player's team has bottom flag
+		else {
+			//player is in their region
+			if(input.player.latitude < centerLat) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	
+	
+	var countdown;
+	var countdown_number;
+	
+	
+	function countdown_init(input) {
+	    countdown_number = 31;
+	    countdown_trigger({player:input.player});
+	}
+	
+	function countdown_trigger(input) {
+	    if(countdown_number > 0) {
+	        countdown_number--;
+	        
+	        Ti.API.debug('player: ' + input.player.playerID + ' disabled for ' + countdown_number + ' seconds');
+	        
+	        if(countdown_number > 0) {
+	            countdown = setTimeout('countdown_trigger()', 1000, input);
+	        }
+	    }
+	    else {
+	    	//re-enable the player
+	    	input.player.tagged = 0;
+	    	countdown_clear();
+	    }
+	}
+	
+	function countdown_clear() {
+	    clearTimeout(countdown);
+	}
+
 	
 	// Story Elements Display
 	
