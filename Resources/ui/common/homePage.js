@@ -101,7 +101,7 @@ exports.homePage = function() {
 	cheatButton.addEventListener('click', function(){
 		userID = Ti.Platform.id;
 		var gamePage = require('ui/common/gamePage');
-		var gameScreen = new gamePage({gameID: 146, userID: userID});
+		var gameScreen = new gamePage({gameID: 117, userID: userID});
 		gameScreen.open();
 		instance.close();
 	});

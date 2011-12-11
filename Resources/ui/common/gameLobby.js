@@ -164,6 +164,8 @@ exports.gameLobby = function (input) {
 						
 					// Listens for start button to be clicked
 					startButton.addEventListener('click', function() {	
+						//clears out list of players
+						//var players = [];
 						
 						// Creates teams and assigns players to teams
 						var webAPI3 = new globals.xml.startGame(gameID);
@@ -270,6 +272,7 @@ exports.gameLobby = function (input) {
 		if (typeof startGameReadyTimer != 'undefined') {
 			clearInterval(startGameReadyTimer);
 		}
+		//var players = [];
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();

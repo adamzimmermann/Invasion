@@ -313,6 +313,7 @@ function playerData (values) {
 		for (var i = 0; i < values.length; i++) {	
 	    	data.push({
 	    		playerID: values.item(i).getElementsByTagName("playerID").item(0).text,
+	    		teamID: values.item(i).getElementsByTagName("teamID").item(0).text,
 	    		latitude: values.item(i).getElementsByTagName("playerLatitude").item(0).text,
 	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
 	    		canTag: values.item(i).getElementsByTagName("canTag").item(0).text,

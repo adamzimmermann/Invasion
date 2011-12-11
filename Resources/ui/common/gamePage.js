@@ -175,28 +175,28 @@ exports.gamePage = function(input) {
 					    Ti.Geolocation.removeEventListener('location', updatePosition);
 					
 						//place human flag
-						if(input.data.teamName == 'Humans') {
+						//if(input.data.teamName == 'Humans') {
 							//alert('In the humans conditional')
-							var flag = Ti.Map.createAnnotation({
-								animate:true,
-								image: 'images/miniIcons/Human/Human_Flag.png',
-								latitude: d.coords.latitude,
-								longitude: d.coords.longitude
-							});
-							
-							mapCreateView.addAnnotation(flag);
-						}
+							// var flag = Ti.Map.createAnnotation({
+								// animate:true,
+								// image: 'images/miniIcons/Human/Human_Flag.png',
+								// latitude: d.coords.latitude,
+								// longitude: d.coords.longitude
+							// });
+// 							
+							// mapCreateView.addAnnotation(flag);
+						//}
 						//place alien flag
-						if(input.data.teamName == 'Aliens') {
-							var flag = Ti.Map.createAnnotation({
-								animate:true,
-								image: 'images/miniIcons/Alien/Alien_Flag.png',
-								latitude: d.coords.latitude,
-								longitude: d.coords.longitude
-							});
-							
-							mapCreateView.addAnnotation(flag);
-						}
+						// if(input.data.teamName == 'Aliens') {
+							// var flag = Ti.Map.createAnnotation({
+								// animate:true,
+								// image: 'images/miniIcons/Alien/Alien_Flag.png',
+								// latitude: d.coords.latitude,
+								// longitude: d.coords.longitude
+							// });
+// 							
+							// mapCreateView.addAnnotation(flag);
+						//}
 						//place flag button clicked
 						Ti.API.debug('place flag button clicked')
 						//alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
@@ -342,7 +342,8 @@ exports.gamePage = function(input) {
 					Ti.API.debug('Center Latitude = ' + centerLat + centerLon)
 					var centerMarker = Ti.Map.createAnnotation({
 						latitude: centerLat,
-						longitude: centerLon
+						longitude: centerLon,
+						image: 'images/line.png'
 					});
 					// Place the center flag
 					mapCreateView.addAnnotation(centerMarker);
@@ -480,7 +481,7 @@ exports.gamePage = function(input) {
 	
 	// Scoring System
 	
-	//function displayScore(input) {
+	function displayScore(input) {
 		//display human score
 		var humanScore = Ti.UI.createLabel({
 			text: '  Humans: ' /*+ input.humanScore,*/,
@@ -513,7 +514,7 @@ exports.gamePage = function(input) {
 			backgroundColor: '#000'
 		});
 		instance.add(alienScore);
-	//}
+	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
@@ -629,10 +630,10 @@ exports.gamePage = function(input) {
 						// can be tagged
 						if(player.canBeTagged == 'true'){
 							if(player.hasFlag == 'false'){
-								var image = 'images/miniIcons/Human/Alien.png';
+								var image = 'images/miniIcons/Alien/Alien.png';
 							}
 							else {
-								var image = 'images/miniIcons/Human/Alien_Carrier.png';
+								var image = 'images/miniIcons/Alien/Alien_Carrier.png';
 							}
 						}
 						else {
@@ -641,7 +642,7 @@ exports.gamePage = function(input) {
 					break;
 					
 				};
-				};
+				
 				var playerData = Ti.Map.createAnnotation({
 					latitude:player.latitude,
 					longitude:player.longitude,
@@ -653,6 +654,7 @@ exports.gamePage = function(input) {
 				//mapCreateView.removeAnnotations(mapData);
 				// push this all back to the data array
 				mapData.push(playerData);
+				};
 			}
 			mapCreateView.zoom(1); 
 			mapCreateView.zoom(-1);	
@@ -683,8 +685,9 @@ exports.gamePage = function(input) {
 				//alert('players: ' + input.players);
 				//alert('flags: ' + input.flags);
 				
+				//alert('players array: ' + JSON.stringify(input.players));
 				
-				checkPlayer({player:input.players[key], players:input.players, flags: input.flags});
+				checkPlayer({player:input.players[key], players:input.players, flags:input.flags});
 				
 				
 				
@@ -706,11 +709,17 @@ exports.gamePage = function(input) {
 			//create a variable for other player
 			var otherPlayer = input.players[key]; 
 			
+			
+			
+			//alert('current player: ' + input.player);
+			alert('current player: ' + JSON.stringify(input.player));
+			
 			//*******************************
 			//set location based variables
 		
 			//if they are in their territory
-			if(ownTerritory({player: input.player, flags:input.flags})) {	
+			if(ownTerritory({player: input.player, flags:input.flags})) {
+				Ti.API.debug(input.player.userName + ' in own territory.')
 				//if they aren't tagged
 				if(input.player.tagged == 0) {
 					//enable tagging
@@ -722,6 +731,7 @@ exports.gamePage = function(input) {
 			
 			//if they are in enemy territory
 			else {
+				Ti.API.debug(input.player.userName + ' in enemy territory.')
 				//enable can be tagged
 				input.player.canBeTagged = 1;
 				//disable tagging
@@ -731,11 +741,17 @@ exports.gamePage = function(input) {
 			//*******************************
 			//set proximity based variables
 			
+			//Ti.API.debug('in check player');
+			//alert('team id comparison: ' + input.player.teamID + ' ' + input.players[key].teamID);
+			
+			
 			//on opposite teams
-			if(input.player.teamID != otherPlayer.teamID) {
+			if(input.player.teamID != input.players[key].teamID) {
+				
 				//if they are close
-				if(distance({one:{latitude:input.player.latidude, longitude:input.player.longitude}, two:{latitude:input.players[key].latitude, longitude:input.players[key].longitude}}) < .005) {
+				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.players[key].latitude, longitude:input.players[key].longitude}}) < .005) {
 					//if tagging conditions met
+					
 					if(input.player.canTag == 1 && otherPlayer.canBeTagged == 1) {
 						//tag the player
 						input.players[key].tagged = 1;
@@ -782,6 +798,7 @@ exports.gamePage = function(input) {
 				//alert('check flag proximity player data for opposite team: ' + input.player.latitude);
 				
 				//check if they are at the other team's base
+				Ti.API.debug('checking if in other teams base');
 				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
 					//send data about which flag was taken
 					webAPI = globals.xml.flagTaken({teamID:input.flags[key].teamID})
@@ -792,9 +809,10 @@ exports.gamePage = function(input) {
 			}
 			//player is on the same team as the flag
 			else {
-				//alert('check flag proximity player data for same team: ' + input.player.latitude);
+				alert('check flag proximity player data for same team: ' + input.player.latitude);
 				
 				//close to the base
+				Ti.API.debug('close to base')
 				if (distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .006){
 					//disable the player's ability to tag
 					input.player.canTag = 0;
@@ -802,13 +820,14 @@ exports.gamePage = function(input) {
 					//check if they are carrying a flag
 					if(input.player.hasFlag) {
 						//check if they are at the base
+						Ti.API.debug('If player has a flag')
 						if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
 							//update the score
 							webAPI = globals.xml.flagCaptured(input.flags[key].teamID)
 						}
 						//reset the hasFlag value for the player
 						input.player.hasFlag = 0;
-						alert('flag Proximity: ' + one + two)
+						//alert('flag Proximity: ' + one + two)
 					}
 				}
 			}
@@ -826,7 +845,7 @@ exports.gamePage = function(input) {
 		var lat2 = input.two.latitude;
 		var lon2 = input.two.longitude;
 		
-		//alert('Lat and Lons are: Lat 1: ' + lat1 + 'Lon 1: ' + lon1 + 'Lat 2: ' + lat2 + 'Lon 2: ' + lon2);
+		alert('Lat and Lons are: Lat 1: ' + lat1 + 'Lon 1: ' + lon1 + 'Lat 2: ' + lat2 + 'Lon 2: ' + lon2);
 		
 		
 		var R = 6371; // km
