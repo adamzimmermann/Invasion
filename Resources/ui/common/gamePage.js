@@ -381,22 +381,16 @@ exports.gamePage = function(input) {
 	//this will be like on update in Unity
 	//the timing can be set in startGame()
 	function gamePlay() {
-		Ti.API.debug(' the center lat in the global scope is: ' + centerLat);	
-		
-		
 		//Titanium.Geolocation.getCurrentPosition( updatePosition );
-		
-		
 		
 		//gets the current location of the user
 		getPlayerLocation();
 		
-		//check tagging conditions
+		//listens for the user's location
 		Ti.App.addEventListener("app:got.Playerlocation", fooFunction2 = function(d) {
 			Ti.App.removeEventListener("app:got.Playerlocation", fooFunction2);
-			
-			
-			Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
+				
+			//Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
 			
 			//updates player data on server and returns other player's locations
 			var web = new globals.xml.playerData({
@@ -406,7 +400,13 @@ exports.gamePage = function(input) {
 				longitude: d.coords.longitude,
 				canTag: 0,
 				canBeTagged: 0,
-				hasFlag: 0
+				hasFlag: 0,
+				tagged: 0
+				
+				//this is what we need to fix next
+				//we need to find a way to send this fake data once to initiate things
+				//then send the actual data from playerProximity for all future occurances
+				
 			});
 		});
 		// if (distance(player, players) < 10)
@@ -447,8 +447,7 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	// Flag Capture
-	
+	// listens for a flag to be captured
 	Ti.App.addEventListener('flagCaptured', function(input){
 		//get current score
 		var webAPI = new globals.xml.checkScore(gameID);
@@ -581,7 +580,7 @@ exports.gamePage = function(input) {
 		
 		
 		//alert(' flag Locations are: ' + flagLocations)
-		playerProximity({players: data.data, flags: flagLocations});
+		playerProximity({players:data.data, flags:flagLocations});
 		
 		Ti.App.addEventListener('playerProximity', fooFunction3 = function(){
 			Ti.App.removeEventListener('playerProximity', fooFunction3);
@@ -676,17 +675,15 @@ exports.gamePage = function(input) {
 	//loops through all players
 		for(var key in input.players) {
 			
+				//alert('current player: ' + input.players[key]);
+				//alert('players: ' + input.players);
+				//alert('flags: ' + input.flags);
+				//alert('player into checkPlayer: ' + JSON.stringify(input.players[key]));
+				
 				//PARAMETERS
 				//current player object from loop
 				//array of player objects from from playerData
 				//array of flag objects from flagLocations
-				
-				//alert('current player: ' + input.players[key]);
-				//alert('players: ' + input.players);
-				//alert('flags: ' + input.flags);
-				
-				//alert('players array: ' + JSON.stringify(input.players));
-				
 				checkPlayer({player:input.players[key], players:input.players, flags:input.flags});
 				
 				
@@ -704,55 +701,43 @@ exports.gamePage = function(input) {
 	
 	//checks other players in relation to one player
 	function checkPlayer(input) {
+	
+		//if they are in their territory
+		if(ownTerritory({player: input.player, flags:input.flags})) {
+			Ti.API.debug(input.player.userName + ' in own territory.')
+			//if they aren't tagged
+			if(input.player.tagged == 0) {
+				//enable tagging
+				input.player.canTag = 1;
+				//disable can be tagged
+				input.player.canBeTagged = 0;
+			}		
+		}
+		
+		//if they are in enemy territory
+		else {
+			Ti.API.debug(input.player.userName + ' in enemy territory.')
+			//enable can be tagged
+			input.player.canBeTagged = 1;
+			//disable tagging
+			input.player.canTag = 0;
+		}
+			
 		//loops through all other players
 		for(var key in input.players) {
-			//create a variable for other player
-			var otherPlayer = input.players[key]; 
-			
-			
-			
-			//alert('current player: ' + input.player);
-			alert('current player: ' + JSON.stringify(input.player));
-			
-			//*******************************
-			//set location based variables
-		
-			//if they are in their territory
-			if(ownTerritory({player: input.player, flags:input.flags})) {
-				Ti.API.debug(input.player.userName + ' in own territory.')
-				//if they aren't tagged
-				if(input.player.tagged == 0) {
-					//enable tagging
-					input.player.canTag = 1;
-					//disable can be tagged
-					input.player.canBeTagged = 0;
-				}		
-			}
-			
-			//if they are in enemy territory
-			else {
-				Ti.API.debug(input.player.userName + ' in enemy territory.')
-				//enable can be tagged
-				input.player.canBeTagged = 1;
-				//disable tagging
-				input.player.canTag = 0;
-			}
-			
+					
 			//*******************************
 			//set proximity based variables
-			
-			//Ti.API.debug('in check player');
-			//alert('team id comparison: ' + input.player.teamID + ' ' + input.players[key].teamID);
-			
 			
 			//on opposite teams
 			if(input.player.teamID != input.players[key].teamID) {
 				
 				//if they are close
 				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.players[key].latitude, longitude:input.players[key].longitude}}) < .005) {
-					//if tagging conditions met
 					
-					if(input.player.canTag == 1 && otherPlayer.canBeTagged == 1) {
+					//if tagging conditions met
+					if((input.player.canTag == 1) && (input.players[key].canBeTagged == 1) && (input.players[key].tagged == 0)) {
+						Ti.API.debug('Player ' + input.players[key].userName + ' was just tagged.');
 						//tag the player
 						input.players[key].tagged = 1;
 						//disable others from tagging them
@@ -795,11 +780,11 @@ exports.gamePage = function(input) {
 		for(var key in input.flags) {
 			//player is on opposite team as the flag
 			if(input.player.teamID != input.flags[key].teamID) {
-				//alert('check flag proximity player data for opposite team: ' + input.player.latitude);
 				
 				//check if they are at the other team's base
 				Ti.API.debug('checking if in other teams base');
-				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
+				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {		
+					Ti.API.debug('Team ' + input.flags[key].teamName + ' just had their flag taken.');
 					//send data about which flag was taken
 					webAPI = globals.xml.flagTaken({teamID:input.flags[key].teamID})
 					//update the player status
@@ -809,19 +794,21 @@ exports.gamePage = function(input) {
 			}
 			//player is on the same team as the flag
 			else {
-				alert('check flag proximity player data for same team: ' + input.player.latitude);
+				
 				
 				//close to the base
-				Ti.API.debug('close to base')
 				if (distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .006){
+					Ti.API.debug(input.player.userName + ' is close to their base');
+					
 					//disable the player's ability to tag
 					input.player.canTag = 0;
 					
 					//check if they are carrying a flag
 					if(input.player.hasFlag) {
 						//check if they are at the base
-						Ti.API.debug('If player has a flag')
+						
 						if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
+							Ti.API.debug('Team ' + input.flags[key].teamName + ' just scored.');
 							//update the score
 							webAPI = globals.xml.flagCaptured(input.flags[key].teamID)
 						}
@@ -838,14 +825,14 @@ exports.gamePage = function(input) {
 	
 	//calculates distance between 2 pairs of coordinates
 	//accepts objects structed in the following format
-	//{1:{latitude:value, longitude:value}, 2:{latitude:value, longitude:value}}
+	//{one:{latitude:value, longitude:value}, two:{latitude:value, longitude:value}}
 	function distance(input) {
 		var lat1 = input.one.latitude;
 		var	lon1 = input.one.longitude;
 		var lat2 = input.two.latitude;
 		var lon2 = input.two.longitude;
 		
-		alert('Lat and Lons are: Lat 1: ' + lat1 + 'Lon 1: ' + lon1 + 'Lat 2: ' + lat2 + 'Lon 2: ' + lon2);
+		//alert('Lat 1: ' + lat1 + ', Lon 1: ' + lon1 + ' // Lat 2: ' + lat2 + ', Lon 2: ' + lon2);
 		
 		
 		var R = 6371; // km
@@ -917,10 +904,10 @@ exports.gamePage = function(input) {
 	    if(countdown_number > 0) {
 	        countdown_number--;
 	        
-	        Ti.API.debug('player: ' + input.player.playerID + ' disabled for ' + countdown_number + ' seconds');
+	        Ti.API.debug(input.player.userName + ' is disabled for ' + countdown_number + ' seconds');
 	        
 	        if(countdown_number > 0) {
-	            countdown = setTimeout('countdown_trigger()', 1000, input);
+	            countdown = setTimeout('countdown_trigger', 1000, input);
 	        }
 	    }
 	    else {
