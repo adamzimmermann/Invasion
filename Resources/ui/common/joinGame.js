@@ -18,7 +18,7 @@ exports.joinGame = function() {
 	
 	// Create the Join Game Window
 	var instance = Ti.UI.createWindow({
-		backgroundImage: 'images/smallLogoTop.jpg'
+		backgroundImage: 'images/SmallLogoTop.jpg'
 	});	
 	
 	
@@ -174,9 +174,8 @@ exports.joinGame = function() {
 	backButton.addEventListener('click', function(e){
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
-		instance.close();
 		homePageScreen.open();
-		
+		instance.close();
 	});
 	
 	instance.add(backButton);
