@@ -23,6 +23,7 @@ exports.gamePage = function(input) {
 		backgroundImage:'images/SmallLogoTop.jpg'
 	});
 	
+	displayScore({alienScore: 0, humanScore: 0});
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	
@@ -163,6 +164,10 @@ exports.gamePage = function(input) {
 				
 				//listens for place flag button to be clicked
 				placeFlagButton.addEventListener('click', function() {
+					var buttonClick= Ti.Media.createSound({
+						url: 'sounds/radiobeeps.mp3',
+					});
+					buttonClick.play();
 					//starts timer to check if both flags are placed
 					flagsPlacedTimer = setInterval(checkFlags, 5000);
 					
@@ -254,24 +259,40 @@ exports.gamePage = function(input) {
 	// Waits for game to be ready
 	Ti.App.addEventListener('gameReady', function(input){
 		// both flags are placed
-		if(input.data == 'true'){
-			//ends timer
-			clearInterval(flagsPlacedTimer);
-			
-			Ti.API.debug('the game is beginning');
-			
-			//starts the game
-			var info = startGame();
-			
-			//var centerLat = info.centerLat;
-			//alert('data: ' + info.flagLocations);
-			
-			//flagLocations = info.flagLocations;
-		}
-		// flags not placed yet
-		else {
-			Ti.API.debug('both flags not yet placed');
-		}
+		// while(input.data != 'true'){
+			// var holdWin = Ti.UI.createWindow({
+				// width: 100,
+				// height: 50,
+				// backgroundColor: '#000'
+			// });
+			// var holdText = Ti.UI.createLabel({
+				// text: 'Please wait until both flags have been placed...',
+				// height: 80,
+				// width:40,
+				// color: '#fff',
+// 				
+			// })
+			// holdWin.add(holdText);
+			// instance.add(holdWin);
+			if(input.data == 'true'){
+				//ends timer
+				//holdWin.close();
+				clearInterval(flagsPlacedTimer);
+				
+				Ti.API.debug('the game is beginning');
+				
+				//starts the game
+				var info = startGame();
+				
+				//var centerLat = info.centerLat;
+				//alert('data: ' + info.flagLocations);
+				
+				//flagLocations = info.flagLocations;
+			} else {
+				Ti.API.debug('Not ready Yet')
+			}
+			// flags not placed yet
+		//}
 	});
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -483,9 +504,9 @@ exports.gamePage = function(input) {
 	function displayScore(input) {
 		//display human score
 		var humanScore = Ti.UI.createLabel({
-			text: '  Humans: ' /*+ input.humanScore,*/,
+			text: '  Humans: ' + input.humanScore,
 			color: '#fff',
-			top: 65,
+			top: 35,
 			left: 25,
 			height:30,
 			width: 90,
@@ -500,9 +521,9 @@ exports.gamePage = function(input) {
 		
 		//display alien score
 		var alienScore = Ti.UI.createLabel({
-			text: '    Aliens: ' /*+ input.alienScore*/,
+			text: '    Aliens: ' + input.alienScore,
 			color: '#fff',
-			top: 65,
+			top: 35,
 			right: 25,
 			height: 30,
 			width: 90,
@@ -978,7 +999,10 @@ exports.gamePage = function(input) {
 	// The event listener
 	legendButton.addEventListener('click', function(){
 		
-		
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		var legWin = Ti.UI.createWindow({
 			height: 350,
 			width: 200,
@@ -1021,6 +1045,10 @@ exports.gamePage = function(input) {
 		
 		legWin.add(close);
 		close.addEventListener('click', function(){
+			var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+			});
+			buttonClick.play();
 			legWin.close();
 		});
 		
@@ -1047,6 +1075,10 @@ exports.gamePage = function(input) {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		if (typeof flagsPlacedTimer != 'undefined') {
 			clearInterval(flagsPlacedTimer);
 		};

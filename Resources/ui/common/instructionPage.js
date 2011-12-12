@@ -93,7 +93,12 @@ exports.instructionPage = function(input) {
 	
 	//listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {	
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		alert(input);
+		bgTunes.stop();
 		var gamePage = require('ui/common/gamePage')
 		var gamePageScreen = new gamePage(input);
 		gamePageScreen.open();
@@ -118,6 +123,10 @@ exports.instructionPage = function(input) {
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
 		homePageScreen.open();

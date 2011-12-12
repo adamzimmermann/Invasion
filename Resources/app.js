@@ -25,14 +25,22 @@ require('lib/require').monkeypatch(this);
 var globals = {
 	osname: Ti.Platform.osname,
 	xml: require('data/xmldata').api,
+	
 };
 
+var bgTunes = Ti.Media.createSound({
+	url: 'sounds/spacejinglesmalloneloop.mp3',
+	looping: true
+});
 
+
+	
 // Opens either the iOS Home Page or the Android Home Page
 (function() {
 	
 		
 	if (globals.osname == 'iphone') {
+		bgTunes.play();
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();
 		homeScreen.open();

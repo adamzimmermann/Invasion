@@ -174,6 +174,10 @@ exports.createGame = function() {
 	
 	// Listens for result of Create Game
 	Ti.App.addEventListener('createGame', function(input){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+			});
+		buttonClick.play();
 		// alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
 		var gameLobbyScreen = new gameLobby(input);
@@ -207,7 +211,7 @@ exports.createGame = function() {
 	
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
-		title:'back',
+		title:'Home',
 		height: 20,
 		width: 100,
 		bottom:10
@@ -216,6 +220,10 @@ exports.createGame = function() {
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+			});
+		buttonClick.play();
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();

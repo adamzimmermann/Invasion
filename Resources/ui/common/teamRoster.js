@@ -66,6 +66,19 @@ exports.teamRoster = function(input){
 			data: data,
 		});
 		instance.add(teamMembers);
+		var title = Ti.UI.createLabel({
+			text: '  Team: ' + input.data[0].teamName,
+			color: '#fff',
+			bottom: 315,
+			height:50,
+			width: 250,
+			font: {fontFamily:'arial', fontSize: 22},
+			borderColor: '#d6d6d6',
+			borderRadius: 2,	 
+			borderWidth: 3,
+			backgroundColor: '#000'
+		});
+		instance.add(title);
 	})
 	
 	
@@ -74,29 +87,22 @@ exports.teamRoster = function(input){
 	
 	// Creates the Continue Button
 	
-	var title = Ti.UI.createLabel({
-		text: '  Teammates',
-		color: '#fff',
-		bottom: 315,
-		height:50,
-		width: 250,
-		font: {fontFamily:'arial', fontSize: 22},
-		borderColor: '#d6d6d6',
-		borderRadius: 2,	 
-		borderWidth: 3,
-		backgroundColor: '#000'
-	});
+	
 	var continueButton = Ti.UI.createButton({
 		height:30,
 		top:380,
 		width:120,
 		title:'Continue'
 	});
-	instance.add(title)
+	
 	instance.add(continueButton);
 	
 	// Listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		alert(input);
 		var instructionPage = require('ui/common/instructionPage');
 		var instructionPageScreen = new instructionPage(input);
@@ -122,6 +128,10 @@ exports.teamRoster = function(input){
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
 		homePageScreen.open();

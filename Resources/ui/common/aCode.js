@@ -129,6 +129,10 @@ exports.aCode = function(data) {
 	
 	// Listens for join game button to clicked
 	joinGameButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+				url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
 		//alert('The GameID is :' + e.source.data)
 		
 		if(userName.value != ''){
@@ -146,6 +150,7 @@ exports.aCode = function(data) {
 	
 	// Listens for access code verification
 	Ti.App.addEventListener('checkCode', function(input){
+			
 		
 			//alert('fired before joinGame:' + data.gameID);
 			if (input.data == "true"){

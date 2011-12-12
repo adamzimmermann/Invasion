@@ -57,14 +57,15 @@ exports.aboutPage = function() {
 		editable: 0,
 		backgroundColor: '#000',
 		font: {fontFamily:'arial', fontSize: 15},
-		value:instructions
+		value:instructions,
+		
 	});
 	
 	
 	var title = Ti.UI.createLabel({
 		text: '  About',
 		color: '#fff',
-		top: 100,
+		top: 102,
 		height:50,
 		width: 250,
 		font: {fontFamily:'arial', fontSize: 22},
@@ -74,6 +75,19 @@ exports.aboutPage = function() {
 		backgroundColor: '#000'
 	});
 	
+	var footer = Ti.UI.createLabel({
+		
+		color: '#fff',
+		top: 375,
+		height:50,
+		width: 250,
+		font: {fontFamily:'arial', fontSize: 22},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 3,
+		backgroundColor: '#d6d6d6',
+		zIndex:1
+	});
 	
 	/*--------------------------------------------------*/
 	
@@ -83,7 +97,8 @@ exports.aboutPage = function() {
 		title:'Home',
 		height: 20,
 		width: 100,
-		bottom:10
+		bottom:50,
+		zIndex:2
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
@@ -104,6 +119,7 @@ exports.aboutPage = function() {
 	scrollyPolly.add(instructionsText)
 	instance.add(scrollyPolly);
 	instance.add(title);
+	instance.add(footer);
 	
 	
 	/*--------------------------------------------------*/

@@ -23,7 +23,7 @@ exports.joinGame = function() {
 	
 	
 	/*--------------------------------------------------*/
-	
+	alert('at least it fires');
 	// Geolocation Code
 	
 	
@@ -102,6 +102,10 @@ exports.joinGame = function() {
 			
 			row.addEventListener('click', function(e) {
 				var currentRow = e.row;
+				var buttonClick= Ti.Media.createSound({
+					url: 'sounds/radiobeeps.mp3',
+					});
+				buttonClick.play();
 				// alert('current row is: ' + currentRow)
 				// alert('current row data: ' + currentRow.gameID)
 				Ti.App.fireEvent('gameSelected', {gameID:currentRow.gameID});
@@ -164,14 +168,18 @@ exports.joinGame = function() {
 	
 	//creates back button
 	var backButton = Ti.UI.createButton({
-		title:'back',
+		title:'Home',
 		height: 20,
 		width: 100,
-		bottom:0
+		bottom:15
 	});
 	
 	//listens for click on back button
 	backButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+			});
+		buttonClick.play();
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
 		homePageScreen.open();

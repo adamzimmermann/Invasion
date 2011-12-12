@@ -27,8 +27,8 @@ exports.gameLobby = function (input) {
 	accessCode = input.accessCode;
 	gameID = input.gameID;
 	userID = Ti.Platform.id;
-	//gameName = input.gameName;
-	//alert('game name is: ' + gameName)
+	gameName = input.gameName;
+	alert('game name is: ' + gameName)
 	
 	//current list of players
 	var players = [];
@@ -115,12 +115,12 @@ exports.gameLobby = function (input) {
 	
 	// The Table Title
 	var title = Ti.UI.createLabel({
-		text: '  Game Lobby',
+		text: '  Game Lobby for: ' + gameName,
 		color: '#fff',
 		bottom: 315,
 		height:50,
 		width: 250,
-		font: {fontFamily:'arial', fontSize: 22},
+		font: {fontFamily:'arial'},
 		borderColor: '#d6d6d6',
 		borderRadius: 2,	 
 		borderWidth: 3,
@@ -166,6 +166,10 @@ exports.gameLobby = function (input) {
 						
 					// Listens for start button to be clicked
 					startButton.addEventListener('click', function() {	
+						var buttonClick= Ti.Media.createSound({
+							url: 'sounds/radiobeeps.mp3',
+						});
+						buttonClick.play();
 						//clears out list of players
 						//var players = [];
 						
@@ -267,6 +271,10 @@ exports.gameLobby = function (input) {
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+			});
+		buttonClick.play();
 		clearInterval(lobbyUpdateTimer);
 		if (typeof gameStatusTimer != 'undefined') {
 			clearInterval(gameStatusTimer);

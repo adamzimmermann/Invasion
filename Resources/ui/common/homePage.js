@@ -34,13 +34,8 @@ exports.homePage = function() {
     /*--------------------------------------------------*/
 	
 	// BG Music 
-	var bgTunes = Ti.Media.createSound({
-		url: 'sounds/StartS.mp3',
-		looping: true
-	});
-	//bgTunes.play();
 	
-	/*--------------------------------------------------*/
+		/*--------------------------------------------------*/
 	
 	// Join Game Button
 	var button1 = Ti.UI.createButton({
@@ -57,6 +52,12 @@ exports.homePage = function() {
 	
 	// Open Join Game
 	button1.addEventListener('click', function(){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+			});
+		buttonClick.play();
+		
+
 		var joinGame = require('ui/common/joinGame');
 		var joinGview = new joinGame();
 		joinGview.open();
@@ -78,6 +79,12 @@ exports.homePage = function() {
 	
 	// Open Create Game
 	button2.addEventListener('click', function(){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
+	
+
 		var createGame = require('ui/common/createGame');
 		var createGameScreen = new createGame();
 		createGameScreen.open();
@@ -98,6 +105,12 @@ exports.homePage = function() {
 	
 	// Open the About Screen
 	button3.addEventListener('click', function(){
+		var buttonClick= Ti.Media.createSound({
+			url: 'sounds/radiobeeps.mp3',
+		});
+		buttonClick.play();
+		
+
 		var aboutPage = require('ui/common/aboutPage');
 		var aboutScreen = new aboutPage();
 		aboutScreen.open();
@@ -106,23 +119,23 @@ exports.homePage = function() {
 	
 	/*--------------------------------------------------*/
 	
-	// // Skip to Game
-	// var cheatButton = Ti.UI.createButton({
-		// title:'Skip to Game',
-		// height:30,
-		// width:150,
-		// top:180
-	// });
-// 	
-	// // Skip to Game Listener
-	// cheatButton.addEventListener('click', function(){
-		// userID = Ti.Platform.id;
-		// var gamePage = require('ui/common/gamePage');
-		// var gameScreen = new gamePage({gameID: 117, userID: userID});
-		// gameScreen.open();
-		// instance.close();
-	// });
-	// instance.add(cheatButton)
+	// Skip to Game
+	var cheatButton = Ti.UI.createButton({
+		title:'Skip to Game',
+		height:30,
+		width:150,
+		top:180
+	});
+	
+	// Skip to Game Listener
+	cheatButton.addEventListener('click', function(){
+		userID = Ti.Platform.id;
+		var gamePage = require('ui/common/gamePage');
+		var gameScreen = new gamePage({gameID: 117, userID: userID});
+		gameScreen.open();
+		instance.close();
+	});
+	instance.add(cheatButton)
 	
 	/*--------------------------------------------------*/
 	
