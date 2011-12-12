@@ -80,9 +80,9 @@ exports.joinGame = function() {
 	
 	
 	// The event listener to trigger when the data from 'Find Games' has been loaded
-	Ti.App.addEventListener('findGames', function(input){
+	Ti.App.addEventListener('findGames', findFunction = function(input){
 		
-		Ti.App.removeEventListener('findGames', function(input){});
+		Ti.App.removeEventListener('findGames', findFunction);
 		// empty data array
 		var data = [];
 		
@@ -174,8 +174,9 @@ exports.joinGame = function() {
 	backButton.addEventListener('click', function(e){
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
-		homePageScreen.open();
 		instance.close();
+		homePageScreen.open();
+		
 	});
 	
 	instance.add(backButton);

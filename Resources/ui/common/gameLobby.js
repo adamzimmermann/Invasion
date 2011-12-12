@@ -27,6 +27,8 @@ exports.gameLobby = function (input) {
 	accessCode = input.accessCode;
 	gameID = input.gameID;
 	userID = Ti.Platform.id;
+	//gameName = input.gameName;
+	//alert('game name is: ' + gameName)
 	
 	//current list of players
 	var players = [];
@@ -277,6 +279,7 @@ exports.gameLobby = function (input) {
 		var homePageScreen = new homePage();
 		homePageScreen.open();
 		instance.close();
+		
 	});
 	
 	/*--------------------------------------------------*/

@@ -19,8 +19,17 @@ exports.homePage = function() {
 	
 	// Create the Home Page Window
 	var instance = Ti.UI.createWindow ({
-		backgroundImage: 'images/MediumLogoTop.jpg'
+		backgroundImage: 'images/background/background.png'
 	});
+	
+	var logo = Ti.UI.createLabel({
+		backgroundImage: 'images/logo/PNG/logoVertical1.png',
+		height:179,
+		width:150,
+		top:10
+	})
+	
+	instance.add(logo);
 	
     /*--------------------------------------------------*/
 	
@@ -38,7 +47,11 @@ exports.homePage = function() {
 		title:'Join Game',
 		height:50,
 		width:150,
-		top:240
+		top:240,
+		borderRadius:1,
+		borderWidth:1,
+		backgroundColor:'#d6d6d6'
+		
 		
 	});
 	
@@ -57,7 +70,9 @@ exports.homePage = function() {
 		title:'Create Game',
 		height:50,
 		width:150,
-		top:300
+		top:300,
+		borderRadius:1,
+		borderWidth:1
 	});
 	
 	
@@ -76,7 +91,9 @@ exports.homePage = function() {
 		title:'About',
 		height:50,
 		width:150,
-		top:360
+		top:360,
+		borderRadius:1,
+		borderWidth:1
 	});
 	
 	// Open the About Screen
@@ -89,23 +106,23 @@ exports.homePage = function() {
 	
 	/*--------------------------------------------------*/
 	
-	// Skip to Game
-	var cheatButton = Ti.UI.createButton({
-		title:'Skip to Game',
-		height:30,
-		width:150,
-		top:180
-	});
-	
-	// Skip to Game Listener
-	cheatButton.addEventListener('click', function(){
-		userID = Ti.Platform.id;
-		var gamePage = require('ui/common/gamePage');
-		var gameScreen = new gamePage({gameID: 117, userID: userID});
-		gameScreen.open();
-		instance.close();
-	});
-	instance.add(cheatButton)
+	// // Skip to Game
+	// var cheatButton = Ti.UI.createButton({
+		// title:'Skip to Game',
+		// height:30,
+		// width:150,
+		// top:180
+	// });
+// 	
+	// // Skip to Game Listener
+	// cheatButton.addEventListener('click', function(){
+		// userID = Ti.Platform.id;
+		// var gamePage = require('ui/common/gamePage');
+		// var gameScreen = new gamePage({gameID: 117, userID: userID});
+		// gameScreen.open();
+		// instance.close();
+	// });
+	// instance.add(cheatButton)
 	
 	/*--------------------------------------------------*/
 	
@@ -117,21 +134,21 @@ exports.homePage = function() {
 	/*--------------------------------------------------*/
 	
 	// Skip to Lobby Button
-	var lobbyButton = Ti.UI.createButton({
-		title:'Skip to Lobby',
-		height:30,
-		width:150,
-		top:100
-	});
-	lobbyButton.addEventListener('click', function(input){
-		//load game lobby screen
-		var gameLobby = require('ui/common/gameLobby');
-		var gameLobbyScreen = new gameLobby({gameID: 117, userID: Ti.Platform.id, accessCode: 157});
-		gameLobbyScreen.open();
-			
-	});
-	instance.add(lobbyButton);
-	
+	// var lobbyButton = Ti.UI.createButton({
+		// title:'Skip to Lobby',
+		// height:30,
+		// width:150,
+		// top:100
+	// });
+	// lobbyButton.addEventListener('click', function(input){
+		// //load game lobby screen
+		// var gameLobby = require('ui/common/gameLobby');
+		// var gameLobbyScreen = new gameLobby({gameID: 117, userID: Ti.Platform.id, accessCode: 157});
+		// gameLobbyScreen.open();
+// 			
+	// });
+	// instance.add(lobbyButton);
+// 	
 	/*--------------------------------------------------*/
 	
 	return instance;

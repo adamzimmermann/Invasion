@@ -124,9 +124,10 @@ function joinGame (input) {
 		
     	var data = {
     		gameID: xml.documentElement.getElementsByTagName("gameID").item(0).text,
+    		//gameName: xml.documentElement.getElementsByTagName("gameName").item(0).text,
     		accessCode: xml.documentElement.getElementsByTagName("accessCode").item(0).text,
     	};
-
+		//alert(data.gameName);
 	    Ti.App.fireEvent('joinGame', {data:data});	
 	}
 	
@@ -237,10 +238,13 @@ function createGame (playerID, gameName, userName, latitude, longitude) {
 		//for (var i = 0; i < games.length; i++) {	
 	    	var data = {
 	    		gameID: xml.getElementsByTagName("gameID").item(0).text,
+	    		//gameName: xml.getElementsByTagName("gameName").item(0).text,
 	    		accessCode: xml.getElementsByTagName("accessCode").item(0).text,
 	    	};
 	    //}
-	    alert('gameID: ' + data.gameID);
+	    //alert('gameID: ' + data.gameID);
+	    //alert('gameName: ' + data.gameName);
+
 	    Ti.App.fireEvent('createGame', data);
 	}
 }
