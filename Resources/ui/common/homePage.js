@@ -22,8 +22,8 @@ exports.homePage = function() {
 		backgroundImage: 'images/background/background.png'
 	});
 	
-	var logo = Ti.UI.createLabel({
-		backgroundImage: 'images/logo/PNG/logoVertical1.png',
+	var logo = Ti.UI.createView({
+		backgroundImage: 'images/logo/PNG/logoVertical.png',
 		height:179,
 		width:150,
 		top:10
@@ -39,24 +39,23 @@ exports.homePage = function() {
 	
 	// Join Game Button
 	var button1 = Ti.UI.createButton({
-		title:'Join Game',
+		backgroundImage: 'images/buttons/joinGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/joinGamebutton.png',
 		height:50,
 		width:150,
 		top:240,
-		borderRadius:1,
-		borderWidth:1,
-		backgroundColor:'#d6d6d6'
+		
 		
 		
 	});
 	
 	// Open Join Game
 	button1.addEventListener('click', function(){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-			});
-		buttonClick.play();
-		
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+			// });
+		// buttonClick.play();
+// 		
 
 		var joinGame = require('ui/common/joinGame');
 		var joinGview = new joinGame();
@@ -68,7 +67,7 @@ exports.homePage = function() {
 	
 	// Create Game Button
 	var button2 = Ti.UI.createButton({
-		title:'Create Game',
+		backgroundImage: 'images/buttons/createGamebutton.png',
 		height:50,
 		width:150,
 		top:300,
@@ -79,11 +78,11 @@ exports.homePage = function() {
 	
 	// Open Create Game
 	button2.addEventListener('click', function(){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
-	
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+		// });
+		// buttonClick.play();
+// 	
 
 		var createGame = require('ui/common/createGame');
 		var createGameScreen = new createGame();
@@ -95,7 +94,7 @@ exports.homePage = function() {
 	
 	// Button for the About Screen
 	var button3 = Ti.UI.createButton({
-		title:'About',
+		backgroundImage: 'images/buttons/aboutbutton.png',
 		height:50,
 		width:150,
 		top:360,
@@ -105,10 +104,10 @@ exports.homePage = function() {
 	
 	// Open the About Screen
 	button3.addEventListener('click', function(){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+		// });
+		// buttonClick.play();
 		
 
 		var aboutPage = require('ui/common/aboutPage');
@@ -128,15 +127,15 @@ exports.homePage = function() {
 	});
 	
 	// Skip to Game Listener
-	cheatButton.addEventListener('click', function(){
-		userID = Ti.Platform.id;
-		var gamePage = require('ui/common/gamePage');
-		var gameScreen = new gamePage({gameID: 117, userID: userID});
-		gameScreen.open();
-		instance.close();
-	});
-	instance.add(cheatButton)
-	
+	// cheatButton.addEventListener('click', function(){
+		// userID = Ti.Platform.id;
+		// var gamePage = require('ui/common/gamePage');
+		// var gameScreen = new gamePage({gameID: 117, userID: userID});
+		// gameScreen.open();
+		// instance.close();
+	// });
+	// instance.add(cheatButton)
+// 	
 	/*--------------------------------------------------*/
 	
 	// Add the Buttons to the Page

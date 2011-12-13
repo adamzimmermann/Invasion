@@ -25,7 +25,7 @@ exports.teamRoster = function(input){
 	/*--------------------------------------------------*/
 	
 	
-	alert(input);
+	//alert(input);
 	// Game & Team Information Calls
 	
 	// gameInformation({gameID: input.gameID, userID: input.userID});
@@ -89,21 +89,21 @@ exports.teamRoster = function(input){
 	
 	
 	var continueButton = Ti.UI.createButton({
-		height:30,
+		height:40,
 		top:380,
 		width:120,
-		title:'Continue'
+		backgroundImage: 'images/buttons/continuebutton.png',
 	});
 	
 	instance.add(continueButton);
 	
 	// Listens for continue button to be clicked
 	continueButton.addEventListener('click', function() {
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
-		alert(input);
+		// var buttonClick= Ti.Media.createSound({
+				// url: 'sounds/radiobeeps.mp3',
+		// });
+		// buttonClick.play();
+		//alert(input);
 		var instructionPage = require('ui/common/instructionPage');
 		var instructionPageScreen = new instructionPage(input);
 		instructionPageScreen.open();
@@ -119,19 +119,19 @@ exports.teamRoster = function(input){
 	
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
-		title:'back',
-		height: 20,
-		width: 100,
-		bottom:0
+		backgroundImage: 'images/buttons/backbutton.png',
+		height: 40,
+		width: 120,
+		bottom:10
 	});
 	instance.add(backButton);
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		// var buttonClick= Ti.Media.createSound({
+				// url: 'sounds/radiobeeps.mp3',
+		// });
+		// buttonClick.play();
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
 		homePageScreen.open();

@@ -157,17 +157,17 @@ exports.gamePage = function(input) {
 					bottom:10,
 					right:30,
 					width:90,
-					title:'Place Flag'
+					backgroundImage: 'images/buttons/placebutton.png',
 				});
 				instance.add(placeFlagButton);
 				
 				
 				//listens for place flag button to be clicked
 				placeFlagButton.addEventListener('click', function() {
-					var buttonClick= Ti.Media.createSound({
-						url: 'sounds/radiobeeps.mp3',
-					});
-					buttonClick.play();
+					// var buttonClick= Ti.Media.createSound({
+						// url: 'sounds/flagposition.mp3',
+					// });
+					// buttonClick.play();
 					//starts timer to check if both flags are placed
 					flagsPlacedTimer = setInterval(checkFlags, 5000);
 					
@@ -990,7 +990,7 @@ exports.gamePage = function(input) {
 		bottom:10,
 		left:30,
 		width:90,
-		title:'Legend'
+		backgroundImage: 'images/buttons/legendbutton.png',
 	});
 	
 	// Add it to the window
@@ -999,10 +999,6 @@ exports.gamePage = function(input) {
 	// The event listener
 	legendButton.addEventListener('click', function(){
 		
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
 		var legWin = Ti.UI.createWindow({
 			height: 350,
 			width: 200,
@@ -1045,10 +1041,7 @@ exports.gamePage = function(input) {
 		
 		legWin.add(close);
 		close.addEventListener('click', function(){
-			var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-			});
-			buttonClick.play();
+			
 			legWin.close();
 		});
 		
@@ -1075,10 +1068,7 @@ exports.gamePage = function(input) {
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		
 		if (typeof flagsPlacedTimer != 'undefined') {
 			clearInterval(flagsPlacedTimer);
 		};
