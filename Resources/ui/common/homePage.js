@@ -22,7 +22,7 @@ exports.homePage = function() {
 		backgroundImage: 'images/background/background.png'
 	});
 	
-	var logo = Ti.UI.createLabel({
+	var logo = Ti.UI.createView({
 		backgroundImage: 'images/logo/PNG/logoVertical1.png',
 		height:179,
 		width:150,
