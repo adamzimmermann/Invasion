@@ -40,7 +40,7 @@ var bgTunes = Ti.Media.createSound({
 	
 		
 	if (globals.osname == 'iphone') {
-		bgTunes.play();
+		//bgTunes.play();
 		homePage = require('ui/common/homePage');
 		var homeScreen = new homePage();
 		homeScreen.open();

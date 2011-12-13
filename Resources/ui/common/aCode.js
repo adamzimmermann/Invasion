@@ -123,16 +123,13 @@ exports.aCode = function(data) {
 		height:30,
 		top:390,
 		width:120,
-		title:'Join Game',
+		backgroundImage: 'images/buttons/joinGamebutton.png',
 		data: data
 	})
 	
 	// Listens for join game button to clicked
 	joinGameButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		
 		//alert('The GameID is :' + e.source.data)
 		
 		if(userName.value != ''){

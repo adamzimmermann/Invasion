@@ -51,11 +51,9 @@ exports.joinGame = function() {
 		    return;
 		}
 		if(onlyOnce == 0) {
-			// onlyOnce = 1;
+			//onlyOnce = 1;
 		 	// fires location found event
-		    Ti.App.fireEvent("app:got.location", {
-		        "coords" : e.coords
-			});
+		    Ti.App.fireEvent("app:got.location", {"coords" : e.coords});
 		}
 	};
 	
@@ -64,7 +62,8 @@ exports.joinGame = function() {
 	    Ti.API.debug(JSON.stringify(d));
 	    Ti.Geolocation.removeEventListener('location', updatePosition);	
 		if(onlyOnce == 0) {
-			onlyOnce = 1;
+			//onlyOnce = 1;
+			Ti.API.debug('debug crash');
 			//finds games within 10 miles
 			var webAPI = new globals.xml.findGames(d.coords.latitude, d.coords.longitude);
 		}
@@ -80,9 +79,9 @@ exports.joinGame = function() {
 	
 	
 	// The event listener to trigger when the data from 'Find Games' has been loaded
-	Ti.App.addEventListener('findGames', findFunction = function(input){
+	Ti.App.addEventListener('findGames', function(input){
 		
-		Ti.App.removeEventListener('findGames', findFunction);
+		//Ti.App.removeEventListener('findGames', findFunction);
 		// empty data array
 		var data = [];
 		
@@ -102,10 +101,10 @@ exports.joinGame = function() {
 			
 			row.addEventListener('click', function(e) {
 				var currentRow = e.row;
-				var buttonClick= Ti.Media.createSound({
-					url: 'sounds/radiobeeps.mp3',
-					});
-				buttonClick.play();
+				// var buttonClick= Ti.Media.createSound({
+					// url: 'sounds/radiobeeps.mp3',
+					// });
+				// buttonClick.play();
 				// alert('current row is: ' + currentRow)
 				// alert('current row data: ' + currentRow.gameID)
 				Ti.App.fireEvent('gameSelected', {gameID:currentRow.gameID});
@@ -116,7 +115,7 @@ exports.joinGame = function() {
 		// List of games
 		var table = Ti.UI.createTableView({
 			top: 140,
-			height: 280,
+			height: 250,
 			width: 250,
 			borderColor: '#d6d6d6',
 			borderRadius: 2,	 
@@ -168,18 +167,18 @@ exports.joinGame = function() {
 	
 	//creates back button
 	var backButton = Ti.UI.createButton({
-		title:'Home',
-		height: 20,
-		width: 100,
+		backgroundImage: 'images/buttons/backbutton.png',
+		height: 40,
+		width: 120,
 		bottom:15
 	});
 	
 	//listens for click on back button
 	backButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-			});
-		buttonClick.play();
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+			// });
+		// buttonClick.play();
 		var homePage = require('ui/common/homePage');
 		var homePageScreen = new homePage();
 		homePageScreen.open();

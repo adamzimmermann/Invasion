@@ -94,10 +94,10 @@ exports.aboutPage = function() {
 	// Back Button
 	
 	var back = Ti.UI.createButton({
-		title:'Home',
-		height: 20,
+		backgroundImage: 'images/buttons/okbutton.png',
+		height: 40,
 		width: 100,
-		bottom:50,
+		bottom:40,
 		zIndex:2
 	});
 	instance.add(back);
