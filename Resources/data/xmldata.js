@@ -43,11 +43,11 @@ function findGames (latitude, longitude) {
 		    	data.push({
 		    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
 		    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
-		    		initiatorID: games.item(i).getElementsByTagName("initiatorID").item(0).text,
+		    		//initiatorID: games.item(i).getElementsByTagName("initiatorID").item(0).text,
 		    		gameName: games.item(i).getElementsByTagName("gameName").item(0).text,
 		    		gameLatitude: games.item(i).getElementsByTagName("gameLatitude").item(0).text,
 		    		gameLongitude: games.item(i).getElementsByTagName("gameLongitude").item(0).text,
-		    		flagsPlaced: games.item(i).getElementsByTagName("flagsPlaced").item(0).text,
+		    		//flagsPlaced: games.item(i).getElementsByTagName("flagsPlaced").item(0).text,
 		    		gameStatus: games.item(i).getElementsByTagName("gameStatus").item(0).text,
 		    	}); 	
 			}

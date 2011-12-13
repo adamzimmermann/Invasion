@@ -108,6 +108,7 @@ exports.createGame = function() {
 		top:375,
 		width:120,
 		backgroundImage: 'images/buttons/createGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/screatebutton.png',
 	})
 	
 	
@@ -212,6 +213,7 @@ exports.createGame = function() {
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
 		height: 40,
 		width: 120,
 		bottom:5

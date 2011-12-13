@@ -90,9 +90,10 @@ exports.teamRoster = function(input){
 	
 	var continueButton = Ti.UI.createButton({
 		height:40,
-		top:380,
+		top:370,
 		width:120,
 		backgroundImage: 'images/buttons/continuebutton.png',
+		backgroundSelectedImage: 'images/buttons/scontinuebutton.png',
 	});
 	
 	instance.add(continueButton);
@@ -120,6 +121,7 @@ exports.teamRoster = function(input){
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/backbutton.png',
 		height: 40,
 		width: 120,
 		bottom:10

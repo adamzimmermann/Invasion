@@ -40,7 +40,7 @@ exports.homePage = function() {
 	// Join Game Button
 	var button1 = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/joinGamebutton.png',
-		backgroundSelectedImage: 'images/buttons/joinGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/sjoinGamebutton.png',
 		height:50,
 		width:150,
 		top:240,
@@ -68,6 +68,7 @@ exports.homePage = function() {
 	// Create Game Button
 	var button2 = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/createGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/screateGamebutton.png',
 		height:50,
 		width:150,
 		top:300,
@@ -95,6 +96,7 @@ exports.homePage = function() {
 	// Button for the About Screen
 	var button3 = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/aboutbutton.png',
+		backgroundSelectedImage: 'images/buttons/saboutbutton.png',
 		height:50,
 		width:150,
 		top:360,
@@ -127,13 +129,13 @@ exports.homePage = function() {
 	});
 	
 	// Skip to Game Listener
-	// cheatButton.addEventListener('click', function(){
-		// userID = Ti.Platform.id;
-		// var gamePage = require('ui/common/gamePage');
-		// var gameScreen = new gamePage({gameID: 117, userID: userID});
-		// gameScreen.open();
-		// instance.close();
-	// });
+	cheatButton.addEventListener('click', function(){
+		userID = Ti.Platform.id;
+		var gamePage = require('ui/common/gamePage');
+		var gameScreen = new gamePage({gameID: 117, userID: userID});
+		gameScreen.open();
+		instance.close();
+	});
 	// instance.add(cheatButton)
 // 	
 	/*--------------------------------------------------*/

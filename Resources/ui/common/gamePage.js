@@ -153,11 +153,12 @@ exports.gamePage = function(input) {
 				
 				//adds Place Flag button
 				var placeFlagButton = Ti.UI.createButton({
-					height:20,
+					height:40,
 					bottom:10,
 					right:30,
-					width:90,
+					width:100,
 					backgroundImage: 'images/buttons/placebutton.png',
+					backgroundSelectedImage: 'images/buttons/splacebutton.png',
 				});
 				instance.add(placeFlagButton);
 				
@@ -218,6 +219,7 @@ exports.gamePage = function(input) {
 				
 					//removes place flag button
 					instance.remove(placeFlagButton);
+					instance.add(back);
 					placeFlagButton.removeEventListener('click', function(){});
 					
 					
@@ -242,7 +244,7 @@ exports.gamePage = function(input) {
 			mapType: Titanium.Map.STANDARD,
 			height:320,
 			width:275,
-			top: 100,
+			top: 85,
 			userLocation: true,
 			borderColor: '#d6d6d6',
 			borderWidth:5,
@@ -986,11 +988,13 @@ exports.gamePage = function(input) {
 	
 	// Legend Button
 	var legendButton = Ti.UI.createButton({
-		height:20,
+		height:40,
 		bottom:10,
 		left:30,
-		width:90,
+		width:100,
 		backgroundImage: 'images/buttons/legendbutton.png',
+		backgroundSelectedImage: 'images/buttons/slegendbutton.png',
+		
 	});
 	
 	// Add it to the window
@@ -1000,13 +1004,19 @@ exports.gamePage = function(input) {
 	legendButton.addEventListener('click', function(){
 		
 		var legWin = Ti.UI.createWindow({
-			height: 350,
-			width: 200,
+			height:	400,
+			width: 280,
+			borderColor: '#d6d6d6',
+			borderWidth:2,
+			borderRadius:2,
 			backgroundColor: '#000'
 		});
 		
+		
 		legWin.open();
+		
 		data = [];
+		
 		
 		data[0] = Ti.UI.createTableViewRow({title: 'You', leftButton: ''});
 		data[1] = Ti.UI.createTableViewRow({title: 'Alien Flag', leftImage: 'images/miniIcons/Alien/Alien_Flag.png'});
@@ -1022,8 +1032,8 @@ exports.gamePage = function(input) {
 		var scrolly = Ti.UI.createScrollableView({});
 		legTable = Ti.UI.createTableView({
 			data:data,
-			height: 300,
-			width:150
+			height: 345,
+			width:250
 		});
 		
 		
@@ -1031,11 +1041,20 @@ exports.gamePage = function(input) {
 		scrolly.add(legTable);
 		legWin.add(scrolly);
 		
+		
+		var legendText = Ti.UI.createLabel({
+			font: {fontFamily:'Arial',fontSize:16},
+			bottom: 370,
+			left: 110,
+			color: '#fff',
+			text: "Legend",
+		});
+		legWin.add(legendText);
 		// Close Button
 		var close = Ti.UI.createButton({
-			bottom:2,
+			bottom:4,
 			height:20,
-			width:50,
+			width:70,
 			title:'Close'
 		})
 		
@@ -1061,12 +1080,14 @@ exports.gamePage = function(input) {
 	
 	// Back Button
 	var back = Ti.UI.createButton({
-		title:'Home',
-		height: 20,
-		width: 60,
-		bottom:10
+		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
+		height:40,
+		bottom:10,
+		right:30,
+		width:100,
 	});
-	instance.add(back);
+	
 	back.addEventListener('click', function(e){
 		
 		if (typeof flagsPlacedTimer != 'undefined') {

@@ -95,6 +95,7 @@ exports.aboutPage = function() {
 	
 	var back = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/okbutton.png',
+		backgroundSelectedImage: 'images/buttons/sokbutton.png',
 		height: 40,
 		width: 100,
 		bottom:40,

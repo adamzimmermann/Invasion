@@ -23,7 +23,7 @@ exports.joinGame = function() {
 	
 	
 	/*--------------------------------------------------*/
-	alert('at least it fires');
+	//alert('at least it fires');
 	// Geolocation Code
 	
 	
@@ -80,7 +80,9 @@ exports.joinGame = function() {
 	
 	// The event listener to trigger when the data from 'Find Games' has been loaded
 	Ti.App.addEventListener('findGames', function(input){
-		
+		// if (input.data == 'false'){
+			// alert('No games found.');
+		// } else {
 		//Ti.App.removeEventListener('findGames', findFunction);
 		// empty data array
 		var data = [];
@@ -140,6 +142,7 @@ exports.joinGame = function() {
 		instance.add(title);
 		// Add the table
 		instance.add(table);
+		// }
 	});
 
 	
@@ -168,6 +171,7 @@ exports.joinGame = function() {
 	//creates back button
 	var backButton = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
 		height: 40,
 		width: 120,
 		bottom:15
