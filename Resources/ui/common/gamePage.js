@@ -415,21 +415,29 @@ exports.gamePage = function(input) {
 				
 			//Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
 			
-			//updates player data on server and returns other player's locations
-			var web = new globals.xml.playerData({
-				gameID: gameID,
-				playerID: playerID,
-				latitude: d.coords.latitude,
-				longitude: d.coords.longitude,
-				canTag: 0,
-				canBeTagged: 0,
-				hasFlag: 0,
-				tagged: 0
+			//listens for updated player information
+			Ti.App.addEventListener("playerProximity", fooFunction3 = function(input) {
+				Ti.App.removeEventListener("playerProximity", fooFunction3);
 				
-				//this is what we need to fix next
-				//we need to find a way to send this fake data once to initiate things
-				//then send the actual data from playerProximity for all future occurances
-				
+				//updates player data on server and returns other player's locations
+				var web = new globals.xml.playerData({
+					gameID: gameID,
+					playerID: playerID,
+					latitude: d.coords.latitude,
+					longitude: d.coords.longitude,
+					canTag: 0,
+					//canTag: input.player.canTag;
+					canBeTagged: 0,
+					//canBeTagged: input.player.canBeTagged;
+					hasFlag: 0,
+					//hasFlag: input.player.hasFlag;
+					tagged: 0
+					//tagged: input.player.hasFlag;
+					
+					//this is what we need to fix next
+					//we need to find a way to send this fake data once to initiate things
+					//then send the actual data from playerProximity for all future occurances			
+				});
 			});
 		});
 		// if (distance(player, players) < 10)
@@ -580,15 +588,15 @@ exports.gamePage = function(input) {
 	    
 	 
 	    
-	    var data = {
-	    	latitude: d.coords.latitude,
-	    	longitude: d.coords.longitude,
-	    	gameID: 1,
-	    	playerID: Ti.Platform.id,
-	    	canTag: 1,
-	    	canBeTagged: 1,
-	    	hasFlag: 0,    	
-	    };
+	    // var data = {
+	    	// latitude: d.coords.latitude,
+	    	// longitude: d.coords.longitude,
+	    	// gameID: 1,
+	    	// playerID: Ti.Platform.id,
+	    	// canTag: 1,
+	    	// canBeTagged: 1,
+	    	// hasFlag: 0,    	
+	    // };
 	    
 	    //var webAPI = new globals.xml.playerData(data);
 	    
@@ -596,86 +604,90 @@ exports.gamePage = function(input) {
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
+	
+	//create variables for holding data
 	mapCount = 0
 	var mapData = [];
+	
 	//Listens for data to be returned about the other players
 	Ti.App.addEventListener('playerData', function(data){
-		
-		
 		//alert(' flag Locations are: ' + flagLocations)
+		
+		Ti.API.debug('player Data recieved: ' + mapCount);
+		
+		//update player location variables
 		playerProximity({players:data.data, flags:flagLocations});
 		
 		Ti.App.addEventListener('playerProximity', fooFunction3 = function(){
 			Ti.App.removeEventListener('playerProximity', fooFunction3);
 			
 			//alert('this is whats in map data: ' + mapData);
-			Ti.API.debug('playerData firing: ' + mapCount)
-			// set up array to contain annotation of everything
-			//mapCreateView.removeAnnotations(mapData);
 			
-			//var mapData = [];
+			
+			//remove map annotations
 			if (mapCount>2){
 				for (key in mapData){
 					mapCreateView.removeAnnotation(mapData[key]);
 					//alert('going to remove Annotations')
 				};
-				
 			}
+			//empty map data array
 			mapData = [];
+			
 			// for loop to pull the data for each event
 			for (var key in data.data) {
 				// key the events in "e"
 				var player = data.data[key];
 				// pull the data from e and set it to lat, lon, and title
 				if (player.playerID != playerID){
-				switch(player.teamName) {
-					case 'Humans':
-						// can be tagged
-						if(player.canBeTagged == 'true') {
-							// change player 'flag carrier human'
-							if(player.hasFlag == 'false'){
-								var image = 'images/miniIcons/Human/Human.png';
+					switch(player.teamName) {
+						case 'Humans':
+							// can be tagged
+							if(player.canBeTagged == 'true') {
+								// change player 'flag carrier human'
+								if(player.hasFlag == 'false'){
+									var image = 'images/miniIcons/Human/Human.png';
+								}
+								else {
+									var image = 'images/miniIcons/Human/Human_Carrier.png';
+								}			
+							}
+							// can't be tagged
+							else {
+								var image = 'images/miniIcons/Human/Human_Tagged.png';
+							}
+						
+						break;
+						
+						//---------------------------------------------
+						case 'Aliens':
+							// can be tagged
+							if(player.canBeTagged == 'true'){
+								if(player.hasFlag == 'false'){
+									var image = 'images/miniIcons/Alien/Alien.png';
+								}
+								else {
+									var image = 'images/miniIcons/Alien/Alien_Carrier.png';
+								}
 							}
 							else {
-								var image = 'images/miniIcons/Human/Human_Carrier.png';
+								var image = 'images/miniIcons/Alien/Alien_Tagged.png';
 							}			
-						}
-						// can't be tagged
-						else {
-							var image = 'images/miniIcons/Human/Human_Tagged.png';
-						}
-					
-					break;
-					
-					//---------------------------------------------
-					case 'Aliens':
-						// can be tagged
-						if(player.canBeTagged == 'true'){
-							if(player.hasFlag == 'false'){
-								var image = 'images/miniIcons/Alien/Alien.png';
-							}
-							else {
-								var image = 'images/miniIcons/Alien/Alien_Carrier.png';
-							}
-						}
-						else {
-							var image = 'images/miniIcons/Alien/Alien_Tagged.png';
-						}			
-					break;
-					
-				};
+						break;
+						
+					};
 				
-				var playerData = Ti.Map.createAnnotation({
-					latitude:player.latitude,
-					longitude:player.longitude,
-					title: player.userName,
-					image: image,
-					//animate: true
-				});
+					var playerData = Ti.Map.createAnnotation({
+						latitude:player.latitude,
+						longitude:player.longitude,
+						title: player.userName,
+						image: image,
+						//animate: true
+					});
 				
-				//mapCreateView.removeAnnotations(mapData);
-				// push this all back to the data array
-				mapData.push(playerData);
+					//mapCreateView.removeAnnotations(mapData);
+					// push this all back to the data array
+					mapData.push(playerData);
 				};
 			}
 			mapCreateView.zoom(1); 
@@ -686,16 +698,11 @@ exports.gamePage = function(input) {
 		});
 		
 	});
-	
-	//updates maps view
-	// function updateMap(data) {
-		// alert('other locations recieved' + data);
-	// }
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	function playerProximity(input) {
-	//loops through all players
+		//loops through all players
 		for(var key in input.players) {
 			
 				//alert('current player: ' + input.players[key]);
@@ -708,8 +715,6 @@ exports.gamePage = function(input) {
 				//array of player objects from from playerData
 				//array of flag objects from flagLocations
 				checkPlayer({player:input.players[key], players:input.players, flags:input.flags});
-				
-				
 				
 				
 				//PARAMETERS
@@ -772,7 +777,7 @@ exports.gamePage = function(input) {
 						
 						if(input.players[key].playerID = playerID) {
 							//set timer
-							countdown_init({player: input.players[key]})
+							//countdown_init({player: input.players[key]})
 						}
 						
 						
