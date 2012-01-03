@@ -199,11 +199,10 @@ exports.gamePage = function(input) {
 			placeFlagButton.addEventListener('click', function() {
 				Ti.API.debug('place flag button clicked');
 				
-<<<<<<< HEAD
 				//removes place flag button
 				instance.remove(placeFlagButton);
 				placeFlagButton.removeEventListener('click', function(){});	
-=======
+
 				//adds Place Flag button
 				var placeFlagButton = Ti.UI.createButton({
 					height:40,
@@ -214,7 +213,7 @@ exports.gamePage = function(input) {
 					backgroundSelectedImage: 'images/buttons/splacebutton.png',
 				});
 				instance.add(placeFlagButton);
->>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
+
 				
 				// var buttonClick= Ti.Media.createSound({
 					// url: 'sounds/flagposition.mp3',
@@ -224,7 +223,7 @@ exports.gamePage = function(input) {
 				//starts timer to check if both flags are placed
 				flagsPlacedTimer = setInterval(checkFlags, 5000);
 				
-<<<<<<< HEAD
+
 				//get current location
 				getLocation();
 				
@@ -234,14 +233,14 @@ exports.gamePage = function(input) {
 				    
 				    //Ti.API.debug(JSON.stringify(d));
 					// Ti.API.debug('center lat is: ' + centerPoint);
-=======
+
 					//removes place flag button
 					instance.remove(placeFlagButton);
 					instance.add(back);
 					placeFlagButton.removeEventListener('click', function(){});
 					
 					
->>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
+
 					
 					//saves the flag location
 					var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
@@ -557,6 +556,8 @@ exports.gamePage = function(input) {
 		Ti.App.addEventListener('flagStatus', function(input){
 			Ti.API.log('new flag status information recieved');
 		});
+		
+		//*******************
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -683,13 +684,13 @@ exports.gamePage = function(input) {
 	
 	// Legend Button
 	var legendButton = Ti.UI.createButton({
-<<<<<<< HEAD
+
 		height:30,
 		bottom:5,
-=======
+
 		height:40,
 		bottom:10,
->>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
+
 		left:30,
 		width:100,
 		backgroundImage: 'images/buttons/legendbutton.png',
@@ -703,7 +704,7 @@ exports.gamePage = function(input) {
 	// The event listener
 	legendButton.addEventListener('click', function(){
 		
-		var legWin = Ti.UI.createWindow({
+		var legendWindow = Ti.UI.createWindow({
 			height:	400,
 			width: 280,
 			borderColor: '#d6d6d6',
@@ -711,16 +712,9 @@ exports.gamePage = function(input) {
 			borderRadius:2,
 			backgroundColor: '#000'
 		});
-		
-<<<<<<< HEAD
 		legendWindow.open();
-=======
-		
-		legWin.open();
-		
->>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
+
 		data = [];
-		
 		
 		data[0] = Ti.UI.createTableViewRow({title: 'You', leftButton: ''});
 		data[1] = Ti.UI.createTableViewRow({title: 'Alien Flag', leftImage: 'images/miniIcons/Alien/Alien_Flag.png'});
@@ -732,19 +726,17 @@ exports.gamePage = function(input) {
 		data[7] = Ti.UI.createTableViewRow({title: 'Tagged Human', leftImage: 'images/miniIcons/Human/Human_Tagged.png'});
 		data[8] = Ti.UI.createTableViewRow({title: 'Human Flag Carrier', leftImage: 'images/miniIcons/Human/Human_Carrier.png'});
 		
-		
+		//create view
 		var scrolly = Ti.UI.createScrollableView({});
 		legendTable = Ti.UI.createTableView({
 			data:data,
 			height: 345,
 			width:250
 		});
-		
-		
 		scrolly.add(legendTable);
 		legendWindow.add(scrolly);
 		
-		
+		//create a label
 		var legendText = Ti.UI.createLabel({
 			font: {fontFamily:'Arial',fontSize:16},
 			bottom: 370,
@@ -753,6 +745,7 @@ exports.gamePage = function(input) {
 			text: "Legend",
 		});
 		legWin.add(legendText);
+		
 		// Close Button
 		var close = Ti.UI.createButton({
 			bottom:4,
@@ -761,9 +754,8 @@ exports.gamePage = function(input) {
 			title:'Close'
 		})
 		
-		legendWin.add(close);
+		legendWindow.add(close);
 		close.addEventListener('click', function(){
-			
 			legendWindow.close();
 		});
 		
@@ -773,7 +765,6 @@ exports.gamePage = function(input) {
 	
 	
 	// Back Button
-<<<<<<< HEAD
 	var backButton = Ti.UI.createButton({
 		title:'Home',
 		height: 20,
@@ -781,9 +772,12 @@ exports.gamePage = function(input) {
 		bottom:10
 	});
 	instance.add(backButton);
+	
+	//listens for Back Button to be clicked
 	backButton.addEventListener('click', function(e){
 		gameOver();
-=======
+	});
+	
 	var back = Ti.UI.createButton({
 		backgroundImage: 'images/buttons/backbutton.png',
 		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
@@ -805,7 +799,6 @@ exports.gamePage = function(input) {
 		var homePageScreen = new homePage();
 		homePageScreen.open();
 		instance.close();
->>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
