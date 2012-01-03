@@ -88,41 +88,41 @@ var bgTunes = Ti.Media.createSound({
 // };
 // 
 // 
-calcDistance({
-	human: {lat: 40.6986, lon: -89.6125}, 
-	alien: {lat: 40.7361, lon: -89.6461} 
-});
-
-
-
-var d;
-
-
-function calcDistance(input){
-	
-	var lat1 = input.human.lat;
-	var	lon1 = input.human.lon;
-	var lat2 = input.alien.lat;
-	var lon2 = input.alien.lon;
-	
-	var R = 6371; // km
-	var dLat = (lat2-lat1) * Math.PI / 180;
-	var dLon = (lon2-lon2) * Math.PI / 180;
-	var lat1 = lat1 * Math.PI / 180;
-	var lat2 = lat2 * Math.PI / 180;
-	
-	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-			   Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-			   Math.sin(dLon/2) * Math.sin(dLon/2);
-			   
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	
-	var d = R * c;
-	
-	Ti.API.debug('Distance between the points is: ' + d)
-	return d;
-
-};
+// calcDistance({
+	// human: {lat: 40.6986, lon: -89.6125}, 
+	// alien: {lat: 40.7361, lon: -89.6461} 
+// });
+// 
+// 
+// 
+// var d;
+// 
+// 
+// function calcDistance(input){
+// 	
+	// var lat1 = input.human.lat;
+	// var	lon1 = input.human.lon;
+	// var lat2 = input.alien.lat;
+	// var lon2 = input.alien.lon;
+// 	
+	// var R = 6371; // km
+	// var dLat = (lat2-lat1) * Math.PI / 180;
+	// var dLon = (lon2-lon2) * Math.PI / 180;
+	// var lat1 = lat1 * Math.PI / 180;
+	// var lat2 = lat2 * Math.PI / 180;
+// 	
+	// var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+			   // Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+			   // Math.sin(dLon/2) * Math.sin(dLon/2);
+// 			   
+	// var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+// 	
+	// var d = R * c;
+// 	
+	// Ti.API.debug('Distance between the points is: ' + d)
+	// return d;
+// 
+// };
 
 // function toRad(Value) {
     // /** Converts numeric degrees to radians */
