@@ -37,7 +37,7 @@ exports.createGame = function() {
 	
 	
 	var createGameLabel = Ti.UI.createLabel({
-		top: 180,
+		top: 170,
 		height: 200,
 		width:250,
 		backgroundColor: '#000',
@@ -104,10 +104,11 @@ exports.createGame = function() {
 	
 	// Create Button
 	var createButton = Ti.UI.createButton({
-		height:30,
-		top:390,
+		height:40,
+		top:375,
 		width:120,
-		title:'Create Game'
+		backgroundImage: 'images/buttons/createGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/screatebutton.png',
 	})
 	
 	
@@ -174,10 +175,10 @@ exports.createGame = function() {
 	
 	// Listens for result of Create Game
 	Ti.App.addEventListener('createGame', function(input){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-			});
-		buttonClick.play();
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+			// });
+		// buttonClick.play();
 		// alert('creategame listener' + input);
 		var gameLobby = require('ui/common/gameLobby');
 		var gameLobbyScreen = new gameLobby(input);
@@ -211,19 +212,20 @@ exports.createGame = function() {
 	
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
-		title:'Home',
-		height: 20,
-		width: 100,
-		bottom:10
+		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
+		height: 40,
+		width: 120,
+		bottom:5
 	});
 	instance.add(backButton);
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-			});
-		buttonClick.play();
+		// var buttonClick= Ti.Media.createSound({
+			// url: 'sounds/radiobeeps.mp3',
+			// });
+		// buttonClick.play();
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();

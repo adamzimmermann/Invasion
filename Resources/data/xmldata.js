@@ -43,11 +43,11 @@ function findGames (latitude, longitude) {
 		    	data.push({
 		    		gameID: games.item(i).getElementsByTagName("gameID").item(0).text,
 		    		accessCode: games.item(i).getElementsByTagName("accessCode").item(0).text,
-		    		initiatorID: games.item(i).getElementsByTagName("initiatorID").item(0).text,
+		    		//initiatorID: games.item(i).getElementsByTagName("initiatorID").item(0).text,
 		    		gameName: games.item(i).getElementsByTagName("gameName").item(0).text,
 		    		gameLatitude: games.item(i).getElementsByTagName("gameLatitude").item(0).text,
 		    		gameLongitude: games.item(i).getElementsByTagName("gameLongitude").item(0).text,
-		    		flagsPlaced: games.item(i).getElementsByTagName("flagsPlaced").item(0).text,
+		    		//flagsPlaced: games.item(i).getElementsByTagName("flagsPlaced").item(0).text,
 		    		gameStatus: games.item(i).getElementsByTagName("gameStatus").item(0).text,
 		    	}); 	
 			}
@@ -299,45 +299,54 @@ function flagsPlaced (gameID) {
 
 // Return Value:
 // xml array of locations if other players found or “false” if no results found
-function playerData (values) { 
+function playerData (input) { 
+	
 	var data = [];
-	Ti.API.debug('values thrown to playerData: ' + values.playerID + ' ' + values.gameID);
+	//Ti.API.debug('values thrown to getplayerData: ' + input.gameID);
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.open('POST','http://ctf.playamericalive.com/form.php');
 	xhr.send({
 		action: 'playerData',
-		gameID: values.gameID,
-		playerID: values.playerID,
-		latitude: values.latitude,
-		longitude: values.longitude,
-		canTag: values.canTag,
-		canBeTagged: values.canBeTagged,
-		hasFlag: values.hasFlag
+		gameID: input.gameID,
+		playerID: input.playerID,
+		latitude: input.latitude,
+		longitude: input.longitude
 	});
 	
 	xhr.onload = function(e) {
-		var xml = this.responseXML;
-	
-		var values = xml.documentElement.getElementsByTagName("player");
+		var players = this.responseText;
 		
-		for (var i = 0; i < values.length; i++) {	
-	    	data.push({
-	    		playerID: values.item(i).getElementsByTagName("playerID").item(0).text,
-	    		teamID: values.item(i).getElementsByTagName("teamID").item(0).text,
-	    		latitude: values.item(i).getElementsByTagName("playerLatitude").item(0).text,
-	    		longitude: values.item(i).getElementsByTagName("playerLongitude").item(0).text,
-	    		canTag: values.item(i).getElementsByTagName("canTag").item(0).text,
-	    		canBeTagged: values.item(i).getElementsByTagName("canBeTagged").item(0).text,
-	    		tagged: values.item(i).getElementsByTagName("tagged").item(0).text,
-	    		hasFlag: values.item(i).getElementsByTagName("hasFlag").item(0).text,
-	    		teamName: values.item(i).getElementsByTagName("teamName").item(0).text,
-				userName: values.item(i).getElementsByTagName("userName").item(0).text,
-	    		
-	    		
-	    	}); 	
-		}
-	
+		data = JSON.parse(players);
+		
+		alert('parsed players from JSON: ' + data['players']);
+		alert('parsed flags from JSON: ' + data['flags']);
+		
 	 	Ti.App.fireEvent('playerData', {data:data});
+	 	
+	 	
+	}
+}
+/*------------------------------------------------------------------------------------------*/
+
+// Parameters:
+// the gameID and an array with the Player's information
+
+// Return Value:
+// xml array of locations if other players found or “false” if no results found
+function updatePlayerData (input) {
+	var xhr = Titanium.Network.createHTTPClient();
+	xhr.open('POST','http://ctf.playamericalive.com/form.php');
+	xhr.send({
+		action: 'updatePlayerData',
+		gameID: input.gameID,
+		playerID: input.playerID,
+		latitude: input.latitude,
+		longitude: input.longitude,
+	});
+	
+	xhr.onload = function(e) {
+	
+	 	Ti.App.fireEvent('updatePlayerData', {data:this.responseText});
 	 	
 	}
 }
@@ -654,6 +663,8 @@ api.gameStatus = gameStatus;
 api.startGame = startGame;
 api.createGame = createGame;
 api.gameReady = gameReady;
+// api.getPlayerData = getPlayerData;
+api.updatePlayerData = updatePlayerData;
 api.playerData = playerData;
 //api.flagsPlaced = flagsPlaced;
 api.placeFlag = placeFlag;

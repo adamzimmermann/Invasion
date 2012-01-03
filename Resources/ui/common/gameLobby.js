@@ -28,7 +28,7 @@ exports.gameLobby = function (input) {
 	gameID = input.gameID;
 	userID = Ti.Platform.id;
 	gameName = input.gameName;
-	alert('game name is: ' + gameName)
+	//alert('game name is: ' + gameName)
 	
 	//current list of players
 	var players = [];
@@ -79,8 +79,9 @@ exports.gameLobby = function (input) {
 	
 	// Listens for data from gamePlayers
 	// event only fired when there are new players
+	var data;
 	Ti.App.addEventListener('gamePlayers', function(input) {
-		var data = [];
+		data = [];
 		
 		for(var key in input.data){
 			var g = input.data[key]
@@ -155,10 +156,11 @@ exports.gameLobby = function (input) {
 					
 					// Creates a start button
 					var startButton = Ti.UI.createButton({
-						bottom: 35,
-						height:25,
-						width:100,
-						title: 'Start Game!'
+						bottom: 55,
+						height:40,
+						width:120,
+						backgroundImage: 'images/buttons/startGamebutton.png',
+						backgroundSelectedImage: 'images/buttons/sstartGamebutton.png',
 					});
 					
 					// Add the button to the Window
@@ -166,10 +168,7 @@ exports.gameLobby = function (input) {
 						
 					// Listens for start button to be clicked
 					startButton.addEventListener('click', function() {	
-						var buttonClick= Ti.Media.createSound({
-							url: 'sounds/radiobeeps.mp3',
-						});
-						buttonClick.play();
+						
 						//clears out list of players
 						//var players = [];
 						
@@ -191,7 +190,7 @@ exports.gameLobby = function (input) {
 			var standby = Ti.UI.createLabel({
 				text: 'Please Wait...',
 				color: '#fff',
-				bottom: 50,
+				bottom: 65,
 				height: 25,
 				width:150,
 				left: 100
@@ -262,19 +261,17 @@ exports.gameLobby = function (input) {
 	
 	// Creates a Back Button
 	var backButton = Ti.UI.createButton({
-		title:'Home',
-		height: 20,
-		width: 100,
+		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
+		height: 40,
+		width: 120,
 		bottom:10
 	});
 	instance.add(backButton);
 	
 	// Listens for back button to be clicked
 	backButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-			url: 'sounds/radiobeeps.mp3',
-			});
-		buttonClick.play();
+		data = []
 		clearInterval(lobbyUpdateTimer);
 		if (typeof gameStatusTimer != 'undefined') {
 			clearInterval(gameStatusTimer);

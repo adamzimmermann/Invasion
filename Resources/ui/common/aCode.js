@@ -46,7 +46,7 @@ exports.aCode = function(data) {
 	// GUI
 	
 	var joinGameLabel = Ti.UI.createLabel({
-		top: 180,
+		top: 160,
 		height: 200,
 		width:250,
 		backgroundColor: '#000',
@@ -120,19 +120,17 @@ exports.aCode = function(data) {
 	
 	//creates a join game button
 	var joinGameButton = Ti.UI.createButton({
-		height:30,
-		top:390,
+		height:40,
+		top:370,
 		width:120,
-		title:'Join Game',
+		backgroundImage: 'images/buttons/joinGamebutton.png',
+		backgroundSelectedImage: 'images/buttons/sjoinGamebutton.png',
 		data: data
 	})
 	
 	// Listens for join game button to clicked
 	joinGameButton.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		
 		//alert('The GameID is :' + e.source.data)
 		
 		if(userName.value != ''){
@@ -201,13 +199,15 @@ exports.aCode = function(data) {
 	
 	// Back Button
 	var back = Ti.UI.createButton({
-		title:'back',
-		height: 20,
-		width: 100,
-		bottom:0
+		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
+		height: 40,
+		width: 120,
+		bottom:10
 	});
 	instance.add(back);
 	back.addEventListener('click', function(e){
+		
 		var homePage = require('ui/common/homePage')
 		var homePageScreen = new homePage();
 		homePageScreen.open();

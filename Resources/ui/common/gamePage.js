@@ -15,7 +15,8 @@ Jesse White
 
 
 
-
+//ARGUMENTS
+//input.gameID
 exports.gamePage = function(input) {
 	
 	// Create the Game Page Window
@@ -23,32 +24,33 @@ exports.gamePage = function(input) {
 		backgroundImage:'images/SmallLogoTop.jpg'
 	});
 	
-	displayScore({alienScore: 0, humanScore: 0});
-	/*----------------------------------------------------------------------------------------------------*/
 	
+	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Simplify the Arguments
 	playerID = Ti.Platform.id;
 	gameID = input.gameID;
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	mapCount = 0;
+	var mapData = [];
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	//puts the flag locations in the global scope
 	var flagLocations;
 	Ti.App.addEventListener('flagData', function(input) {
 		flagLocations = input.flags;
 		//alert('flag locations in global scope: ' + flagLocations);
 	});
 	
-	
-	
 	//puts the center lat in the global scope
 	Ti.App.addEventListener('centerLocation', function(input) {
 		var centerLat = input.centerLat;
 	});
 	
-	//var flagLocations = ['something', 'something'];
-	
-	//Ti.API.debug('my player id is ' + playerID);
 	/*----------------------------------------------------------------------------------------------------*/
-	
-	// Begin Geolocation Services
 	
 	// starts up GPS service
 	Ti.App.GeoApp = {};
@@ -63,7 +65,10 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	// Called after location found
+	// Gets current location for the initial zoom
+	function getLocation() {
+		Titanium.Geolocation.getCurrentPosition( updatePosition );
+	}
 	function updatePosition(e) {
 		if( ! e.success || e.error ) {
 		    alert("Unable to get your location.");
@@ -71,10 +76,15 @@ exports.gamePage = function(input) {
 		    Ti.API.debug(e);
 		    return;
 		}
-		
-		Ti.App.fireEvent("app:got.location", {"coords" : e.coords});
-		
+		Ti.App.fireEvent("app:got.location", {"coords" : e.coords});	
 	};
+	
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	// gets the current location for the gamePlay interval
+	function getPlayerLocation() {
+		Titanium.Geolocation.getCurrentPosition( updatePlayerPosition );
+	}
 	function updatePlayerPosition(e) {
 		if( ! e.success || e.error ) {
 		    alert("Unable to get your location.");
@@ -82,37 +92,26 @@ exports.gamePage = function(input) {
 		    Ti.API.debug(e);
 		    return;
 		}
-		
 		Ti.App.fireEvent("app:got.Playerlocation", {"coords" : e.coords});
-		
 	};
 	
-
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	// Gets current location
-	function getLocation() {
-		Titanium.Geolocation.getCurrentPosition( updatePosition );
+	//gets player's starting location
+	function startingLocation() {
+		Titanium.Geolocation.getCurrentPosition( getStartingPosition );
 	}
-	
-	function getPlayerLocation() {
-		Titanium.Geolocation.getCurrentPosition( updatePlayerPosition );
-	}
-	
-	
-	
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	
-	// Checks if current user is a flag placer
-	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
-
-
-	
+	function getStartingPosition(e) {
+		if( ! e.success || e.error ) {
+		    alert("Unable to get your location.");
+		    Ti.API.debug(JSON.stringify(e));
+		    Ti.API.debug(e);
+		    return;
+		}	
+		Ti.App.fireEvent("startingLocation", {"coords" : e.coords});	
+	};
 	
 	/*----------------------------------------------------------------------------------------------------*/
-	
-	
 	
 	// Checks if flags are placed
 	function checkFlags() {
@@ -123,126 +122,146 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-		onlyOnce = 0;
+	//display the score
+
+	//human score
+	var humanScore = Ti.UI.createLabel({
+		text: '  Humans: ' + 0,
+		color: '#fff',
+		top: 35,
+		left: 25,
+		height:30,
+		width: 90,
+		font: {fontFamily:'arial', fontSize: 15},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 1,
+		backgroundColor: '#000'
+	});
+	instance.add(humanScore);
+
+	//alien score
+	var alienScore = Ti.UI.createLabel({
+		text: '    Aliens: ' + 0,
+		color: '#fff',
+		top: 35,
+		right: 25,
+		height: 30,
+		width: 90,
+		font: {fontFamily:'arial', fontSize: 15},
+		borderColor: '#d6d6d6',
+		borderRadius: 2,	 
+		borderWidth: 1,
+		backgroundColor: '#000'
+	});
+	instance.add(alienScore);
+
+	//gets current location
+	getLocation();
 	
-		
+	//listens for current location
+	Ti.App.addEventListener("app:got.location", function(d){
+		var region={
+            latitude: d.coords.latitude,
+            longitude: d.coords.longitude,
+            animate:true,
+            latitudeDelta:0.003,
+            longitudeDelta:0.003
+    	};
+    	//creates a map and zooms into the user's location
+		mapCreateView.setLocation(region);
+	});
+
+	// Checks if current user is a flag placer
+	var webAPI = new globals.xml.userInfo({userID:input.userID, gameID:input.gameID});
 	
-		if (onlyOnce == 0);
-	
-		// Listens for information determining if user is a flag placer
-		Ti.App.addEventListener('userInfo', function(input) {
-			getLocation();
-			Ti.App.addEventListener("app:got.location", function(d){
-				var region={
-		            latitude: d.coords.latitude,
-		            longitude: d.coords.longitude,
-		            animate:true,
-		            latitudeDelta:0.003,
-		            longitudeDelta:0.003
-	        	};
-        		mapCreateView.setLocation(region);
+	// Listens for information determining if user is a flag placer
+	Ti.App.addEventListener('userInfo', function(input) {
+
+		//they are the flag placer
+		if(input.data.flagPlacer == '1') {
+			//notify them and have them navigate to the desired location
+			alert('you are the flag placer');
+			alert('navigate to the desired flag location and select place flag');
+			
+			//adds Place Flag button
+			var placeFlagButton = Ti.UI.createButton({
+				height:20,
+				bottom:10,
+				right:30,
+				width:90,
+				backgroundImage: 'images/buttons/placebutton.png',
 			});
+			instance.add(placeFlagButton);
 			
 			
-			//alert('Team Name is: ' + input.data.teamName)
-			//they are the flag placer
-			if(input.data.flagPlacer == '1') {
-				//notify them and have them navigate to the desired location
-				alert('you are the flag placer');
-				alert('navigate to the desired flag location and select place flag');
+			//listens for place flag button to be clicked
+			placeFlagButton.addEventListener('click', function() {
+				Ti.API.debug('place flag button clicked');
 				
+<<<<<<< HEAD
+				//removes place flag button
+				instance.remove(placeFlagButton);
+				placeFlagButton.removeEventListener('click', function(){});	
+=======
 				//adds Place Flag button
 				var placeFlagButton = Ti.UI.createButton({
-					height:20,
+					height:40,
 					bottom:10,
 					right:30,
-					width:90,
-					title:'Place Flag'
+					width:100,
+					backgroundImage: 'images/buttons/placebutton.png',
+					backgroundSelectedImage: 'images/buttons/splacebutton.png',
 				});
 				instance.add(placeFlagButton);
+>>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 				
+				// var buttonClick= Ti.Media.createSound({
+					// url: 'sounds/flagposition.mp3',
+				// });
+				// buttonClick.play();
 				
-				//listens for place flag button to be clicked
-				placeFlagButton.addEventListener('click', function() {
-					var buttonClick= Ti.Media.createSound({
-						url: 'sounds/radiobeeps.mp3',
-					});
-					buttonClick.play();
-					//starts timer to check if both flags are placed
-					flagsPlacedTimer = setInterval(checkFlags, 5000);
-					
-					//get current location
-					getLocation();
-					
-					//wait for current location
-					Ti.App.addEventListener("app:got.location", function(d) {
-					    Ti.API.debug(JSON.stringify(d));
-					    Ti.Geolocation.removeEventListener('location', updatePosition);
-					
-						//place human flag
-						//if(input.data.teamName == 'Humans') {
-							//alert('In the humans conditional')
-							// var flag = Ti.Map.createAnnotation({
-								// animate:true,
-								// image: 'images/miniIcons/Human/Human_Flag.png',
-								// latitude: d.coords.latitude,
-								// longitude: d.coords.longitude
-							// });
-// 							
-							// mapCreateView.addAnnotation(flag);
-						//}
-						//place alien flag
-						// if(input.data.teamName == 'Aliens') {
-							// var flag = Ti.Map.createAnnotation({
-								// animate:true,
-								// image: 'images/miniIcons/Alien/Alien_Flag.png',
-								// latitude: d.coords.latitude,
-								// longitude: d.coords.longitude
-							// });
-// 							
-							// mapCreateView.addAnnotation(flag);
-						//}
-						//place flag button clicked
-						Ti.API.debug('place flag button clicked')
-						//alert(input.data.teamID + d.coords.latitude + d.coords.longitude)
-						//saves the flag location
-						
-						// Ti.API.debug('flag location lats are: )
-						
-						// Ti.API.debug('center lat is: ' + centerPoint);
-						
-						
-						var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
-						
-					});
+				//starts timer to check if both flags are placed
+				flagsPlacedTimer = setInterval(checkFlags, 5000);
 				
+<<<<<<< HEAD
+				//get current location
+				getLocation();
+				
+				//wait for current location
+				Ti.App.addEventListener("app:got.location", function(d) {
+				    Ti.Geolocation.removeEventListener('location', updatePosition);
+				    
+				    //Ti.API.debug(JSON.stringify(d));
+					// Ti.API.debug('center lat is: ' + centerPoint);
+=======
 					//removes place flag button
 					instance.remove(placeFlagButton);
+					instance.add(back);
 					placeFlagButton.removeEventListener('click', function(){});
 					
 					
+>>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 					
-				});	
-			}
-			else {
-				//notify them to wait for flags to be placed
-				alert('wait for flags to be placed'); //convert to window that is dismissed when game starts *******
-				//starts timer to check if both flags are placed
-				flagsPlacedTimer = setInterval(checkFlags, 5000);	
-			}
-			
-		
-		});
-		
-	
-	/*----------------------------------------------------------------------------------------------------*/
+					//saves the flag location
+					var webAPI = new globals.xml.placeFlag({teamID: input.data.teamID, latitude: d.coords.latitude, longitude: d.coords.longitude});
+				});			
+			});	
+		}
+		else {
+			//notify them to wait for flags to be placed
+			alert('wait for flags to be placed');
+			//starts timer to check if both flags are placed
+			flagsPlacedTimer = setInterval(checkFlags, 5000);	
+		}
+	});
 
 	// Creates a Map View
 	var mapCreateView = Titanium.Map.createView({
 			mapType: Titanium.Map.STANDARD,
 			height:320,
 			width:275,
-			top: 100,
+			top: 85,
 			userLocation: true,
 			borderColor: '#d6d6d6',
 			borderWidth:5,
@@ -251,88 +270,67 @@ exports.gamePage = function(input) {
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	
-	
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	
 	// Waits for game to be ready
 	Ti.App.addEventListener('gameReady', function(input){
-		// both flags are placed
-		// while(input.data != 'true'){
-			// var holdWin = Ti.UI.createWindow({
-				// width: 100,
-				// height: 50,
-				// backgroundColor: '#000'
-			// });
-			// var holdText = Ti.UI.createLabel({
-				// text: 'Please wait until both flags have been placed...',
-				// height: 80,
-				// width:40,
-				// color: '#fff',
-// 				
-			// })
-			// holdWin.add(holdText);
-			// instance.add(holdWin);
-			if(input.data == 'true'){
-				//ends timer
-				//holdWin.close();
-				clearInterval(flagsPlacedTimer);
-				
-				Ti.API.debug('the game is beginning');
-				
-				//starts the game
-				var info = startGame();
-				
-				//var centerLat = info.centerLat;
-				//alert('data: ' + info.flagLocations);
-				
-				//flagLocations = info.flagLocations;
-			} else {
-				Ti.API.debug('Not ready Yet')
-			}
-			// flags not placed yet
-		//}
+		//both flags placed
+		if(input.data == 'true'){
+			Ti.API.debug('the game is beginning');
+			
+			//ends timer
+			clearInterval(flagsPlacedTimer);
+			
+			//starts the game
+			startGame();
+		}
+		//not all flags placed
+		else {
+			Ti.API.debug('waiting for both flags to be placed')
+		}
 	});
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
-
 	//Sets up the Game
 	function startGame() {
+		
+		//get player's starting location
+		startingLocation();
+		
+		//listen for player's starting location
+		Ti.App.addEventListener('startingLocation', function(input) {
+			
+			Ti.API.debug('location data: ' + input);
+			
+			//sets initial player conditions
+			var web = new globals.xml.updatePlayerData({
+				gameID: gameID,
+				playerID: playerID,
+				latitude: input.coords.latitude,
+				longitude: input.coords.longitude,			
+			});
+		});
+		
 		//get flag locations
-	
 		var webAPI = new globals.xml.flagLocations({gameID:gameID});
 		
 		//receives flag location data
 		Ti.App.addEventListener('flagLocations', function(input){
-			/*-------------------------------*/
 			
+			//puts flag data into local global scope
 			Ti.App.fireEvent('flagData', {flags:input.data});
-			
-			//flagLocations=input.data;
-			var hDone = 0;
-			var aDone = 0;
-			// if both flags placed **** gonna need this from the XML
-			for (key in input.data) {
-				
-				
+
+			//annotates both flags to the map
+			for (key in input.data) {				
 				var flag = input.data[key]
 				switch (flag.teamName) {
 					case 'Humans':
-						var humanCenterLat;
-						var humanCenterLon;
 						var humanFlag = Ti.Map.createAnnotation({
 							animate:true,
 							image: 'images/miniIcons/Human/Human_Flag.png',
 							latitude: flag.latitude,
 							longitude: flag.longitude
-						});
-						var humanCenterLat = flag.latitude;
-						var humanCenterLon = flag.longitude;
-						
+						});			
 						mapCreateView.addAnnotation(humanFlag);
-						hDone = 1;
 						break;
 						
 					case 'Aliens':
@@ -343,54 +341,35 @@ exports.gamePage = function(input) {
 							latitude: flag.latitude,
 							longitude: flag.longitude
 						});
-						var alienCenterLat = flag.latitude;
-						var alienCenterLon = flag.longitude;
-	
-						
 						mapCreateView.addAnnotation(alienFlag);
-						aDone = 1;
 						break;
-				};
-				
-				//mapCreateView.add(centerMarker);
-				
-			};
-			if (hDone == 1 && aDone == 1){
-					centerLat = (parseFloat(humanCenterLat) + parseFloat(alienCenterLat)) / 2;
-					centerLon = (parseFloat(humanCenterLon) + parseFloat(alienCenterLon)) / 2;
-					
-					
-					Ti.API.debug('Center Latitude = ' + centerLat + centerLon)
-					var centerMarker = Ti.Map.createAnnotation({
-						latitude: centerLat,
-						longitude: centerLon,
-						image: 'images/line.png'
-					});
-					// Place the center flag
-					mapCreateView.addAnnotation(centerMarker);
+				};	
 			};
 			
+			//calculate center point
+			centerLatitude = (parseFloat(input.data[0].latitude) + parseFloat(input.data[1].latitude)) / 2;		
+			centerLongitude = (parseFloat(input.data[0].longitude) + parseFloat(input.data[1].longitude)) / 2;
+			Ti.API.debug('Center Coordinates: ' + centerLatitude + ':' + centerLongitude);
 			
+			//create center point marker
+			var centerMarker = Ti.Map.createAnnotation({
+				latitude: centerLatitude,
+				longitude: centerLongitude,
+				image: 'images/line.png'
+			});
 			
-			//return centerLat to local global scope
-			Ti.App.fireEvent('centerLocation', {centerLat:centerLat});
+			//Place the center marker
+			mapCreateView.addAnnotation(centerMarker);
 			
+			//return centerLatitude to local global scope
+			Ti.App.fireEvent('centerLocation', {centerLat:centerLatitude});		
 			
 			alert('Both flags placed. Get ready.');
-			
+				
 			//start game timer
 			gameTimer = setInterval(gamePlay, 5000);
-			//gamePlay({flags:input.data});
 			
-			
-			
-			
-			/*-------------------------------*/
 		});
-		
-		
-		
-		//return {centerLat:centerLat, flagLocations:flagLocations};
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
@@ -398,150 +377,156 @@ exports.gamePage = function(input) {
 	// GamePlay
 	
 	//the update function called on an interval
-	//do everything you do every frame
 	//this will be like on update in Unity
 	//the timing can be set in startGame()
 	function gamePlay() {
-		//Titanium.Geolocation.getCurrentPosition( updatePosition );
 		
+		Ti.API.debug('****************************************************************');
+
 		//gets the current location of the user
 		getPlayerLocation();
-		
+	
 		//listens for the user's location
-		Ti.App.addEventListener("app:got.Playerlocation", fooFunction2 = function(d) {
-			Ti.App.removeEventListener("app:got.Playerlocation", fooFunction2);
-				
-			//Ti.API.debug('Info for Player Data: ' + gameID + playerID + d.coords.latitude + d.coords.longitude)
+		Ti.App.addEventListener("app:got.Playerlocation", gotPlayerLocation = function(input) {
+			Ti.App.removeEventListener("app:got.Playerlocation", gotPlayerLocation);
 			
-			//listens for updated player information
-			Ti.App.addEventListener("playerProximity", fooFunction3 = function(input) {
-				Ti.App.removeEventListener("playerProximity", fooFunction3);
+			//update the web
+			var webAPI = new globals.xml.PlayerData({playerID:playerID, gameID:gameID, latitude:input.coords.latitude, longitude:input.coords.longitude});
+			
+			Ti.App.addEventListener('playerData', function(input) {
 				
-				//updates player data on server and returns other player's locations
-				var web = new globals.xml.playerData({
-					gameID: gameID,
-					playerID: playerID,
-					latitude: d.coords.latitude,
-					longitude: d.coords.longitude,
-					canTag: 0,
-					//canTag: input.player.canTag;
-					canBeTagged: 0,
-					//canBeTagged: input.player.canBeTagged;
-					hasFlag: 0,
-					//hasFlag: input.player.hasFlag;
-					tagged: 0
-					//tagged: input.player.hasFlag;
+				//annotate the map
+				annotateMap(input.data);
+				
+				//update the score
+				updateScore(input.data['flags']);
+				
+			});		
+		});
+	}
+			
+	/*----------------------------------------------------------------------------------------------------*/
+			
+		
+	function annotateMap(input){
 					
-					//this is what we need to fix next
-					//we need to find a way to send this fake data once to initiate things
-					//then send the actual data from playerProximity for all future occurances			
-				});
-			});
-		});
-		// if (distance(player, players) < 10)
+		//remove map annotations
+		if (mapCount>1){
+			for (key in mapData){
+				mapCreateView.removeAnnotation(mapData[key]);
+			};
+		}
+		//clear map data array
+		mapData = [];
 		
-		// Create constantly updating annotations
-		
-		// Ti.App.addEventListener('playerData', function(input){
-			// var data = [];
-			// for(var key in input.data){
-				// var g = input.data[key]
-				// var annotData = {
-					// title: g.playerID,
-					// latitude: g.latitude,
-					// longitude: g.longitude
-				// };
-				// data.push(data);
-			// };
-			// alert(data);
-			// mapCreateView.setAnnotations(data);
-		// });
-// 		
-		
-		//update flag conditions
-		//updateFlags();	
+		//loop through all the players
+		for (var key in input.players) {
+			//create a current iteration variable
+			var player = input.players[key];
 			
+			//exclude the current user
+			if (player.playerID != playerID){
+				switch(player.teamName) {
+					//a human player
+					case 'Humans':
+						// can be tagged
+						if(player.canBeTagged == 'true') {
+							// change player 'flag carrier human'
+							if(player.hasFlag == 'false'){
+								var image = 'images/miniIcons/Human/Human.png';
+							}
+							else {
+								var image = 'images/miniIcons/Human/Human_Carrier.png';
+							}			
+						}
+						// can't be tagged
+						else {
+							var image = 'images/miniIcons/Human/Human_Tagged.png';
+						}			
+					break;
+					
+					//an alien player
+					case 'Aliens':
+						// can be tagged
+						if(player.canBeTagged == 'true'){
+							if(player.hasFlag == 'false'){
+								var image = 'images/miniIcons/Alien/Alien.png';
+							}
+							else {
+								var image = 'images/miniIcons/Alien/Alien_Carrier.png';
+							}
+						}
+						else {
+							var image = 'images/miniIcons/Alien/Alien_Tagged.png';
+						}			
+					break;		
+				};
+			
+				var playerData = Ti.Map.createAnnotation({
+					latitude:player.latitude,
+					longitude:player.longitude,
+					title: player.userName,
+					image: image,
+				});
+			
+				//put current player instance into the array
+				mapData.push(playerData);
+			};
+		}
+		//aids with animation of annotations
+		mapCreateView.zoom(1); 
+		mapCreateView.zoom(-1);	
 		
+		//adds new locations to the map
+		mapCreateView.addAnnotations(mapData);
+		mapCount++
 		
 	}
 	
 
 	/*----------------------------------------------------------------------------------------------------*/
 
+	//ends the game
+	//clears timers and loads home screen
 	function gameOver() {
-		
-		
-		
+		if (typeof flagsPlacedTimer != 'undefined') {
+			clearInterval(flagsPlacedTimer);
+		};
+		if (typeof gameTimer != 'undefined') {
+			clearInterval(gameTimer);
+		};
+		var homePage = require('ui/common/homePage')
+		var homePageScreen = new homePage();
+		homePageScreen.open();
+		instance.close();
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	// listens for a flag to be captured
-	Ti.App.addEventListener('flagCaptured', function(input){
-		//get current score
-		var webAPI = new globals.xml.checkScore(gameID);
-		
-		//recieves score data
-		Ti.App.addEventListener('checkScore', function(input) {
-			//the game is over
-			if(input.data[0].points > 3 || input.data[1].points > 3) {
-				//clear game timer
-				clearInterval(gameTimer);
-				
-				//call victory function
-				if(input.data[0]<input.data[1]) {
-					victory('humans');
-				} else {
-					victory('aliens');
-				}
-			}
-			//game continues
-			else {	
-				displayScore({alienScore:input.data[0], humanScore:input.data[1]});
-			}
-		});
-
-
-			//storyElement();
-	});
-	
-	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Scoring System
-	
-	function displayScore(input) {
-		//display human score
-		var humanScore = Ti.UI.createLabel({
-			text: '  Humans: ' + input.humanScore,
-			color: '#fff',
-			top: 35,
-			left: 25,
-			height:30,
-			width: 90,
-			font: {fontFamily:'arial', fontSize: 15},
-			borderColor: '#d6d6d6',
-			borderRadius: 2,	 
-			borderWidth: 1,
-			backgroundColor: '#000'
-		});
-		instance.add(humanScore);
-	
+	function updateScore(input) {	
+		humanScore.text = 'Humans: ' + input[0].points;
+		alienScore.text = 'Aliens: ' + input[1].points;
 		
-		//display alien score
-		var alienScore = Ti.UI.createLabel({
-			text: '    Aliens: ' + input.alienScore,
-			color: '#fff',
-			top: 35,
-			right: 25,
-			height: 30,
-			width: 90,
-			font: {fontFamily:'arial', fontSize: 15},
-			borderColor: '#d6d6d6',
-			borderRadius: 2,	 
-			borderWidth: 1,
-			backgroundColor: '#000'
-		});
-		instance.add(alienScore);
+		//check if end game conditions met
+		if(input[0].points > 3 || input[1].points > 3) {
+			//clear game timer
+			clearInterval(gameTimer);
+			
+			//call victory function
+			if(input.data[0]<input.data[1]) {
+				victory('humans');
+			} else {
+				victory('aliens');
+			}
+		}
+		//game continues
+		else {	
+			updateScore({alienScore:input.data[0], humanScore:input.data[1]});
+			
+			//storyElement({alienScore:input.data[0], humanScore:input.data[1]});
+		}
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
@@ -551,10 +536,12 @@ exports.gamePage = function(input) {
 		if(input == 'human') {
 			//display humans won
 			alert('humans won');
+			gameOver();
 		}
 		else {
 			//display aliens won
 			alert('aliens won');
+			gameOver();
 		}
 		//create main menu button
 	};
@@ -566,288 +553,26 @@ exports.gamePage = function(input) {
 		Ti.API.debug('checking the flag status');
 		var webAPI = new globals.xml.flagStatus({gameID:gameID});
 		
+		//listens for flag status information
 		Ti.App.addEventListener('flagStatus', function(input){
 			Ti.API.log('new flag status information recieved');
-			
 		});
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	
 	// Listens for updatePositions to finish
-	Ti.App.addEventListener("app:got.location", fooFunction = function(d) {
-	  	Ti.App.removeEventListener('app:got.location', fooFunction)
+	Ti.App.addEventListener("app:got.location", gotLocationFunction = function(d) {
+	  	Ti.App.removeEventListener('app:got.location', gotLocationFunction)
 	    // Ti.App.GeoApp.f_lng = d.longitude;
 	    // Ti.App.GeoApp.f_lat = d.latitude;
 	    Ti.API.debug(JSON.stringify(d));
 	    // you need to remove this listener, see the blog post mentioned above
-	    Ti.Geolocation.removeEventListener('location', updatePosition);	
-	    
-	 
-	    
-	    // var data = {
-	    	// latitude: d.coords.latitude,
-	    	// longitude: d.coords.longitude,
-	    	// gameID: 1,
-	    	// playerID: Ti.Platform.id,
-	    	// canTag: 1,
-	    	// canBeTagged: 1,
-	    	// hasFlag: 0,    	
-	    // };
-	    
-	    //var webAPI = new globals.xml.playerData(data);
-	    
+	    Ti.Geolocation.removeEventListener('location', updatePosition);
 	 
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
-	
-	//create variables for holding data
-	mapCount = 0
-	var mapData = [];
-	
-	//Listens for data to be returned about the other players
-	Ti.App.addEventListener('playerData', function(data){
-		//alert(' flag Locations are: ' + flagLocations)
-		
-		Ti.API.debug('player Data recieved: ' + mapCount);
-		
-		//update player location variables
-		playerProximity({players:data.data, flags:flagLocations});
-		
-		Ti.App.addEventListener('playerProximity', fooFunction3 = function(){
-			Ti.App.removeEventListener('playerProximity', fooFunction3);
-			
-			//alert('this is whats in map data: ' + mapData);
-			
-			
-			//remove map annotations
-			if (mapCount>2){
-				for (key in mapData){
-					mapCreateView.removeAnnotation(mapData[key]);
-					//alert('going to remove Annotations')
-				};
-			}
-			//empty map data array
-			mapData = [];
-			
-			// for loop to pull the data for each event
-			for (var key in data.data) {
-				// key the events in "e"
-				var player = data.data[key];
-				// pull the data from e and set it to lat, lon, and title
-				if (player.playerID != playerID){
-					switch(player.teamName) {
-						case 'Humans':
-							// can be tagged
-							if(player.canBeTagged == 'true') {
-								// change player 'flag carrier human'
-								if(player.hasFlag == 'false'){
-									var image = 'images/miniIcons/Human/Human.png';
-								}
-								else {
-									var image = 'images/miniIcons/Human/Human_Carrier.png';
-								}			
-							}
-							// can't be tagged
-							else {
-								var image = 'images/miniIcons/Human/Human_Tagged.png';
-							}
-						
-						break;
-						
-						//---------------------------------------------
-						case 'Aliens':
-							// can be tagged
-							if(player.canBeTagged == 'true'){
-								if(player.hasFlag == 'false'){
-									var image = 'images/miniIcons/Alien/Alien.png';
-								}
-								else {
-									var image = 'images/miniIcons/Alien/Alien_Carrier.png';
-								}
-							}
-							else {
-								var image = 'images/miniIcons/Alien/Alien_Tagged.png';
-							}			
-						break;
-						
-					};
-				
-					var playerData = Ti.Map.createAnnotation({
-						latitude:player.latitude,
-						longitude:player.longitude,
-						title: player.userName,
-						image: image,
-						//animate: true
-					});
-				
-					//mapCreateView.removeAnnotations(mapData);
-					// push this all back to the data array
-					mapData.push(playerData);
-				};
-			}
-			mapCreateView.zoom(1); 
-			mapCreateView.zoom(-1);	
-			mapCreateView.addAnnotations(mapData);
-			mapCount++
-		
-		});
-		
-	});
-
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	function playerProximity(input) {
-		//loops through all players
-		for(var key in input.players) {
-			
-				//alert('current player: ' + input.players[key]);
-				//alert('players: ' + input.players);
-				//alert('flags: ' + input.flags);
-				//alert('player into checkPlayer: ' + JSON.stringify(input.players[key]));
-				
-				//PARAMETERS
-				//current player object from loop
-				//array of player objects from from playerData
-				//array of flag objects from flagLocations
-				checkPlayer({player:input.players[key], players:input.players, flags:input.flags});
-				
-				
-				//PARAMETERS
-				//current player object from loop
-				//array of flag objects from gameInfo 
-				checkFlagsProximity({player:input.players[key], flags:input.flags});
-		};
-		Ti.App.fireEvent('playerProximity');
-	};
-	
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	//checks other players in relation to one player
-	function checkPlayer(input) {
-	
-		//if they are in their territory
-		if(ownTerritory({player: input.player, flags:input.flags})) {
-			Ti.API.debug(input.player.userName + ' in own territory.')
-			//if they aren't tagged
-			if(input.player.tagged == 0) {
-				//enable tagging
-				input.player.canTag = 1;
-				//disable can be tagged
-				input.player.canBeTagged = 0;
-			}		
-		}
-		
-		//if they are in enemy territory
-		else {
-			Ti.API.debug(input.player.userName + ' in enemy territory.')
-			//enable can be tagged
-			input.player.canBeTagged = 1;
-			//disable tagging
-			input.player.canTag = 0;
-		}
-			
-		//loops through all other players
-		for(var key in input.players) {
-					
-			//*******************************
-			//set proximity based variables
-			
-			//on opposite teams
-			if(input.player.teamID != input.players[key].teamID) {
-				
-				//if they are close
-				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.players[key].latitude, longitude:input.players[key].longitude}}) < .005) {
-					
-					//if tagging conditions met
-					if((input.player.canTag == 1) && (input.players[key].canBeTagged == 1) && (input.players[key].tagged == 0)) {
-						Ti.API.debug('Player ' + input.players[key].userName + ' was just tagged.');
-						//tag the player
-						input.players[key].tagged = 1;
-						//disable others from tagging them
-						input.players[key].canBeTagged = 0;
-						//disable tagging
-						input.players[key].canTag = 0;
-						
-						
-						
-						if(input.players[key].playerID = playerID) {
-							//set timer
-							//countdown_init({player: input.players[key]})
-						}
-						
-						
-						//if they were carrying a flag
-						if(input.player.hasFlag == 1) {
-							//remove the flag
-							input.player.hasFlag = 0;
-							
-							//reset the flag
-							globals.xml.resetFlag({teamID:input.player.teamID, gameID:input.player.gameID})
-							
-						}
-					}
-				}
-			}
-			//on the same team
-			else {
-				//do nothing.
-			}
-		}
-	}
-	
-	//-----------------------------------------------------------------------------------------------------------------------------
-	
-	//checks player proximity to either flag
-	function checkFlagsProximity(input) {
-		//loops through both flags
-		for(var key in input.flags) {
-			//player is on opposite team as the flag
-			if(input.player.teamID != input.flags[key].teamID) {
-				
-				//check if they are at the other team's base
-				Ti.API.debug('checking if in other teams base');
-				if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {		
-					Ti.API.debug('Team ' + input.flags[key].teamName + ' just had their flag taken.');
-					//send data about which flag was taken
-					webAPI = globals.xml.flagTaken({teamID:input.flags[key].teamID})
-					//update the player status
-					input.player.hasFlag = 1;
-					
-				}
-			}
-			//player is on the same team as the flag
-			else {
-				
-				
-				//close to the base
-				if (distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .006){
-					Ti.API.debug(input.player.userName + ' is close to their base');
-					
-					//disable the player's ability to tag
-					input.player.canTag = 0;
-					
-					//check if they are carrying a flag
-					if(input.player.hasFlag) {
-						//check if they are at the base
-						
-						if(distance({one:{latitude:input.player.latitude, longitude:input.player.longitude}, two:{latitude:input.flags[key].latitude, longitude:input.flags[key].longitude}}) < .005) {
-							Ti.API.debug('Team ' + input.flags[key].teamName + ' just scored.');
-							//update the score
-							webAPI = globals.xml.flagCaptured(input.flags[key].teamID)
-						}
-						//reset the hasFlag value for the player
-						input.player.hasFlag = 0;
-						//alert('flag Proximity: ' + one + two)
-					}
-				}
-			}
-		}
-	}
-	
-	//-----------------------------------------------------------------------------------------------------------------------------
 	
 	//calculates distance between 2 pairs of coordinates
 	//accepts objects structed in the following format
@@ -858,8 +583,7 @@ exports.gamePage = function(input) {
 		var lat2 = input.two.latitude;
 		var lon2 = input.two.longitude;
 		
-		//alert('Lat 1: ' + lat1 + ', Lon 1: ' + lon1 + ' // Lat 2: ' + lat2 + ', Lon 2: ' + lon2);
-		
+		Ti.API.debug('Latitude 1: ' + lat1 + ', Longitude 1: ' + lon1 + ' // Latitude 2: ' + lat2 + ', Longitude 2: ' + lon2);
 		
 		var R = 6371; // km
 		var dLat = (lat2-lat1) * Math.PI / 180;
@@ -868,8 +592,8 @@ exports.gamePage = function(input) {
 		var lat2 = lat2 * Math.PI / 180;
 		
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-				   Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-				   Math.sin(dLon/2) * Math.sin(dLon/2);
+				Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+				Math.sin(dLon/2) * Math.sin(dLon/2);
 				   
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		
@@ -882,44 +606,10 @@ exports.gamePage = function(input) {
 	
 	//-----------------------------------------------------------------------------------------------------------------------------
 	
-	function ownTerritory(input) {
-		
-		//need to determine which flag has a higher location
-		if(input.flags[0].latitude > input.flags[1].latitude) {
-			var topFlag = input.flags[0].teamID;
-		}
-		else {
-			var topFlag = input.flags[1].teamID;
-		}
-		
-		//if player's team has top flag
-		if(input.player.teamID == topFlag){
-			//if player is in their region
-			if(input.player.latitude > centerLat) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		//player's team has bottom flag
-		else {
-			//player is in their region
-			if(input.player.latitude < centerLat) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-	}
 	
-	//-----------------------------------------------------------------------------------------------------------------------------
-	
-	
+	//not yet implemented countdown timer for when a user is tagged
 	var countdown;
 	var countdown_number;
-	
 	
 	function countdown_init(input) {
 	    countdown_number = 31;
@@ -942,48 +632,50 @@ exports.gamePage = function(input) {
 	    	countdown_clear();
 	    }
 	}
-	
 	function countdown_clear() {
 	    clearTimeout(countdown);
 	}
 
+	/*----------------------------------------------------------------------------------------------------*/
+	
+	//	Story Element
+	function storyElement(input) {
+		human = input.human.score;
+		alien = input.alient.score;
+		score = 'x' + human + '-' + alien;
+		displayStoryElement(score);
+	}
+	
+	/*----------------------------------------------------------------------------------------------------*/
 	
 	// Story Elements Display
-	
-	
 	function displayStoryElement(score) {
 		var storyText = {
-			'1-0': "The humans have infiltrated our base and stole some of our resources!!",
-			'2-0': "The humans are dominating us!! We need back up!",
-			'3-0': "The humans have won and taken all of our resources!!",
-			'3-1': "The humans have won and taken all of our resources!!",
-			'3-2': "The humans have won and taken all of our resources!!",
-			'2-1': "The Aliens are beating us!!",
-			'1-1': "The score is tied up!!",
-			'2-2': "The score is tied up!!",
-			'0-1': "The Aliens took our resources, back-up needed!!",
-			'0-2': "The Aliens are surrounding us!! Troops fall back!!",
-			'0-3': "The Aliens have won and taken all our resources!!",
-			'1-3': "The Aliens have won and taken all our resources!!",
-			'2-3': "The Aliens have won and taken all our resources!!",
-			'2-1': "The Humans are beating us!!"
+			'x1-0': "The humans have infiltrated our base and stole some of our resources!!",
+			'x2-0': "The humans are dominating us!! We need back up!",
+			'x3-0': "The humans have won and taken all of our resources!!",
+			'x3-1': "The humans have won and taken all of our resources!!",
+			'x3-2': "The humans have won and taken all of our resources!!",
+			'x2-1': "The Aliens are beating us!!",
+			'x1-1': "The score is tied up!!",
+			'x2-2': "The score is tied up!!",
+			'x0-1': "The Aliens took our resources, back-up needed!!",
+			'x0-2': "The Aliens are surrounding us!! Troops fall back!!",
+			'x0-3': "The Aliens have won and taken all our resources!!",
+			'x1-3': "The Aliens have won and taken all our resources!!",
+			'x2-3': "The Aliens have won and taken all our resources!!",
+			'x2-1': "The Humans are beating us!!"
 		}
 		//display story element
-		//alert(storyText.(score.toString));
+		//alert(storyText.(score.toString()));
 		alert('a story element');
 		
 	}
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
-	//	Story Element
-		
-	function storyElement(input) {
-		human = input.human.score;
-		alien = input.alient.score;
-		score = human+'-'+alien;
-		displayStoryElement(score);
-	}
+
+	
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
@@ -991,11 +683,18 @@ exports.gamePage = function(input) {
 	
 	// Legend Button
 	var legendButton = Ti.UI.createButton({
-		height:20,
+<<<<<<< HEAD
+		height:30,
+		bottom:5,
+=======
+		height:40,
 		bottom:10,
+>>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 		left:30,
-		width:90,
-		title:'Legend'
+		width:100,
+		backgroundImage: 'images/buttons/legendbutton.png',
+		backgroundSelectedImage: 'images/buttons/slegendbutton.png',
+		
 	});
 	
 	// Add it to the window
@@ -1004,18 +703,24 @@ exports.gamePage = function(input) {
 	// The event listener
 	legendButton.addEventListener('click', function(){
 		
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
 		var legWin = Ti.UI.createWindow({
-			height: 350,
-			width: 200,
+			height:	400,
+			width: 280,
+			borderColor: '#d6d6d6',
+			borderWidth:2,
+			borderRadius:2,
 			backgroundColor: '#000'
 		});
 		
+<<<<<<< HEAD
+		legendWindow.open();
+=======
+		
 		legWin.open();
+		
+>>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 		data = [];
+		
 		
 		data[0] = Ti.UI.createTableViewRow({title: 'You', leftButton: ''});
 		data[1] = Ti.UI.createTableViewRow({title: 'Alien Flag', leftImage: 'images/miniIcons/Alien/Alien_Flag.png'});
@@ -1029,61 +734,67 @@ exports.gamePage = function(input) {
 		
 		
 		var scrolly = Ti.UI.createScrollableView({});
-		legTable = Ti.UI.createTableView({
+		legendTable = Ti.UI.createTableView({
 			data:data,
-			height: 300,
-			width:150
+			height: 345,
+			width:250
 		});
 		
 		
+		scrolly.add(legendTable);
+		legendWindow.add(scrolly);
 		
-		scrolly.add(legTable);
-		legWin.add(scrolly);
 		
+		var legendText = Ti.UI.createLabel({
+			font: {fontFamily:'Arial',fontSize:16},
+			bottom: 370,
+			left: 110,
+			color: '#fff',
+			text: "Legend",
+		});
+		legWin.add(legendText);
 		// Close Button
 		var close = Ti.UI.createButton({
-			bottom:2,
+			bottom:4,
 			height:20,
-			width:50,
+			width:70,
 			title:'Close'
 		})
 		
-		legWin.add(close);
+		legendWin.add(close);
 		close.addEventListener('click', function(){
-			var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-			});
-			buttonClick.play();
-			legWin.close();
+			
+			legendWindow.close();
 		});
 		
 	});
-	
-	
-	/*----------------------------------------------------------------------------------------------------*/
-	
-	
-	// Add To the Window
-	
-	instance.add(mapCreateView);
-	instance.open();
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
 	
 	// Back Button
-	var back = Ti.UI.createButton({
+<<<<<<< HEAD
+	var backButton = Ti.UI.createButton({
 		title:'Home',
 		height: 20,
 		width: 60,
 		bottom:10
 	});
-	instance.add(back);
+	instance.add(backButton);
+	backButton.addEventListener('click', function(e){
+		gameOver();
+=======
+	var back = Ti.UI.createButton({
+		backgroundImage: 'images/buttons/backbutton.png',
+		backgroundSelectedImage: 'images/buttons/sbackbutton.png',
+		height:40,
+		bottom:10,
+		right:30,
+		width:100,
+	});
+	
 	back.addEventListener('click', function(e){
-		var buttonClick= Ti.Media.createSound({
-				url: 'sounds/radiobeeps.mp3',
-		});
-		buttonClick.play();
+		
 		if (typeof flagsPlacedTimer != 'undefined') {
 			clearInterval(flagsPlacedTimer);
 		};
@@ -1094,10 +805,13 @@ exports.gamePage = function(input) {
 		var homePageScreen = new homePage();
 		homePageScreen.open();
 		instance.close();
+>>>>>>> 00710ba749f0c232dac0498dc29172038e21dcc4
 	});
 	
 	/*----------------------------------------------------------------------------------------------------*/
 	
+	instance.add(mapCreateView);
+	instance.open();
 	
 	return instance	
 
