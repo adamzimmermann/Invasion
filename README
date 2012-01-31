@@ -1,5 +1,58 @@
-Invasion is a GPS based game that seeks to mimic and enhance the gameplay of the traditional game of Capture the Flag. It is built using the Titanium cross platform mobile development frame work. It has a php web API which is connected to a mysql database, which manages the realtime game stats and player information. 
+--------------------------------------------------------------------------------
+Overview
+--------------------------------------------------------------------------------
 
-It was orginally created as a course project in the Interactive Media Department at Bradley University. I recently began rewriting the gameplay script to optimize it and offshore more processing to the server where I could calculate spacial conditions in linear php as asynchronous js was giving me troubles.
+Invasion is a GPS based game that seeks to mimic and enhance the gameplay of the traditional game of Capture the Flag.
 
-The menu system is minimally working, with much need for testing and the gameplay is completely untested since my re-write. I hope to find time after graduation to finish this app, and have my first ever mobile app complete.
+It is built using the Titanium cross platform mobile development frame work.
+
+It has a php web API which is connected to a mysql database, which manages the realtime game stats and player information. 
+
+It was orginally created as a course project in the Interactive Media Department at Bradley University.
+
+
+I recently began rewriting the gameplay script to optimize it and offshore more processing to the server where I could calculate spacial conditions in linear php as asynchronous js was giving me troubles.
+
+The menu system is minimally working, with much need for testing, and the gameplay is completely untested since my re-write.
+
+I hope to find time after graduation to finish this app, and have my first ever mobile app complete.
+
+
+--------------------------------------------------------------------------------
+AUTHORS
+--------------------------------------------------------------------------------
+
+Adam Zimmermann
+Web API & Mobile Development
+www.adamzimmermann.com
+
+Jesse White
+Mobile Development
+www.seonte.com
+https://github.com/seonte
+
+Vasi Tsagarakis
+Graphics & Story
+www.vasi-ts.net
+
+David Cuculich
+Audio Production
+
+Lexa Lemanski
+Documentation & Testing
+
+Matt Nelson
+Instructor
+https://github.com/n3ls0n
+
+--------------------------------------------------------------------------------
+Version
+--------------------------------------------------------------------------------
+
+VERSION
+- .1
+
+RELEASE NOTES
+- alpha release with all basic features
+- it is largely untested due to lack of available data enabled smartphones
+
